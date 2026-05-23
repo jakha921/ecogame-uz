@@ -1658,7 +1658,7 @@
 
 ## Phase 9: Docker и деплой на ecogame.fullfocus.dev
 
-### [ ] 9.1 Создать production Docker-конфигурацию
+### [x] 9.1 Создать production Docker-конфигурацию
 
 **Что сделать:**
 - Обновить `backend/Dockerfile` для production (с collectstatic, gunicorn)
