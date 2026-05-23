@@ -25,6 +25,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "corsheaders",
+    # Local apps
+    "apps.accounts",
 ]
 
 MIDDLEWARE = [
@@ -79,7 +81,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# AUTH_USER_MODEL set in apps/accounts after that app is created
+AUTH_USER_MODEL = "accounts.Player"
 
 # Django REST Framework
 REST_FRAMEWORK = {
