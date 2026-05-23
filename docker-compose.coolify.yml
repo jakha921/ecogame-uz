@@ -61,16 +61,18 @@ services:
       - coolify
     labels:
       - "traefik.enable=true"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.gzip.compress=true"
+      - "traefik.http.middlewares.ecogame-redirect-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.ecogame-gzip.compress=true"
       - "traefik.http.routers.http-0-ecogame-nginx.entryPoints=http"
-      - "traefik.http.routers.http-0-ecogame-nginx.middlewares=redirect-to-https"
+      - "traefik.http.routers.http-0-ecogame-nginx.middlewares=ecogame-redirect-https"
       - "traefik.http.routers.http-0-ecogame-nginx.rule=Host(`ecogame.fullfocus.dev`) && PathPrefix(`/`)"
+      - "traefik.http.routers.http-0-ecogame-nginx.service=ecogame-nginx"
       - "traefik.http.routers.https-0-ecogame-nginx.entryPoints=https"
-      - "traefik.http.routers.https-0-ecogame-nginx.middlewares=gzip"
+      - "traefik.http.routers.https-0-ecogame-nginx.middlewares=ecogame-gzip"
       - "traefik.http.routers.https-0-ecogame-nginx.rule=Host(`ecogame.fullfocus.dev`) && PathPrefix(`/`)"
       - "traefik.http.routers.https-0-ecogame-nginx.tls=true"
       - "traefik.http.routers.https-0-ecogame-nginx.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.https-0-ecogame-nginx.service=ecogame-nginx"
       - "traefik.http.services.ecogame-nginx.loadbalancer.server.port=80"
 
 volumes:
