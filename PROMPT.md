@@ -1241,7 +1241,7 @@
 
 ## Phase 6: Phaser.js — Базовая настройка
 
-### [ ] 6.1 Создать EventBus и PhaserGame компонент
+### [x] 6.1 Создать EventBus и PhaserGame компонент
 
 **Что сделать:**
 - Создать `src/game/events/EventBus.ts`:
@@ -1331,7 +1331,7 @@
 
 ---
 
-### [ ] 6.2 Создать игровые сцены (Boot, Preload, HUD)
+### [x] 6.2 Создать игровые сцены (Boot, Preload, HUD)
 
 **Что сделать:**
 - Создать `src/game/scenes/BootScene.ts`:
@@ -1371,7 +1371,7 @@
 
 ---
 
-### [ ] 6.3 Создать игровые ассеты (спрайты, звуки)
+### [x] 6.3 Создать игровые ассеты (спрайты, звуки)
 
 **Что сделать:**
 - Создать директории: `public/assets/sprites/`, `public/assets/audio/`, `public/assets/ui/`
