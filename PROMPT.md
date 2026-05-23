@@ -895,7 +895,7 @@
 
 ---
 
-### [ ] 4.3 Создать Education API, Leaderboard API и Django signals
+### [x] 4.3 Создать Education API, Leaderboard API и Django signals
 
 **Что сделать:**
 - Создать `apps/education/serializers.py`, `views.py`, `urls.py`:
