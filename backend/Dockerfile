@@ -15,8 +15,11 @@ RUN uv sync --frozen --no-dev
 # Copy application
 COPY . .
 
-# Collect static files
-RUN uv run python manage.py collectstatic --noinput --settings=config.settings.prod || true
+# Collect static files (SECRET_KEY фиктивный — только для сборки статики)
+RUN DJANGO_SECRET_KEY=build-only-not-for-prod \
+    POSTGRES_PASSWORD=build \
+    DATABASE_URL=sqlite:////tmp/build.db \
+    uv run python manage.py collectstatic --noinput --settings=config.settings.prod
 
 EXPOSE 8000
 
