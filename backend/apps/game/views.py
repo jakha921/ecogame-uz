@@ -107,6 +107,8 @@ class PlayerAchievementListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return PlayerAchievement.objects.filter(player=self.request.user).select_related(
-            "achievement"
+        return (
+            PlayerAchievement.objects.filter(player=self.request.user)
+            .select_related("achievement")
+            .order_by("unlocked_at")
         )
