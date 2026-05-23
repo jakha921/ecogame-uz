@@ -62,7 +62,7 @@ logs/
 ehthumbs.db
 
 # uv
-uv.lock
+# uv.lock НЕ игнорируется — нужен для воспроизводимой сборки Docker
 .python-version
 
 # Misc
