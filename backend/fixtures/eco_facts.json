@@ -1,0 +1,17 @@
+[
+  {"model": "education.ecofact", "pk": 1, "fields": {"text_uz": "Bir daraxt yiliga taxminan 22 kg CO2 shimib oladi va kislorod ishlab chiqaradi.", "source": "FAO", "category": "FLORA"}},
+  {"model": "education.ecofact", "pk": 2, "fields": {"text_uz": "Plastik shisha tabiatda parchalanishi uchun 450 yil kerak bo'ladi.", "source": "UNEP", "category": "WASTE"}},
+  {"model": "education.ecofact", "pk": 3, "fields": {"text_uz": "Orol dengizi so'nggi 60 yilda o'z hajmining 90% ini yo'qotdi.", "source": "UNDP", "category": "WATER"}},
+  {"model": "education.ecofact", "pk": 4, "fields": {"text_uz": "O'zbekistonda yiliga 300 kundan ortiq quyoshli kun bo'ladi — bu katta energiya manbai.", "source": "IRENA", "category": "ENERGY"}},
+  {"model": "education.ecofact", "pk": 5, "fields": {"text_uz": "O'zbekistonning Qizil kitobida 184 ta hayvon va 324 ta o'simlik turi bor.", "source": "O'zbekiston Qizil kitobi", "category": "FAUNA"}},
+  {"model": "education.ecofact", "pk": 6, "fields": {"text_uz": "Bitta plastik sumka o'rniga matadan sumka ishlatish yiliga 700 g plastikni tejaydi.", "source": "WWF", "category": "WASTE"}},
+  {"model": "education.ecofact", "pk": 7, "fields": {"text_uz": "Toshkentda 3 million kishidan ortiq yashaydi — bu shahar havosini yaxshilash juda muhim.", "source": "Toshkent shahar hokimligi", "category": "FLORA"}},
+  {"model": "education.ecofact", "pk": 8, "fields": {"text_uz": "Suvni tejash uchun oddiy maslahat: tishingizni tozalayotganda kranini yoping — bu daqiqada 6 litr suv tejaydi.", "source": "UNICEF", "category": "WATER"}},
+  {"model": "education.ecofact", "pk": 9, "fields": {"text_uz": "Quyosh paneli 25 yil davomida ishlaydi va o'rnatish xarajatlarini 5-7 yilda qoplaydi.", "source": "IRENA", "category": "ENERGY"}},
+  {"model": "education.ecofact", "pk": 10, "fields": {"text_uz": "Jayron — O'zbekistonning noyob gazeli. Bugungi kunda ularning soni 10,000 tadan kamayib ketgan.", "source": "IUCN", "category": "FAUNA"}},
+  {"model": "education.ecofact", "pk": 11, "fields": {"text_uz": "O'rmon 1 gektar maydon hisobiga yiliga 5-10 tonna CO2 o'zlashtiradi.", "source": "FAO", "category": "FLORA"}},
+  {"model": "education.ecofact", "pk": 12, "fields": {"text_uz": "O'zbekistonda suv tanqisligi: mamlakatning 60% idan ortiq aholisi suv tanqisligini his qiladi.", "source": "Dunyo banki", "category": "WATER"}},
+  {"model": "education.ecofact", "pk": 13, "fields": {"text_uz": "LED chiroq an'anaviy chiroqqa qaraganda 75% kam energiya sarflaydi va 25 baravar uzoqroq yonadi.", "source": "IEA", "category": "ENERGY"}},
+  {"model": "education.ecofact", "pk": 14, "fields": {"text_uz": "Qog'oz qayta ishlash 17 ta daraxt, 26,000 litr suv va 3,000 kVt soat energiyani tejaydi.", "source": "EPA", "category": "WASTE"}},
+  {"model": "education.ecofact", "pk": 15, "fields": {"text_uz": "Archa daraxti — O'zbekiston nishoni. Ular 3000 metr balandlikda ham o'sishi mumkin.", "source": "O'zbekiston o'rmon xo'jaligi", "category": "FAUNA"}}
+]

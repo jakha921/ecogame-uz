@@ -1,0 +1,218 @@
+[
+  {
+    "model": "game.ecoaction",
+    "pk": 1,
+    "fields": {
+      "key": "plant_tree",
+      "name_uz": "Daraxt ekish",
+      "description_uz": "Daraxt ekish havoni tozalaydi va biologik xilma-xillikni oshiradi. Har bir daraxt yiliga 22 kg CO2 shimadi!",
+      "category": "FLORA",
+      "score_value": 20,
+      "air_impact": 1.5,
+      "water_impact": 0.2,
+      "soil_impact": 0.5,
+      "biodiversity_impact": 1.2,
+      "cooldown_seconds": 8,
+      "unlock_level": 1,
+      "sprite_key": "tree"
+    }
+  },
+  {
+    "model": "game.ecoaction",
+    "pk": 2,
+    "fields": {
+      "key": "plant_flowers",
+      "name_uz": "Gul ekish",
+      "description_uz": "Gullar hasharotlarni jalb qiladi va biologik xilma-xillikni boyitadi. Tabiatning go'zalligi!",
+      "category": "FLORA",
+      "score_value": 10,
+      "air_impact": 0.3,
+      "water_impact": 0.1,
+      "soil_impact": 0.3,
+      "biodiversity_impact": 0.8,
+      "cooldown_seconds": 5,
+      "unlock_level": 1,
+      "sprite_key": "flowers"
+    }
+  },
+  {
+    "model": "game.ecoaction",
+    "pk": 3,
+    "fields": {
+      "key": "care_garden",
+      "name_uz": "Bog' parvarishi",
+      "description_uz": "Bog'ni parvarish qilish tuproqni sog'lom saqlaydi. Muntazam parvarish katta natijalar beradi!",
+      "category": "FLORA",
+      "score_value": 15,
+      "air_impact": 0.2,
+      "water_impact": 0.1,
+      "soil_impact": 1.0,
+      "biodiversity_impact": 0.5,
+      "cooldown_seconds": 6,
+      "unlock_level": 1,
+      "sprite_key": "garden"
+    }
+  },
+  {
+    "model": "game.ecoaction",
+    "pk": 4,
+    "fields": {
+      "key": "clean_water",
+      "name_uz": "Suvni tozalash",
+      "description_uz": "Suvni tozalash baliqlar va boshqa suv tirik mavjudotlari uchun hayot saqlab qoladi!",
+      "category": "WATER",
+      "score_value": 25,
+      "air_impact": 0.1,
+      "water_impact": 2.0,
+      "soil_impact": 0.3,
+      "biodiversity_impact": 1.0,
+      "cooldown_seconds": 10,
+      "unlock_level": 1,
+      "sprite_key": "water_clean"
+    }
+  },
+  {
+    "model": "game.ecoaction",
+    "pk": 5,
+    "fields": {
+      "key": "save_water",
+      "name_uz": "Suv tejash",
+      "description_uz": "Har bir tomchi suv qadrli! Suv tejash bizning kelajak avlodlarga sovg'amiz.",
+      "category": "WATER",
+      "score_value": 10,
+      "air_impact": 0.0,
+      "water_impact": 0.8,
+      "soil_impact": 0.1,
+      "biodiversity_impact": 0.3,
+      "cooldown_seconds": 5,
+      "unlock_level": 1,
+      "sprite_key": "water_save"
+    }
+  },
+  {
+    "model": "game.ecoaction",
+    "pk": 6,
+    "fields": {
+      "key": "sort_waste",
+      "name_uz": "Chiqindilarni saralash",
+      "description_uz": "Chiqindilarni saralash qayta ishlashni osonlashtiradi. Plastik, qog'oz, shisha — har birini alohida!",
+      "category": "WASTE",
+      "score_value": 20,
+      "air_impact": 0.3,
+      "water_impact": 0.2,
+      "soil_impact": 1.5,
+      "biodiversity_impact": 0.4,
+      "cooldown_seconds": 8,
+      "unlock_level": 1,
+      "sprite_key": "waste_sort"
+    }
+  },
+  {
+    "model": "game.ecoaction",
+    "pk": 7,
+    "fields": {
+      "key": "recycle",
+      "name_uz": "Qayta ishlash",
+      "description_uz": "Chiqindilarni qayta ishlash tabiatni asraydi va iqtisodga foyda keltiradi!",
+      "category": "WASTE",
+      "score_value": 15,
+      "air_impact": 0.5,
+      "water_impact": 0.2,
+      "soil_impact": 1.0,
+      "biodiversity_impact": 0.3,
+      "cooldown_seconds": 7,
+      "unlock_level": 1,
+      "sprite_key": "recycle"
+    }
+  },
+  {
+    "model": "game.ecoaction",
+    "pk": 8,
+    "fields": {
+      "key": "install_solar",
+      "name_uz": "Quyosh paneli o'rnatish",
+      "description_uz": "Quyosh energiyasi — toza va cheksiz manba! Bir panel yiliga tonna CO2 emissiyasini kamaytiradi.",
+      "category": "ENERGY",
+      "score_value": 30,
+      "air_impact": 2.0,
+      "water_impact": 0.1,
+      "soil_impact": 0.1,
+      "biodiversity_impact": 0.5,
+      "cooldown_seconds": 15,
+      "unlock_level": 2,
+      "sprite_key": "solar_panel"
+    }
+  },
+  {
+    "model": "game.ecoaction",
+    "pk": 9,
+    "fields": {
+      "key": "save_energy",
+      "name_uz": "Energiya tejash",
+      "description_uz": "Keraksiz chiroqlarni o'chiring! Har bir kilovatt-soat energiya tejash tabiatga yordam.",
+      "category": "ENERGY",
+      "score_value": 10,
+      "air_impact": 0.8,
+      "water_impact": 0.0,
+      "soil_impact": 0.0,
+      "biodiversity_impact": 0.2,
+      "cooldown_seconds": 5,
+      "unlock_level": 1,
+      "sprite_key": "energy_save"
+    }
+  },
+  {
+    "model": "game.ecoaction",
+    "pk": 10,
+    "fields": {
+      "key": "protect_animal",
+      "name_uz": "Hayvonlarni himoya qilish",
+      "description_uz": "Qizil kitobga kiritilgan hayvonlarni himoya qiling! Har bir tur yo'qolsa, ekotizim zarar ko'radi.",
+      "category": "FAUNA",
+      "score_value": 30,
+      "air_impact": 0.2,
+      "water_impact": 0.2,
+      "soil_impact": 0.3,
+      "biodiversity_impact": 2.5,
+      "cooldown_seconds": 12,
+      "unlock_level": 2,
+      "sprite_key": "animal_protect"
+    }
+  },
+  {
+    "model": "game.ecoaction",
+    "pk": 11,
+    "fields": {
+      "key": "bird_house",
+      "name_uz": "Qushlar uyi",
+      "description_uz": "Qushlar uchun uy yasang! Qushlar hasharotlarni yeydi va urug' tarqatadi — tabiatning yordamchilari!",
+      "category": "FAUNA",
+      "score_value": 20,
+      "air_impact": 0.1,
+      "water_impact": 0.0,
+      "soil_impact": 0.2,
+      "biodiversity_impact": 1.5,
+      "cooldown_seconds": 10,
+      "unlock_level": 1,
+      "sprite_key": "bird_house"
+    }
+  },
+  {
+    "model": "game.ecoaction",
+    "pk": 12,
+    "fields": {
+      "key": "save_fish",
+      "name_uz": "Baliqlarni saqlash",
+      "description_uz": "Orol dengizining baliqlarini saqlang! Suv ekotizimini tiklash — kelajak avlodlar uchun hadya.",
+      "category": "FAUNA",
+      "score_value": 25,
+      "air_impact": 0.1,
+      "water_impact": 1.2,
+      "soil_impact": 0.1,
+      "biodiversity_impact": 1.8,
+      "cooldown_seconds": 10,
+      "unlock_level": 3,
+      "sprite_key": "fish_save"
+    }
+  }
+]

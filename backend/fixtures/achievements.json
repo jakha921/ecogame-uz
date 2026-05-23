@@ -1,0 +1,122 @@
+[
+  {
+    "model": "game.achievement",
+    "pk": 1,
+    "fields": {
+      "key": "first_tree",
+      "name_uz": "Birinchi daraxt",
+      "description_uz": "Birinchi daraxtingizni ektingiz. Tabiat bilan do'stlik boshlandi!",
+      "icon": "tree",
+      "condition_type": "ACTION_COUNT",
+      "condition_value": {"action_key": "plant_tree", "count": 1}
+    }
+  },
+  {
+    "model": "game.achievement",
+    "pk": 2,
+    "fields": {
+      "key": "gardener",
+      "name_uz": "Bog'bon",
+      "description_uz": "10 ta daraxt ektingiz. Siz haqiqiy bog'bonsiz!",
+      "icon": "garden",
+      "condition_type": "ACTION_COUNT",
+      "condition_value": {"action_key": "plant_tree", "count": 10}
+    }
+  },
+  {
+    "model": "game.achievement",
+    "pk": 3,
+    "fields": {
+      "key": "water_guardian",
+      "name_uz": "Suv qo'riqchisi",
+      "description_uz": "Suvni 5 marta tozaladingiz. Suv hayot manbai!",
+      "icon": "water",
+      "condition_type": "ACTION_COUNT",
+      "condition_value": {"action_key": "clean_water", "count": 5}
+    }
+  },
+  {
+    "model": "game.achievement",
+    "pk": 4,
+    "fields": {
+      "key": "waste_hero",
+      "name_uz": "Chiqindi qahramoni",
+      "description_uz": "Chiqindilarni 5 marta saraladingiz. Toza shahar — baxtli shahar!",
+      "icon": "recycle",
+      "condition_type": "ACTION_COUNT",
+      "condition_value": {"action_key": "sort_waste", "count": 5}
+    }
+  },
+  {
+    "model": "game.achievement",
+    "pk": 5,
+    "fields": {
+      "key": "ecologist",
+      "name_uz": "Ekolog",
+      "description_uz": "1000 ball to'pladingiz. Ekologiya sohasida katta muvaffaqiyat!",
+      "icon": "star",
+      "condition_type": "SCORE",
+      "condition_value": {"min_score": 1000}
+    }
+  },
+  {
+    "model": "game.achievement",
+    "pk": 6,
+    "fields": {
+      "key": "level1_complete",
+      "name_uz": "Kichik hovli qahramoni",
+      "description_uz": "Birinchi darajani muvaffaqiyatli tugatdingiz. Zo'r natija!",
+      "icon": "home",
+      "condition_type": "LEVEL_COMPLETE",
+      "condition_value": {"level_number": 1}
+    }
+  },
+  {
+    "model": "game.achievement",
+    "pk": 7,
+    "fields": {
+      "key": "clean_air",
+      "name_uz": "Toza havo",
+      "description_uz": "Havo sifatini 80% ga yetkazdingiz. Nafas olish yanada yoqimli!",
+      "icon": "air",
+      "condition_type": "INDICATOR",
+      "condition_value": {"indicator": "air", "min_value": 80}
+    }
+  },
+  {
+    "model": "game.achievement",
+    "pk": 8,
+    "fields": {
+      "key": "nature_friend",
+      "name_uz": "Tabiat do'sti",
+      "description_uz": "Biologik xilma-xillikni 80% ga yetkazdingiz. Tabiat sizni sevadi!",
+      "icon": "leaf",
+      "condition_type": "INDICATOR",
+      "condition_value": {"indicator": "biodiversity", "min_value": 80}
+    }
+  },
+  {
+    "model": "game.achievement",
+    "pk": 9,
+    "fields": {
+      "key": "solar_pioneer",
+      "name_uz": "Quyosh kashshofi",
+      "description_uz": "Quyosh paneli o'rnatdingiz. Kelajak energiyasi sizniki!",
+      "icon": "solar",
+      "condition_type": "ACTION_COUNT",
+      "condition_value": {"action_key": "install_solar", "count": 1}
+    }
+  },
+  {
+    "model": "game.achievement",
+    "pk": 10,
+    "fields": {
+      "key": "eco_master",
+      "name_uz": "Ekologiya ustasi",
+      "description_uz": "5000 ball to'pladingiz. Siz haqiqiy ekologiya ustasisiz!",
+      "icon": "crown",
+      "condition_type": "SCORE",
+      "condition_value": {"min_score": 5000}
+    }
+  }
+]

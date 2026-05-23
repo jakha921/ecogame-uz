@@ -1,0 +1,67 @@
+[
+  {
+    "model": "education.educationalcontent",
+    "pk": 1,
+    "fields": {
+      "title_uz": "Orol dengizi fojiasi",
+      "body_uz": "Orol dengizi — bir vaqtlar dunyoning to'rtinchi yirik ko'li bo'lgan. Ammo suv tanqisligi va noto'g'ri suv boshqaruvi tufayli u deyarli qurib ketdi.\n\nO'tgan asrning 60-yillarida dengiz 68,000 km² maydonni egallagan. Bugungi kunda uning qoldig'i atigi 10% ni tashkil etadi. Bu hududda yashagan baliqlarning ko'plab turlari yo'q bo'lib ketdi, baliqchilik sanoati inqirozga uchradi.\n\nO'zbekiston hukumati Orol dengizini tiklash bo'yicha katta ishlar olib bormoqda. Qurg'oq dengiz tubida millionlab daraxtlar ekilmoqda. Siz ham o'z hovlingizda daraxt ekish orqali bu ulug'vor ishga hissa qo'sha olasiz!",
+      "category": "WATER",
+      "image": null,
+      "order": 1,
+      "is_published": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "education.educationalcontent",
+    "pk": 2,
+    "fields": {
+      "title_uz": "O'zbekistonda havo ifloslanishi",
+      "body_uz": "O'zbekiston shaharlari, ayniqsa Toshkent, havo ifloslanishi bilan kurashmoqda. Avtomobillar, zavodlar va issiqlik elektr stantsiyalari asosiy ifloslantiruvchi manbalar hisoblanadi.\n\nHavo ifloslanishi nafas olish kasalliklari, yurak xastaliklari va erta o'limga olib kelishi mumkin. Bolalar va keksa kishilar ayniqsa ta'sirchan.\n\nDaraxt ekish bu muammoning eng samarali yechimlaridan biridir. Bir kattalashgan daraxt yiliga taxminan 22 kg CO2 shimib oladi. Ko'cha bo'ylab daraxt ekish shahar harosini pasaytiradi va havo sifatini yaxshilaydi. Bugungi harakatingiz ertangi sog'lomlikdir!",
+      "category": "FLORA",
+      "image": null,
+      "order": 2,
+      "is_published": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "education.educationalcontent",
+    "pk": 3,
+    "fields": {
+      "title_uz": "Chiqindilarni qayta ishlash",
+      "body_uz": "O'zbekistonda har yili millionlab tonna chiqindi hosil bo'ladi. Ularning katta qismi poligonlarga tashlanib, tuproq va suvni ifloslantiradi.\n\nChiqindilarni saralash juda muhim: plastik, qog'oz, shisha va metalni alohida yig'ing. Har bir material qayta ishlanib, yangi mahsulotga aylanishi mumkin.\n\nDilini quvontiruvchi fakt: bitta plastik shishani qayta ishlash 2 soat uchun elektr tejaydi. Qog'ozni qayta ishlash 17 ta daraxtni saqlab qoladi. Kichik qadamlar katta o'zgarishlarga olib keladi!",
+      "category": "WASTE",
+      "image": null,
+      "order": 3,
+      "is_published": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "education.educationalcontent",
+    "pk": 4,
+    "fields": {
+      "title_uz": "Quyosh energiyasi — kelajak manbai",
+      "body_uz": "O'zbekiston Markaziy Osiyoning eng ko'p quyosh nuriga ega davlatlaridan biridir. Yiliga 300 kundan ortiq quyoshli kun bo'ladi. Bu boylikni ishlatmasak, katta imkoniyatni boy beramiz!\n\nQuyosh panellari bino tomlari va dalalarga o'rnatilishi mumkin. 1 kVt quvvatli panel yiliga taxminan 1,5 tonna CO2 emissiyasini kamaytiradi.\n\nO'zbekiston 2030 yilga qadar qayta tiklanuvchi energiyadan foydalanishni 25% ga yetkazishni rejalashtirmoqda. Siz ham uyingizga kichik quyosh paneli o'rnatib, bu maqsadga hissa qo'sha olasiz!",
+      "category": "ENERGY",
+      "image": null,
+      "order": 4,
+      "is_published": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "education.educationalcontent",
+    "pk": 5,
+    "fields": {
+      "title_uz": "O'zbekiston Qizil kitobi hayvonlari",
+      "body_uz": "O'zbekistonning Qizil kitobiga 184 ta hayvon turi kiritilgan. Ularning orasida Amur yo'lbarsi, qo'ng'ir ayiq, qoraquyruq, jayron va Ko'l bo'ri kabi noyob turlar mavjud.\n\nBu hayvonlarning kamayib ketishining asosiy sabablari: yashash muhitining yo'qolishi, ov qilish, va iqlim o'zgarishi. Har bir yo'qolgan tur ekotizimga katta zarar yetkazadi.\n\nSiz hayvonlarni himoya qilishga hissa qo'sha olasiz: yovvoyi hayvonlarni ovlamaslik, ularning yashash muhitini saqlab qolish, va tarbiyaviy ish olib borish. Birgalikda noyob turlarni saqlaylik!",
+      "category": "FAUNA",
+      "image": null,
+      "order": 5,
+      "is_published": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  }
+]
