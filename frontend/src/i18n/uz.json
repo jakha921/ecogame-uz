@@ -1,0 +1,67 @@
+{
+  "app_name": "EcoGame",
+  "menu": {
+    "home": "Bosh sahifa",
+    "play": "O'ynash",
+    "leaderboard": "Yetakchilar",
+    "education": "Ta'lim",
+    "profile": "Profil",
+    "login": "Kirish",
+    "register": "Ro'yxatdan o'tish",
+    "logout": "Chiqish"
+  },
+  "game": {
+    "air_quality": "Havo sifati",
+    "water_purity": "Suv tozaligi",
+    "soil_health": "Tuproq holati",
+    "biodiversity": "Biologik xilma-xillik",
+    "score": "Ball",
+    "level": "Daraja",
+    "start": "Boshlash",
+    "pause": "Pauza",
+    "resume": "Davom ettirish",
+    "level_complete": "Daraja tugallandi!",
+    "locked": "Qulflangan",
+    "required_score": "Kerakli ball",
+    "completed": "Bajarildi"
+  },
+  "auth": {
+    "username": "Foydalanuvchi nomi",
+    "password": "Parol",
+    "confirm_password": "Parolni tasdiqlang",
+    "nickname": "Nik",
+    "email": "Elektron pochta",
+    "login_title": "Tizimga kirish",
+    "register_title": "Ro'yxatdan o'tish",
+    "no_account": "Hisobingiz yo'qmi?",
+    "has_account": "Hisobingiz bormi?"
+  },
+  "leaderboard": {
+    "title": "Yetakchilar jadvali",
+    "rank": "O'rin",
+    "player": "O'yinchi",
+    "score": "Ball",
+    "levels": "Darajalar",
+    "achievements": "Yutuqlar",
+    "my_rank": "Mening o'rnim"
+  },
+  "education": {
+    "title": "Ekologik ta'lim",
+    "all": "Hammasi",
+    "read_more": "Ko'proq o'qish",
+    "daily_fact": "Kunning ekologik fakti"
+  },
+  "profile": {
+    "title": "Mening profilim",
+    "total_score": "Umumiy ball",
+    "levels_completed": "O'tilgan darajalar",
+    "achievements": "Yutuqlar",
+    "edit": "Tahrirlash",
+    "save": "Saqlash"
+  },
+  "errors": {
+    "not_found": "Topilmadi",
+    "server_error": "Server xatosi",
+    "network_error": "Tarmoq xatosi"
+  }
+}
