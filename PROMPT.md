@@ -1399,7 +1399,7 @@
 
 ## Phase 7: Phaser.js — Геймплей
 
-### [ ] 7.1 Создать игровые объекты
+### [x] 7.1 Создать игровые объекты
 
 **Что сделать:**
 - Создать `src/game/objects/InteractiveZone.ts`:
@@ -1425,7 +1425,7 @@
 
 ---
 
-### [ ] 7.2 Создать системы (EcosystemManager, ActionSystem, ScoreSystem)
+### [x] 7.2 Создать системы (EcosystemManager, ActionSystem, ScoreSystem)
 
 **Что сделать:**
 - Создать `src/game/systems/EcosystemManager.ts`:
@@ -1490,7 +1490,7 @@
 
 ---
 
-### [ ] 7.3 Реализовать полноценный MainScene
+### [x] 7.3 Реализовать полноценный MainScene
 
 **Что сделать:**
 - Полностью реализовать `src/game/scenes/MainScene.ts`:
@@ -1531,7 +1531,7 @@
 
 ---
 
-### [ ] 7.4 Подключить Phaser к API синхронизации
+### [x] 7.4 Подключить Phaser к API синхронизации
 
 **Что сделать:**
 - Обновить `src/pages/GamePage.tsx`:
