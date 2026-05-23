@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     # Local apps
     "apps.accounts",
     "apps.game",
+    "apps.education",
+    "apps.leaderboard",
 ]
 
 MIDDLEWARE = [
