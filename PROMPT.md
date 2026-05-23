@@ -590,7 +590,7 @@
 
 ---
 
-### [ ] 2.6 Написать unit-тесты для моделей
+### [x] 2.6 Написать unit-тесты для моделей
 
 **Что сделать:**
 - Создать `apps/accounts/tests/__init__.py` и `apps/accounts/tests/test_models.py`:
