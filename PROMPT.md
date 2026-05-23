@@ -972,7 +972,7 @@
 
 ## Phase 5: Frontend — Роутинг, Auth, API-клиент
 
-### [ ] 5.1 Создать API-клиент и TypeScript типы
+### [x] 5.1 Создать API-клиент и TypeScript типы
 
 **Что сделать:**
 - Создать `src/api/types.ts` — строгие TypeScript типы (без `any`):
