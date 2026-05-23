@@ -1,0 +1,84 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-ecogame}
+      POSTGRES_USER: ${POSTGRES_USER:-ecogame}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ecogame}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ecogame
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file: .env
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.prod
+    volumes:
+      - static_volume:/app/static_collected
+      - media_volume:/app/media
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - ecogame
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: /api/v1
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - ecogame
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    volumes:
+      - static_volume:/app/static
+      - media_volume:/app/media
+    depends_on:
+      - backend
+      - frontend
+    restart: unless-stopped
+    networks:
+      - ecogame
+      - coolify
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.gzip.compress=true"
+      - "traefik.http.routers.http-0-ecogame-nginx.entryPoints=http"
+      - "traefik.http.routers.http-0-ecogame-nginx.middlewares=redirect-to-https"
+      - "traefik.http.routers.http-0-ecogame-nginx.rule=Host(`ecogame.fullfocus.dev`) && PathPrefix(`/`)"
+      - "traefik.http.routers.https-0-ecogame-nginx.entryPoints=https"
+      - "traefik.http.routers.https-0-ecogame-nginx.middlewares=gzip"
+      - "traefik.http.routers.https-0-ecogame-nginx.rule=Host(`ecogame.fullfocus.dev`) && PathPrefix(`/`)"
+      - "traefik.http.routers.https-0-ecogame-nginx.tls=true"
+      - "traefik.http.routers.https-0-ecogame-nginx.tls.certresolver=letsencrypt"
+      - "traefik.http.services.ecogame-nginx.loadbalancer.server.port=80"
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
+
+networks:
+  ecogame:
+  coolify:
+    external: true
