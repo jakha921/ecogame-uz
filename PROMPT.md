@@ -709,7 +709,7 @@
 
 ## Phase 4: Backend API — Игровая логика
 
-### [ ] 4.1 Создать GameService
+### [x] 4.1 Создать GameService
 
 **Что сделать:**
 - Создать `apps/game/services.py`:
