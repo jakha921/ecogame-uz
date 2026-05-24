@@ -43,8 +43,6 @@ services:
     build:
       context: ./nginx
       dockerfile: Dockerfile
-    ports:
-      - "80:80"
     volumes:
       - static_volume:/app/static
       - media_volume:/app/media
@@ -52,6 +50,21 @@ services:
       - backend
       - frontend
     restart: unless-stopped
+    networks:
+      - default
+      - coolify
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ecogame.rule=Host(`ecogame.fullfocus.dev`)"
+      - "traefik.http.routers.ecogame.entrypoints=http,https"
+      - "traefik.http.routers.ecogame.tls=true"
+      - "traefik.http.routers.ecogame.tls.certresolver=letsencrypt"
+      - "traefik.http.services.ecogame.loadbalancer.server.port=80"
+      - "traefik.docker.network=coolify"
+
+networks:
+  coolify:
+    external: true
 
 volumes:
   postgres_data:
