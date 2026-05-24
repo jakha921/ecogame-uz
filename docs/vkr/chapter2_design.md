@@ -23,7 +23,7 @@ EcoGame построена по классической клиент-серве
 └───────────┬────────────────┬────────────────────┘
             │                │
 ┌───────────▼──┐    ┌────────▼────────────────────┐
-│  Django 5.1  │    │  React+Nginx (Static SPA)   │
+│  Django 6.0  │    │  React+Nginx (Static SPA)   │
 │  + DRF       │    │  /usr/share/nginx/html       │
 │  + Gunicorn  │    └─────────────────────────────┘
 │  (3 workers) │
@@ -45,7 +45,7 @@ graph TB
     subgraph "Docker Compose"
         NGINX["nginx:alpine\nReverse Proxy\n:80"]
         FRONTEND["node:20-alpine → nginx:alpine\nReact SPA + Phaser.js\n(static)"]
-        BACKEND["python:3.12-slim\nDjango 5.1 + DRF\nGunicorn :8000"]
+        BACKEND["python:3.12-slim\nDjango 6.0 + DRF\nGunicorn :8000"]
         DB["postgres:16-alpine\nPostgreSQL\n:5432"]
     end
 

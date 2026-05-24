@@ -24,7 +24,7 @@
 
 10. Prensky M. Digital Game-Based Learning. — New York: McGraw-Hill, 2001. — 442 p.
 
-11. Django Documentation: The Web Framework for Perfectionists with Deadlines / Django Software Foundation. — 2024. — URL: https://docs.djangoproject.com/en/5.1/.
+11. Django Documentation: The Web Framework for Perfectionists with Deadlines / Django Software Foundation. — 2024. — URL: https://docs.djangoproject.com/en/6.0/.
 
 12. React Documentation. — Meta Open Source, 2024. — URL: https://react.dev.
 

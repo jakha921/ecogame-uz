@@ -924,7 +924,7 @@ Coolify (self-hosted PaaS) настроен на автодеплой при pus
 
 В данной главе описана реализация всех компонентов системы EcoGame:
 
-1. **Backend** (Django 5.1 + DRF): split-settings архитектура, кастомная модель Player, GameService с транзакционными операциями, денормализованный LeaderboardEntry через Django signals, 20 REST API эндпоинтов, административная панель Unfold.
+1. **Backend** (Django 6.0 + DRF): split-settings архитектура, кастомная модель Player, GameService с транзакционными операциями, денормализованный LeaderboardEntry через Django signals, 20 REST API эндпоинтов, административная панель Unfold.
 
 2. **Frontend** (React 19 + TypeScript + Zustand): строготипизированный API-клиент с автообновлением JWT, EventBus-паттерн для интеграции Phaser.js с React, hook useGameSync с буфером действий на useRef.
 
