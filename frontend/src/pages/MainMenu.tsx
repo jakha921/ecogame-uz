@@ -1,6 +1,19 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Grid2x2, Leaf, Lock, MapPin, PlayCircle, Star, Trophy, UserCircle } from "lucide-react";
+import {
+  Grid2x2,
+  Leaf,
+  Lock,
+  MapPin,
+  MousePointerClick,
+  PlayCircle,
+  Recycle,
+  Sprout,
+  Star,
+  Target,
+  Trophy,
+  UserCircle,
+} from "lucide-react";
 import { educationApi } from "@/api/education";
 import type { EcoFact, Level } from "@/api/types";
 import { useAuthStore } from "@/stores/authStore";
@@ -123,14 +136,28 @@ export function MainMenu() {
   return (
     <div className="flex flex-col gap-8">
       {/* Hero */}
-      <div className="rounded-3xl bg-gradient-to-br from-green-800 to-emerald-600 p-8 flex flex-col gap-3">
+      <div className="rounded-3xl bg-gradient-to-br from-green-800 to-emerald-600 p-8 flex flex-col gap-4">
         <div className="flex items-center gap-3">
           <Leaf size={32} className="text-green-200" />
           <h1 className="text-3xl font-bold text-white">EcoGame</h1>
         </div>
         <p className="text-green-100 text-base max-w-md">
-          Toshkent shahrini ekologik tiklang. Daraxt o'tqazing, suv tozalang, shahar yashnasin.
+          Toshkent shahrini ekologik tiklang. Daraxt o'tqazing, suv tozalang, hayvonlarni himoya qiling.
         </p>
+        {/* How to play — 4 steps */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
+          {[
+            { icon: <MousePointerClick size={18} />, text: "Pastdan qurol tanlang" },
+            { icon: <Sprout size={18} />, text: "Xaritaga bosib joylang" },
+            { icon: <Recycle size={18} />, text: "Ob'ektlar o'sib atrofni yaxshilaydi" },
+            { icon: <Target size={18} />, text: "4 ko'rsatkichni 80% ga yetkazing" },
+          ].map(({ icon, text }, i) => (
+            <div key={i} className="bg-white/10 rounded-xl p-3 flex flex-col items-center gap-2 text-center">
+              <span className="text-green-200">{icon}</span>
+              <p className="text-xs text-green-100 leading-tight">{text}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Player stats */}

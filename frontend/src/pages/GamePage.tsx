@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, CheckCircle, Star, Trophy } from "lucide-react";
+import { ArrowLeft, CheckCircle, Info, Star, Target, Trophy } from "lucide-react";
 import { ToolbarPanel } from "@/components/game/ToolbarPanel";
 import type { AchievementUnlockedPayload, ActionPerformedPayload, LevelCompletedPayload } from "@/game/events/EventBus";
 import { PhaserGame } from "@/game/PhaserGame";
@@ -16,6 +16,7 @@ export function GamePage() {
   const started = useRef(false);
   const [levelComplete, setLevelComplete] = useState(false);
   const [unlockedAchievement, setUnlockedAchievement] = useState<string | null>(null);
+  const [showTutorial, setShowTutorial] = useState(true);
 
   const { pushAction, flushBuffer } = useGameSync(currentSession?.id ?? null);
 
@@ -114,24 +115,62 @@ export function GamePage() {
         </button>
       </div>
 
-      {/* React HUD overlay */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {indicators.map(({ key, label, value, bg }) => (
-          <div key={key} className="bg-white rounded-xl p-3 shadow-sm">
-            <p className="text-xs text-gray-400 mb-1">{label}</p>
-            <div className="w-full bg-gray-100 rounded-full h-2.5">
-              <div
-                className={`${bg} h-2.5 rounded-full transition-all duration-500`}
-                style={{ width: `${Math.min(100, Math.max(0, value))}%` }}
-              />
-            </div>
-            <p className="text-xs text-right text-gray-500 mt-1">{value.toFixed(1)}%</p>
-          </div>
-        ))}
+      {/* Goal banner */}
+      <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-2.5 flex items-center gap-3">
+        <Target size={16} className="text-green-600 shrink-0" />
+        <p className="text-sm text-green-700 flex-1">
+          <span className="font-semibold">Maqsad:</span> barcha ko'rsatkichlarni{" "}
+          <span className="font-bold">80%</span> ga yetkazing
+        </p>
+        <span className="text-sm font-bold text-green-700 ml-auto">
+          {t("game.score")}: {score}
+        </span>
       </div>
 
-      <div className="text-right text-sm text-gray-600">
-        {t("game.score")}: <span className="font-bold text-green-700">{score}</span>
+      {/* Tutorial hint — dismissable */}
+      {showTutorial && (
+        <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 flex items-start gap-3">
+          <Info size={16} className="text-blue-500 mt-0.5 shrink-0" />
+          <div className="flex-1 text-sm text-blue-700">
+            <p className="font-semibold mb-1">Qanday o'ynash kerak?</p>
+            <ol className="list-decimal list-inside space-y-0.5 text-xs">
+              <li>Pastdagi paneldan qurol tanlang (daraxt, suv, quyosh paneli...)</li>
+              <li>Xaritadagi istalgan katakchaga bosing — ob'ekt joylashadi</li>
+              <li>Ob'ektlar o'sib, atrofdagi muhitni yaxshilaydi</li>
+              <li>Barcha 4 ko'rsatkich 80% ga yetganda daraja tugaydi</li>
+            </ol>
+          </div>
+          <button
+            onClick={() => setShowTutorial(false)}
+            className="text-blue-400 hover:text-blue-600 text-xs shrink-0"
+          >
+            Yopish ✕
+          </button>
+        </div>
+      )}
+
+      {/* React HUD overlay */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {indicators.map(({ key, label, value, bg }) => {
+          const done = value >= 80;
+          return (
+            <div
+              key={key}
+              className={`rounded-xl p-3 shadow-sm border ${done ? "bg-green-50 border-green-200" : "bg-white border-transparent"}`}
+            >
+              <p className="text-xs text-gray-400 mb-1">{label}</p>
+              <div className="w-full bg-gray-100 rounded-full h-2.5">
+                <div
+                  className={`${done ? "bg-green-500" : bg} h-2.5 rounded-full transition-all duration-500`}
+                  style={{ width: `${Math.min(100, Math.max(0, value))}%` }}
+                />
+              </div>
+              <p className={`text-xs text-right mt-1 ${done ? "text-green-600 font-semibold" : "text-gray-500"}`}>
+                {value.toFixed(1)}% {done && "✓"}
+              </p>
+            </div>
+          );
+        })}
       </div>
 
       {/* Phaser canvas */}

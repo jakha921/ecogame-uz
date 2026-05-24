@@ -148,9 +148,25 @@ export function ToolbarPanel({ levelNumber }: ToolbarPanelProps) {
         )}
       </div>
 
-      {selectedTool && (
-        <p className="text-center text-xs text-green-400">
-          Joylashtirish uchun xaritaga bosing
+      {selectedTool ? (
+        <div className="bg-green-900/60 rounded-xl px-3 py-2 flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse shrink-0" />
+          <p className="text-xs text-green-300 flex-1">
+            <span className="font-semibold text-green-200">
+              {visibleActions.find((a) => a.key === selectedTool)?.name_uz ?? selectedTool}
+            </span>{" "}
+            — xaritadagi katakchaga bosing
+          </p>
+          <button
+            onClick={() => { setSelectedTool(null); EventBus.emit(EVENTS.TOOL_SELECTED, { actionKey: "" }); }}
+            className="text-gray-500 hover:text-gray-300 text-xs"
+          >
+            Bekor ✕
+          </button>
+        </div>
+      ) : (
+        <p className="text-center text-xs text-gray-500">
+          Yuqoridan qurol tanlang va xaritaga bosing
         </p>
       )}
     </div>
