@@ -23,9 +23,17 @@ export interface MapZone {
 }
 
 export interface MapConfig {
-  width: number;
-  height: number;
-  zones: MapZone[];
+  width?: number;
+  height?: number;
+  zones?: MapZone[];
+  // Isometric sandbox fields (Phase 1+)
+  iso_width?: number;
+  iso_height?: number;
+  initial_resources?: number;
+  regen_rate?: number;
+  ground?: number[];
+  pollution?: number[];
+  blocked?: number[];
 }
 
 export interface Level {

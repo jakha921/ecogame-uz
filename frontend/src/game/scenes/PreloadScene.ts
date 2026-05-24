@@ -14,7 +14,7 @@ export class PreloadScene extends Phaser.Scene {
   }
 
   create() {
-    this.scene.start("MainScene");
+    this.scene.start("IsoMainScene");
     this.scene.launch("HUDScene");
   }
 

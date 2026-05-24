@@ -14,7 +14,7 @@ import {
 } from "./events/EventBus";
 import { BootScene } from "./scenes/BootScene";
 import { HUDScene } from "./scenes/HUDScene";
-import { MainScene } from "./scenes/MainScene";
+import { IsoMainScene } from "./scenes/IsoMainScene";
 import { PreloadScene } from "./scenes/PreloadScene";
 
 interface PhaserGameProps {
@@ -43,7 +43,7 @@ export function PhaserGame({
       height: GAME_HEIGHT,
       parent: containerRef.current,
       backgroundColor: "#87ceeb",
-      scene: [BootScene, PreloadScene, MainScene, HUDScene],
+      scene: [BootScene, PreloadScene, IsoMainScene, HUDScene],
       physics: {
         default: "arcade",
         arcade: { gravity: { x: 0, y: 0 }, debug: false },
