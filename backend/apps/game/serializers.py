@@ -1,9 +1,22 @@
-from django.contrib.auth import get_user_model
+import random
+
 from rest_framework import serializers
 
-from .models import Achievement, GameProgress, GameSession, Level, PlayerAchievement
+from .models import (
+    Achievement,
+    ActionCategory,
+    Answer,
+    DailyChallenge,
+    GameProgress,
+    GameSession,
+    Level,
+    PlayerAchievement,
+    Question,
+    QuizMode,
+    QuizSession,
+)
 
-Player = get_user_model()
+# ─── Legacy serializers (kept for backward-compat) ────────────────────────────
 
 
 class LevelSerializer(serializers.ModelSerializer):
@@ -60,18 +73,113 @@ class GameSessionSerializer(serializers.ModelSerializer):
         read_only_fields = ["id", "started_at", "ended_at", "is_active", "level"]
 
 
-class AchievementSerializer(serializers.ModelSerializer):
-    is_unlocked = serializers.SerializerMethodField()
+# ─── Quiz serializers ─────────────────────────────────────────────────────────
+
+
+class AnswerSerializer(serializers.ModelSerializer):
+    """Answer without is_correct — safe to send to the client before answering."""
 
     class Meta:
-        model = Achievement
-        fields = ["id", "key", "name_uz", "description_uz", "icon", "condition_type", "is_unlocked"]
+        model = Answer
+        fields = ["id", "text_uz", "order"]
 
-    def get_is_unlocked(self, obj: Achievement) -> bool:
+
+class AnswerWithCorrectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Answer
+        fields = ["id", "text_uz", "order", "is_correct"]
+
+
+class QuestionSerializer(serializers.ModelSerializer):
+    answers = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Question
+        fields = [
+            "id",
+            "text_uz",
+            "category",
+            "difficulty",
+            "question_type",
+            "image",
+            "time_limit",
+            "source",
+            "answers",
+        ]
+
+    def get_answers(self, obj: Question) -> list:
+        answers = list(obj.answers.all())
+        random.shuffle(answers)
+        return AnswerSerializer(answers, many=True).data
+
+
+class QuizSessionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuizSession
+        fields = [
+            "id",
+            "mode",
+            "category",
+            "started_at",
+            "finished_at",
+            "score",
+            "correct_count",
+            "total_questions",
+            "max_streak",
+        ]
+
+
+class QuizSessionCreateSerializer(serializers.Serializer):
+    mode = serializers.ChoiceField(choices=QuizMode.choices)
+    category = serializers.ChoiceField(
+        choices=ActionCategory.choices, required=False, allow_null=True
+    )
+
+    def validate(self, data: dict) -> dict:
+        if data.get("mode") == "CATEGORY" and not data.get("category"):
+            raise serializers.ValidationError({"category": "Category mode requires a category."})
+        return data
+
+
+class SubmitAnswerSerializer(serializers.Serializer):
+    question_id = serializers.IntegerField()
+    answer_id = serializers.IntegerField(required=False, allow_null=True)
+    time_spent_ms = serializers.IntegerField(min_value=0, max_value=120000)
+
+
+class DailyChallengeSerializer(serializers.ModelSerializer):
+    questions = QuestionSerializer(many=True, read_only=True)
+    is_completed = serializers.SerializerMethodField()
+
+    class Meta:
+        model = DailyChallenge
+        fields = ["id", "date", "questions", "bonus_score", "is_completed"]
+
+    def get_is_completed(self, obj: DailyChallenge) -> bool:
         request = self.context.get("request")
-        if request is None or not request.user.is_authenticated:
+        if not request or not request.user.is_authenticated:
             return False
-        return PlayerAchievement.objects.filter(player=request.user, achievement=obj).exists()
+        return QuizSession.objects.filter(
+            player=request.user,
+            mode="DAILY",
+            started_at__date=obj.date,
+            finished_at__isnull=False,
+        ).exists()
+
+
+class MiniGameScoreSerializer(serializers.Serializer):
+    score = serializers.IntegerField(min_value=0)
+    correct_count = serializers.IntegerField(min_value=0)
+    total_items = serializers.IntegerField(min_value=1)
+
+
+# ─── Achievement serializers ──────────────────────────────────────────────────
+
+
+class AchievementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Achievement
+        fields = ["id", "key", "name_uz", "description_uz", "icon"]
 
 
 class PlayerAchievementSerializer(serializers.ModelSerializer):

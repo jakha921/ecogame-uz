@@ -119,4 +119,4 @@ class TestAchievementsAPI:
     def test_my_achievements_empty(self, auth_client):
         response = auth_client.get(reverse("game-my-achievements"))
         assert response.status_code == status.HTTP_200_OK
-        assert response.data["count"] == 0
+        assert len(response.data) == 0

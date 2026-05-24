@@ -139,7 +139,7 @@
 
 ## Phase 2: Backend — QuizService
 
-### [ ] 2.1 Реализовать QuizService в services.py
+### [x] 2.1 Реализовать QuizService в services.py
 
 **Что сделать:**
 - Полностью заменить `backend/apps/game/services.py` новым QuizService
@@ -395,7 +395,7 @@ class QuizService:
 
 ## Phase 3: Backend — Quiz API
 
-### [ ] 3.1 Создать сериализаторы для квиза
+### [x] 3.1 Создать сериализаторы для квиза
 
 **Что сделать:**
 - Открыть `backend/apps/game/serializers.py`
@@ -506,7 +506,7 @@ class PlayerAchievementSerializer(serializers.ModelSerializer):
 
 ---
 
-### [ ] 3.2 Создать Quiz views и обновить URL
+### [x] 3.2 Создать Quiz views и обновить URL
 
 **Что сделать:**
 - Открыть `backend/apps/game/views.py`
