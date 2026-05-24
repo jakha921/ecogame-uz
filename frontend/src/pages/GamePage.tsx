@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { ToolbarPanel } from "@/components/game/ToolbarPanel";
 import type { AchievementUnlockedPayload, ActionPerformedPayload, LevelCompletedPayload } from "@/game/events/EventBus";
 import { PhaserGame } from "@/game/PhaserGame";
 import { useGameSync } from "@/hooks/useGameSync";
@@ -135,6 +136,9 @@ export function GamePage() {
         onLevelCompleted={handleLevelCompleted}
         onAchievementUnlocked={handleAchievementUnlocked}
       />
+
+      {/* Toolbar: tool selection panel */}
+      <ToolbarPanel levelNumber={level.number} />
 
       {/* Achievement toast */}
       {unlockedAchievement && (

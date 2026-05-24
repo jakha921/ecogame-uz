@@ -17,21 +17,23 @@ import type { ToolSelectedPayload } from "../events/EventBus";
 import { getTileColor, getTileLeftColor, getTileRightColor, GROUND_TYPES } from "../data/tilesets";
 import type { GroundType, IsoMapConfig, TileState, ObjectStage } from "../data/worldTypes";
 
-// ─── Object visual data ───────────────────────────────────────────────────────
+// ─── Object visual styles per action + stage ─────────────────────────────────
+// Each entry: [stage0_color, stage1_color, stage2_color, stage3_color]
+// Rendered as a colored diamond/shape on the tile (no emoji)
 
-const OBJECT_EMOJI: Record<string, string[]> = {
-  plant_tree: ["🌱", "🌿", "🌳", "🌲"],
-  plant_flowers: ["🌱", "🌸", "🌺", "🌻"],
-  care_garden: ["🌱", "🌿", "🍀", "🌾"],
-  clean_water: ["💧", "🫧", "🌊", "✨"],
-  save_water: ["🪣", "💧", "🚿", "🌊"],
-  sort_waste: ["🗑️", "♻️", "✅", "🌿"],
-  recycle: ["🗑️", "♻️", "✅", "🌿"],
-  install_solar: ["🔧", "⚡", "☀️", "✨"],
-  save_energy: ["💡", "⚡", "☀️", "🌟"],
-  protect_animal: ["🦺", "🐾", "🦌", "🌿"],
-  bird_house: ["🏠", "🐦", "🦅", "🌿"],
-  save_fish: ["🎣", "🐟", "🐠", "🌊"],
+const OBJECT_COLORS: Record<string, number[]> = {
+  plant_tree:     [0x8bc34a, 0x4caf50, 0x2e7d32, 0x1b5e20],
+  plant_flowers:  [0xfce4ec, 0xf48fb1, 0xe91e63, 0xad1457],
+  care_garden:    [0xc8e6c9, 0x81c784, 0x43a047, 0x2e7d32],
+  clean_water:    [0xe3f2fd, 0x64b5f6, 0x1976d2, 0x0d47a1],
+  save_water:     [0xe0f7fa, 0x4dd0e1, 0x00838f, 0x006064],
+  sort_waste:     [0xfff9c4, 0xffd54f, 0xf57f17, 0xe65100],
+  recycle:        [0xdcedc8, 0xaed581, 0x558b2f, 0x33691e],
+  install_solar:  [0xfffde7, 0xffe082, 0xf9a825, 0xf57f17],
+  save_energy:    [0xfff8e1, 0xffcc02, 0xff8f00, 0xe65100],
+  protect_animal: [0xede7f6, 0xce93d8, 0x7b1fa2, 0x4a148c],
+  bird_house:     [0xfbe9e7, 0xffab91, 0xe64a19, 0xbf360c],
+  save_fish:      [0xe0f2f1, 0x80cbc4, 0x00796b, 0x004d40],
 };
 
 // ─── Scene ────────────────────────────────────────────────────────────────────
@@ -57,8 +59,8 @@ export class IsoMainScene extends Phaser.Scene {
   private simAccumMs = 0;
   private completionEmitted = false;
 
-  // Object sprite cache: "col,row" → Phaser Text (emoji label)
-  private objectSprites = new Map<string, Phaser.GameObjects.Text>();
+  // Object graphic cache: "col,row" → Graphics (colored shape on tile)
+  private objectSprites = new Map<string, Phaser.GameObjects.Graphics>();
 
   constructor() {
     super({ key: "IsoMainScene" });
@@ -103,9 +105,9 @@ export class IsoMainScene extends Phaser.Scene {
     this.input.on(Phaser.Input.Events.GAME_OUT, this.onPointerOut, this);
     this.input.on("wheel", this.onWheel, this);
 
-    // React → Phaser: tool selection
+    // React → Phaser: tool selection (empty string = deselect)
     EventBus.on(EVENTS.TOOL_SELECTED, (payload: ToolSelectedPayload) => {
-      this.selectedTool = payload.actionKey;
+      this.selectedTool = payload.actionKey || null;
     });
 
     // Initial render
@@ -351,42 +353,81 @@ export class IsoMainScene extends Phaser.Scene {
   }
 
   private redrawObjectLayer() {
-    // Remove sprites for objects that no longer exist
-    for (const [key, sprite] of this.objectSprites) {
+    // Remove graphics for tiles that no longer have objects
+    for (const [key, gfx] of this.objectSprites) {
       const [col, row] = key.split(",").map(Number);
       const tile = this.tiles[row]?.[col];
       if (!tile?.placedObject) {
-        sprite.destroy();
+        gfx.destroy();
         this.objectSprites.delete(key);
       }
     }
 
-    // Create/update sprites for all placed objects
-    for (const row of this.tiles) {
-      for (const tile of row) {
+    // Draw colored isometric shape for each placed object
+    for (const rowArr of this.tiles) {
+      for (const tile of rowArr) {
         if (!tile.placedObject) continue;
         const key = `${tile.col},${tile.row}`;
+        const colors = OBJECT_COLORS[tile.placedObject] ?? [0x66bb6a, 0x43a047, 0x2e7d32, 0x1b5e20];
+        const color = colors[tile.objectStage] ?? colors[0];
+
         const { x, y } = this.gridToScreen(tile.col, tile.row);
-        const cx = x + ISO_TILE_W / 2;
-        const cy = y + ISO_TILE_H / 2 - 8;
+        const depth = (tile.col + tile.row) * 10 + 5;
 
         if (!this.objectSprites.has(key)) {
-          const emoji =
-            (OBJECT_EMOJI[tile.placedObject]?.[tile.objectStage] ?? "🌱");
-          const text = this.add
-            .text(cx, cy, emoji, { fontSize: "18px" })
-            .setOrigin(0.5)
-            .setDepth((tile.col + tile.row) * 10 + 5);
-          this.objectSprites.set(key, text);
+          const gfx = this.add.graphics().setDepth(depth);
+          this.drawObjectShape(gfx, x, y, color, tile.objectStage);
+          this.objectSprites.set(key, gfx);
         } else {
-          const sprite = this.objectSprites.get(key)!;
-          const emoji =
-            (OBJECT_EMOJI[tile.placedObject]?.[tile.objectStage] ?? "🌱");
-          sprite.setText(emoji);
-          sprite.setPosition(cx, cy);
+          const gfx = this.objectSprites.get(key)!;
+          gfx.clear();
+          gfx.setDepth(depth);
+          this.drawObjectShape(gfx, x, y, color, tile.objectStage);
         }
       }
     }
+  }
+
+  // Object rendered as a mini isometric diamond sitting on the tile
+  private drawObjectShape(
+    gfx: Phaser.GameObjects.Graphics,
+    tileX: number,
+    tileY: number,
+    color: number,
+    stage: number,
+  ) {
+    // Scale object by stage: tiny seed → small → medium → full
+    const scales = [0.25, 0.4, 0.6, 0.85];
+    const s = scales[stage] ?? 0.25;
+
+    const hw = (ISO_TILE_W / 2) * s;
+    const hh = (ISO_TILE_H / 2) * s;
+    const cx = tileX + ISO_TILE_W / 2;
+    const cy = tileY + ISO_TILE_H / 2 - hh * 0.5;
+
+    // Filled diamond
+    gfx.fillStyle(color, 0.95);
+    gfx.fillPoints(
+      [
+        { x: cx, y: cy - hh },
+        { x: cx + hw, y: cy },
+        { x: cx, y: cy + hh },
+        { x: cx - hw, y: cy },
+      ],
+      true,
+    );
+
+    // Dark border
+    gfx.lineStyle(1, 0x000000, 0.4);
+    gfx.strokePoints(
+      [
+        { x: cx, y: cy - hh },
+        { x: cx + hw, y: cy },
+        { x: cx, y: cy + hh },
+        { x: cx - hw, y: cy },
+      ],
+      true,
+    );
   }
 
   // ─── Ecosystem simulation ─────────────────────────────────────────────────────
