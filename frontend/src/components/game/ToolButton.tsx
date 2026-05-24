@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Coins } from "lucide-react";
 
 interface ToolButtonProps {
   icon: ReactNode;
@@ -26,7 +27,9 @@ export function ToolButton({ icon, label, cost, isSelected, disabled, onClick }:
     >
       <span className="text-xl">{icon}</span>
       <span className="text-[10px] font-medium leading-tight text-center">{label}</span>
-      <span className="text-[9px] text-yellow-400 font-semibold">{cost}🪙</span>
+      <span className="text-[9px] text-yellow-400 font-semibold flex items-center gap-0.5">
+        <Coins size={9} />{cost}
+      </span>
     </button>
   );
 }

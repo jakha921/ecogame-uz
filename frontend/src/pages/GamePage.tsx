@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { ArrowLeft, CheckCircle, Star, Trophy } from "lucide-react";
 import { ToolbarPanel } from "@/components/game/ToolbarPanel";
 import type { AchievementUnlockedPayload, ActionPerformedPayload, LevelCompletedPayload } from "@/game/events/EventBus";
 import { PhaserGame } from "@/game/PhaserGame";
@@ -70,14 +71,18 @@ export function GamePage() {
   if (levelComplete) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6">
-        <div className="text-6xl">🎉</div>
+        <CheckCircle size={72} className="text-green-500" />
         <h1 className="text-3xl font-bold text-green-700">{t("game.level_complete")}</h1>
         <p className="text-gray-600">{level.name_uz} muvaffaqiyatli tugallandi!</p>
-        <p className="text-2xl font-bold text-green-600">Ball: {score}</p>
+        <div className="flex items-center gap-2 text-2xl font-bold text-green-600">
+          <Star size={24} className="text-yellow-500" />
+          {score} ball
+        </div>
         <button
           onClick={() => navigate("/")}
-          className="bg-green-600 hover:bg-green-500 text-white font-semibold px-8 py-3 rounded-xl transition-colors"
+          className="bg-green-600 hover:bg-green-500 text-white font-semibold px-8 py-3 rounded-xl transition-colors flex items-center gap-2"
         >
+          <ArrowLeft size={18} />
           Bosh sahifaga qaytish
         </button>
       </div>
@@ -103,9 +108,9 @@ export function GamePage() {
         <h1 className="text-xl font-bold text-green-700">{level.name_uz}</h1>
         <button
           onClick={() => navigate("/")}
-          className="text-sm text-gray-500 hover:text-gray-700"
+          className="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1"
         >
-          ← Chiqish
+          <ArrowLeft size={14} /> Chiqish
         </button>
       </div>
 
@@ -142,8 +147,9 @@ export function GamePage() {
 
       {/* Achievement toast */}
       {unlockedAchievement && (
-        <div className="fixed bottom-6 right-6 bg-yellow-400 text-gray-900 rounded-xl px-5 py-3 shadow-lg font-semibold animate-bounce">
-          🏆 Yutuq: {unlockedAchievement}
+        <div className="fixed bottom-6 right-6 bg-yellow-400 text-gray-900 rounded-xl px-5 py-3 shadow-lg font-semibold animate-bounce flex items-center gap-2">
+          <Trophy size={18} />
+          Yutuq: {unlockedAchievement}
         </div>
       )}
     </div>

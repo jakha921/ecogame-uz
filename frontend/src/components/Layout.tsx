@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Leaf } from "lucide-react";
 import { useAuthStore } from "@/stores/authStore";
 import { t } from "@/i18n";
 
@@ -18,7 +19,8 @@ export function Layout() {
       <header className="bg-green-700 text-white shadow-md">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link to="/" className="text-xl font-bold flex items-center gap-2">
-            🌿 {t("app_name")}
+            <Leaf size={20} className="text-green-200" />
+            {t("app_name")}
           </Link>
 
           {/* Desktop nav */}

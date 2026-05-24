@@ -1,20 +1,35 @@
 import { useEffect, useState } from "react";
+import {
+  Bird,
+  Crown,
+  Droplets,
+  Home,
+  Leaf,
+  Recycle,
+  Star,
+  SunMedium,
+  TreeDeciduous,
+  Trophy,
+  UserCircle,
+  Wind,
+} from "lucide-react";
 import { gameApi } from "@/api/game";
 import type { PlayerAchievement } from "@/api/types";
 import { useAuthStore } from "@/stores/authStore";
 import { t } from "@/i18n";
 
-const ICON_EMOJI: Record<string, string> = {
-  tree: "🌳",
-  garden: "🌷",
-  water: "💧",
-  recycle: "♻️",
-  star: "⭐",
-  home: "🏠",
-  air: "💨",
-  leaf: "🍃",
-  solar: "☀️",
-  crown: "👑",
+const ICON_MAP: Record<string, React.ReactNode> = {
+  tree: <TreeDeciduous size={28} className="text-green-600" />,
+  garden: <Leaf size={28} className="text-green-500" />,
+  water: <Droplets size={28} className="text-blue-500" />,
+  recycle: <Recycle size={28} className="text-yellow-600" />,
+  star: <Star size={28} className="text-yellow-500" />,
+  home: <Home size={28} className="text-orange-500" />,
+  air: <Wind size={28} className="text-cyan-500" />,
+  leaf: <Leaf size={28} className="text-green-400" />,
+  solar: <SunMedium size={28} className="text-orange-400" />,
+  crown: <Crown size={28} className="text-yellow-600" />,
+  bird: <Bird size={28} className="text-purple-500" />,
 };
 
 export function ProfilePage() {
@@ -43,8 +58,8 @@ export function ProfilePage() {
       {/* Player card */}
       <div className="bg-white rounded-2xl shadow-sm p-6 flex flex-col gap-4">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center text-3xl">
-            🌿
+          <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
+            <UserCircle size={40} className="text-green-600" />
           </div>
           <div className="flex-1">
             {editing ? (
@@ -99,7 +114,7 @@ export function ProfilePage() {
               key={pa.id}
               className="bg-white rounded-xl p-4 border border-green-100 flex flex-col items-center text-center gap-2"
             >
-              <span className="text-3xl">{ICON_EMOJI[pa.achievement.icon] ?? "🏆"}</span>
+              <span>{ICON_MAP[pa.achievement.icon] ?? <Trophy size={28} className="text-yellow-500" />}</span>
               <p className="text-sm font-semibold text-gray-700">{pa.achievement.name_uz}</p>
               <p className="text-xs text-gray-400">{pa.achievement.description_uz}</p>
             </div>

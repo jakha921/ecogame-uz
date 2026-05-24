@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   Bird,
+  Coins,
   Droplets,
   Fish,
   Flower2,
@@ -95,7 +96,9 @@ export function ToolbarPanel({ levelNumber }: ToolbarPanelProps) {
     <div className="flex flex-col gap-2 bg-gray-900/95 border border-gray-700 rounded-2xl p-3 shadow-2xl">
       {/* Resources bar */}
       <div className="flex items-center gap-3">
-        <span className="text-yellow-400 font-semibold text-sm">🪙 {resources}</span>
+        <span className="text-yellow-400 font-semibold text-sm flex items-center gap-1">
+          <Coins size={14} /> {resources}
+        </span>
         <div className="flex-1 bg-gray-700 rounded-full h-2">
           <div
             className="bg-yellow-400 h-2 rounded-full transition-all duration-300"

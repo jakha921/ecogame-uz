@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Bird, BookOpen, Droplets, Recycle, SunMedium, TreeDeciduous } from "lucide-react";
 import { educationApi } from "@/api/education";
 import type { ActionCategory, EducationalContent } from "@/api/types";
 import { t } from "@/i18n";
@@ -13,12 +14,12 @@ const CATEGORIES: { key: ActionCategory | "ALL"; label: string }[] = [
   { key: "FAUNA", label: "Hayvonlar" },
 ];
 
-const CATEGORY_EMOJI: Record<string, string> = {
-  FLORA: "🌳",
-  WATER: "💧",
-  WASTE: "♻️",
-  ENERGY: "☀️",
-  FAUNA: "🦁",
+const CATEGORY_ICON: Record<string, React.ReactNode> = {
+  FLORA: <TreeDeciduous size={18} className="text-green-600" />,
+  WATER: <Droplets size={18} className="text-blue-600" />,
+  WASTE: <Recycle size={18} className="text-yellow-600" />,
+  ENERGY: <SunMedium size={18} className="text-orange-500" />,
+  FAUNA: <Bird size={18} className="text-purple-600" />,
 };
 
 export function EducationPage() {
@@ -50,7 +51,7 @@ export function EducationPage() {
                 : "bg-white border border-gray-200 text-gray-600 hover:border-green-400"
             }`}
           >
-            {key !== "ALL" && CATEGORY_EMOJI[key]} {label}
+            {key !== "ALL" && <span className="inline-flex">{CATEGORY_ICON[key]}</span>} {label}
           </button>
         ))}
       </div>
@@ -65,7 +66,7 @@ export function EducationPage() {
               to={`/education/${article.id}`}
               className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 hover:shadow-md hover:border-green-200 transition-all flex flex-col gap-2"
             >
-              <div className="text-2xl">{CATEGORY_EMOJI[article.category] ?? "📖"}</div>
+              <div>{CATEGORY_ICON[article.category] ?? <BookOpen size={20} className="text-gray-500" />}</div>
               <h2 className="font-bold text-gray-800">{article.title_uz}</h2>
               <p className="text-sm text-gray-500 line-clamp-3">
                 {article.body_uz.slice(0, 120)}...
