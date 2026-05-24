@@ -1,0 +1,22 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "🌿 EcoGame" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e7]:
+        - link "Bosh sahifa" [ref=e8] [cursor=pointer]:
+          - /url: /
+        - link "Yetakchilar" [ref=e9] [cursor=pointer]:
+          - /url: /leaderboard
+        - link "Ta'lim" [ref=e10] [cursor=pointer]:
+          - /url: /education
+        - link "Kirish" [ref=e11] [cursor=pointer]:
+          - /url: /login
+        - link "Ro'yxatdan o'tish" [ref=e12] [cursor=pointer]:
+          - /url: /register
+  - main [ref=e13]:
+    - generic [ref=e14]:
+      - generic [ref=e15]:
+        - heading "🌿 EcoGame" [level=1] [ref=e16]
+        - paragraph [ref=e17]: Ekologiyani o'yin orqali o'rgan va muhofaza qil!
+      - heading "Darajalar" [level=2] [ref=e19]

@@ -1,9 +1,9 @@
-# EcoGame — Экологическая игра-симулятор экосистемы (на узбекском языке)
+# EcoGame Quiz — Дипломный проект
 
 > **Автор:** Рузибаев Жахонгир Дилмуратович (036-21 SMMr)
-> **Тема:** Разработка экологической игры по охране окружающей среды
+> **Тема:** Разработка экологической игры по охране окружающей среды (на узбекском языке)
 > **Научные руководители:** Узакова М.А., Абидова Ш.Б.
-> **Стек:** Django REST + React 19 + Phaser.js + Docker + Coolify
+> **Стек:** Django REST + React 19 + Docker + Coolify
 > **Домен:** https://ecogame.fullfocus.dev
 >
 > **Команда запуска ralph-loop:**
@@ -13,1964 +13,1503 @@
 
 ---
 
-## Phase 1: Инициализация проекта и конфигурация
+## Контекст пивота
 
-### [x] 1.1 Инициализировать Git-репозиторий и базовые файлы
+Проект переключается с изометрической sandbox-игры (Phaser.js) на **экологическую викторину** (quiz).
 
-**Что сделать:**
-- Выполнить `git init` в `/Users/jakha/MyFiles/University/Diploma/`
-- Создать `.gitignore` с правилами для Python, Node.js, Docker, IDE, секретов:
-  - Python: `__pycache__/`, `*.pyc`, `.venv/`, `*.egg-info/`, `.pytest_cache/`, `.ruff_cache/`, `htmlcov/`, `.coverage`
-  - Node: `node_modules/`, `dist/`, `.vite/`, `*.local`
-  - Docker: `.env`, `.env.local`, `.env.*.local`
-  - IDE: `.vscode/`, `.idea/`, `*.swp`, `.DS_Store`
-  - DB: `*.sqlite3`, `db.sqlite3`
-  - Media: `backend/media/`, `backend/static_collected/`
-- Создать `README.md` с описанием проекта на русском:
-  - Название, описание, стек технологий
-  - Инструкции запуска dev: `docker compose -f docker-compose.dev.yml up`
-  - Инструкции запуска prod: `docker compose up`
-  - URL: https://ecogame.fullfocus.dev
-- Создать `.env.example`:
-  ```
-  # Django
-  DJANGO_SECRET_KEY=change-me-in-production-use-50-char-random-string
-  DJANGO_DEBUG=True
-  DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
-  DATABASE_URL=sqlite:///db.sqlite3
+**Что переиспользуется (~60% кодбазы):**
+- `accounts` app — Player, JWT, anonymous login, claim account
+- `leaderboard` app — LeaderboardEntry, signals, top-50 API
+- `education` app — EducationalContent (5 статей), EcoFact (15 фактов)
+- Admin panel (django-unfold), Docker/deploy, Frontend layout, auth pages
 
-  # PostgreSQL (production only)
-  POSTGRES_DB=ecogame
-  POSTGRES_USER=ecogame
-  POSTGRES_PASSWORD=change-me-strong-password
-
-  # CORS
-  CORS_ALLOWED_ORIGINS=http://localhost:3000
-
-  # Frontend
-  VITE_API_URL=http://localhost:8000/api/v1
-  ```
-- Создать структуру каталогов командой mkdir:
-  - `backend/`
-  - `frontend/`
-  - `nginx/`
-  - `docs/vkr/`
-  - `docs/presentation/`
-
-**Проверка:** `git status` показывает файлы, `ls -la` показывает все директории.
-**Коммит:** `chore: инициализировать репозиторий и базовые конфигурации`
+**Что убираем:** Phaser.js, GamePage, ToolbarPanel, frontend/src/game/
 
 ---
 
-### [x] 1.2 Настроить Django-проект (backend)
+## Phase 1: Backend — Quiz модели
+
+### [x] 1.1 Добавить новые модели Quiz в game/models.py
 
 **Что сделать:**
-- В директории `backend/` инициализировать uv-проект:
-  ```bash
-  cd backend && uv init --no-readme
-  ```
-- Настроить `pyproject.toml` — добавить в секцию `[project].dependencies`:
-  - `django>=5.1`
-  - `djangorestframework>=3.15`
-  - `django-unfold>=0.40`
-  - `djangorestframework-simplejwt>=5.3`
-  - `django-cors-headers>=4.4`
-  - `django-environ>=0.11`
-  - `gunicorn>=22.0`
-  - `psycopg2-binary>=2.9`
-  - `Pillow>=10.4`
-  - В `[tool.uv.dev-dependencies]`: `pytest>=8`, `pytest-django>=4.8`, `ruff>=0.6`
-- Выполнить `uv sync`
-- Создать Django-проект: `uv run django-admin startproject config .`
-- Создать директорию `config/settings/` и переместить `settings.py` → `config/settings/base.py`
-- Создать `config/settings/__init__.py` (пустой)
-- Создать `config/settings/dev.py`:
+- Открыть `backend/apps/game/models.py`
+- СОХРАНИТЬ существующие: `ActionCategory`, `Level`, `GameSession`, `GameProgress`, `Achievement`, `PlayerAchievement`, `ConditionType`
+- УДАЛИТЬ классы: `EcoAction`, `ActionLog` (вместе с их __str__ и Meta)
+- ДОБАВИТЬ новые TextChoices:
   ```python
-  from .base import *
-  DEBUG = True
-  DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / "db.sqlite3"}}
-  CORS_ALLOW_ALL_ORIGINS = True
-  ```
-- Создать `config/settings/prod.py`:
-  ```python
-  import environ
-  from .base import *
-  env = environ.Env()
-  DEBUG = False
-  SECRET_KEY = env("DJANGO_SECRET_KEY")
-  ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS")
-  DATABASES = {"default": env.db("DATABASE_URL")}
-  CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS")
-  STATIC_ROOT = BASE_DIR / "static_collected"
-  SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-  ```
-- В `config/settings/base.py` добавить:
-  - `INSTALLED_APPS`: `rest_framework`, `rest_framework_simplejwt`, `corsheaders`, `unfold` (перед `django.contrib.admin`)
-  - `MIDDLEWARE`: `corsheaders.middleware.CorsMiddleware` (первым)
-  - `REST_FRAMEWORK` конфиг:
-    ```python
-    REST_FRAMEWORK = {
-        "DEFAULT_AUTHENTICATION_CLASSES": ["rest_framework_simplejwt.authentication.JWTAuthentication"],
-        "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
-        "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-        "PAGE_SIZE": 20,
-    }
-    ```
-  - `SIMPLE_JWT`: `ACCESS_TOKEN_LIFETIME = timedelta(hours=1)`, `REFRESH_TOKEN_LIFETIME = timedelta(days=7)`
-  - `STATIC_URL = "/static/"`, `MEDIA_URL = "/media/"`, `MEDIA_ROOT = BASE_DIR / "media"`
-- Обновить `manage.py`: `os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.dev")`
-- Создать `config/urls.py` (заготовка с admin и api/v1/ prefix)
-- Создать `pytest.ini` в `backend/`:
-  ```ini
-  [pytest]
-  DJANGO_SETTINGS_MODULE = config.settings.dev
-  python_files = test_*.py tests.py
-  ```
+  class QuestionType(models.TextChoices):
+      MCQ = "MCQ", "Ko'p tanlovli"
+      TRUE_FALSE = "TRUE_FALSE", "To'g'ri/Noto'g'ri"
+      SCENARIO = "SCENARIO", "Senariy"
 
-**Проверка:** `cd backend && uv run python manage.py check` — без ошибок.
-**Коммит:** `chore: настроить Django-проект с split settings`
+  class QuizMode(models.TextChoices):
+      QUICK = "QUICK", "Tezkor o'yin"
+      CATEGORY = "CATEGORY", "Kategoriya bo'yicha"
+      DAILY = "DAILY", "Kunlik vazifa"
+      MARATHON = "MARATHON", "Marafon"
+  ```
+- РАСШИРИТЬ `ConditionType`: добавить `QUIZ_COUNT = "QUIZ_COUNT", "Количество викторин"`, `STREAK = "STREAK", "Серия ответов"`, `DAILY_STREAK = "DAILY_STREAK", "Ежедневная серия"`, `CATEGORY_MASTER = "CATEGORY_MASTER", "Мастер категории"`
+- ДОБАВИТЬ модели (все с verbose_name, Meta, __str__):
+  ```
+  Question: text_uz(500), category(ActionCategory), difficulty(1-3, validators),
+            question_type(QuestionType), explanation_uz, image(ImageField, optional),
+            time_limit(30), source(200, blank), related_article(FK EducationalContent, null, blank),
+            is_active(True), created_at(auto_now_add)
+
+  Answer: question(FK CASCADE, related_name="answers"), text_uz(300), is_correct, order
+          Meta: ordering = ["order"]
+
+  QuizSession: player(FK AUTH_USER, CASCADE, related_name="quiz_sessions"), mode(QuizMode),
+               category(ActionCategory, null, blank), started_at(auto_now_add),
+               finished_at(null, blank), score(0), correct_count(0), total_questions(0),
+               max_streak(0), current_streak(0)
+               Meta: ordering = ["-started_at"]
+
+  QuizAnswer: session(FK QuizSession, CASCADE, related_name="given_answers"),
+              question(FK Question, CASCADE), selected_answer(FK Answer, SET_NULL, null, blank),
+              is_correct, time_spent_ms, answered_at(auto_now_add)
+              Meta: unique_together = ("session", "question")
+
+  DailyChallenge: date(DateField, unique), questions(M2M Question, related_name="daily_challenges"),
+                  bonus_score(50)
+
+  MiniGameScore: player(FK AUTH_USER, CASCADE, related_name="mini_game_scores"),
+                 game_type("SORTING", default), score, correct_count, total_items,
+                 played_at(auto_now_add)
+  ```
+- Добавить импорт: `from django.core.validators import MinValueValidator, MaxValueValidator`
+
+**Проверка:** `cd backend && uv run python manage.py check`
+**Коммит:** `feat: Phase 1 — добавить Quiz модели (Question, Answer, QuizSession, QuizAnswer, DailyChallenge)`
 
 ---
 
-### [x] 1.3 Настроить React-проект (frontend)
+### [x] 1.2 Создать миграции и обновить admin.py
 
 **Что сделать:**
-- В директории `frontend/` создать проект:
-  ```bash
-  cd frontend && npm create vite@latest . -- --template react-ts
-  ```
-- Установить зависимости одной командой:
-  ```bash
-  npm install phaser@^3.80 zustand@^5 react-router-dom@^7 axios@^1.7 zod@^3.23 react-hook-form@^7.53 @hookform/resolvers@^3.9 react-hot-toast@^2.4 clsx@^2.1
-  npm install -D tailwindcss@^4 @tailwindcss/vite prettier @types/node
-  ```
-- Настроить `tsconfig.json`:
-  - `"strict": true`
-  - `"baseUrl": "."`, `"paths": {"@/*": ["src/*"]}`
-  - `"noUnusedLocals": true`, `"noUnusedParameters": true`
-- Настроить `vite.config.ts`:
-  ```typescript
-  import { defineConfig } from "vite";
-  import react from "@vitejs/plugin-react";
-  import tailwindcss from "@tailwindcss/vite";
-  import path from "path";
+- Запустить `cd backend && uv run python manage.py makemigrations game --name quiz_models`
+- Запустить `uv run python manage.py migrate`
+- Открыть `backend/apps/game/admin.py`
+- УДАЛИТЬ регистрации: EcoAction, ActionLog (если есть)
+- ДОБАВИТЬ:
+  ```python
+  from unfold.admin import ModelAdmin, TabularInline
+  from .models import (Question, Answer, QuizSession, QuizAnswer,
+                       DailyChallenge, MiniGameScore, Achievement, PlayerAchievement)
 
-  export default defineConfig({
-    plugins: [react(), tailwindcss()],
-    resolve: { alias: { "@": path.resolve(__dirname, "./src") } },
-    server: {
-      proxy: {
-        "/api": { target: "http://localhost:8000", changeOrigin: true },
-        "/admin": { target: "http://localhost:8000", changeOrigin: true },
-      },
-    },
-  });
-  ```
-- Создать `.prettierrc`:
-  ```json
-  { "semi": true, "singleQuote": false, "tabWidth": 2, "trailingComma": "es5" }
-  ```
-- Создать пустые директории в `src/`:
-  - `api/`, `stores/`, `pages/`, `components/`, `game/events/`, `game/scenes/`, `game/objects/`, `game/systems/`, `game/data/`, `hooks/`, `i18n/`, `styles/`
-- Обновить `src/main.tsx` с базовым Tailwind импортом
-- Обновить `src/styles/globals.css` с Tailwind директивами
+  class AnswerInline(TabularInline):
+      model = Answer
+      extra = 4
+      fields = ["text_uz", "is_correct", "order"]
 
-**Проверка:** `cd frontend && npm run build` — успешная сборка без TypeScript ошибок.
-**Коммит:** `chore: настроить React + TypeScript + Vite + Phaser проект`
+  @admin.register(Question)
+  class QuestionAdmin(ModelAdmin):
+      list_display = ["text_uz_short", "category", "difficulty", "question_type", "is_active", "created_at"]
+      list_filter = ["category", "difficulty", "question_type", "is_active"]
+      search_fields = ["text_uz", "explanation_uz"]
+      list_editable = ["is_active"]
+      inlines = [AnswerInline]
+      def text_uz_short(self, obj): return obj.text_uz[:60] + "..." if len(obj.text_uz) > 60 else obj.text_uz
+      text_uz_short.short_description = "Savol"
+
+  @admin.register(QuizSession)
+  class QuizSessionAdmin(ModelAdmin):
+      list_display = ["player", "mode", "category", "score", "correct_count", "total_questions", "started_at", "finished_at"]
+      list_filter = ["mode", "category"]
+      date_hierarchy = "started_at"
+      readonly_fields = ["player", "started_at"]
+
+  @admin.register(DailyChallenge)
+  class DailyChallengeAdmin(ModelAdmin):
+      list_display = ["date", "bonus_score", "question_count"]
+      filter_horizontal = ["questions"]
+      def question_count(self, obj): return obj.questions.count()
+      question_count.short_description = "Savollar soni"
+
+  @admin.register(MiniGameScore)
+  class MiniGameScoreAdmin(ModelAdmin):
+      list_display = ["player", "game_type", "score", "correct_count", "total_items", "played_at"]
+  ```
+- Сохранить регистрации Achievement и PlayerAchievement если были
+
+**Проверка:** `uv run python manage.py check`, открыть `http://localhost:8000/admin/` — видны новые модели
+**Коммит:** `feat: Phase 1 — миграции и admin для Quiz моделей`
 
 ---
 
-### [x] 1.4 Создать Docker-конфигурацию для разработки
+## Phase 2: Backend — QuizService
+
+### [ ] 2.1 Реализовать QuizService в services.py
 
 **Что сделать:**
-- Создать `backend/Dockerfile`:
-  ```dockerfile
-  FROM python:3.12-slim
-  ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
-  WORKDIR /app
-  COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
-  COPY pyproject.toml uv.lock* ./
-  RUN uv sync --frozen
-  COPY . .
-  EXPOSE 8000
-  CMD ["uv", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
-  ```
-- Создать `frontend/Dockerfile`:
-  ```dockerfile
-  FROM node:20-alpine
-  WORKDIR /app
-  COPY package.json package-lock.json* ./
-  RUN npm ci
-  COPY . .
-  EXPOSE 3000
-  CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "3000"]
-  ```
-- Создать `docker-compose.dev.yml`:
-  ```yaml
-  services:
-    backend:
-      build: ./backend
-      volumes:
-        - ./backend:/app
-        - /app/.venv
-      ports:
-        - "8000:8000"
-      env_file: .env
-      environment:
-        - DJANGO_SETTINGS_MODULE=config.settings.dev
-
-    frontend:
-      build: ./frontend
-      volumes:
-        - ./frontend:/app
-        - /app/node_modules
-      ports:
-        - "3000:3000"
-      env_file: .env
-      depends_on:
-        - backend
-  ```
-- Создать `.env` из `.env.example` (для локальной разработки, НЕ коммитить):
-  - Скопировать `.env.example` → `.env`, заменить значения на рабочие
-- Создать `CLAUDE.md` в корне проекта:
-  ```markdown
-  # EcoGame — Project-specific Claude Instructions
-
-  ## Команды проверки
-  - Backend: `cd backend && uv run python manage.py check`
-  - Backend tests: `cd backend && uv run pytest -v`
-  - Backend lint: `cd backend && uv run ruff check --fix .`
-  - Frontend: `cd frontend && npm run build`
-  - Frontend lint: `cd frontend && npm run lint`
-  - Docker dev: `docker compose -f docker-compose.dev.yml up --build`
-
-  ## Контент
-  - ВСЕ пользовательские тексты в игре — на узбекском языке (латиница)
-  - Поля с узбекским контентом именуются с суффиксом `_uz`
-  - Текст ВКР — на русском языке
-
-  ## Структура
-  - Backend: `backend/apps/` — Django приложения
-  - Frontend: `frontend/src/` — React + Phaser код
-  - Docs: `docs/vkr/` — текст диплома, `docs/presentation/` — презентация
-  ```
-
-**Проверка:** `docker compose -f docker-compose.dev.yml config` — валидная конфигурация (нет ошибок).
-**Коммит:** `chore: добавить Docker конфигурацию для разработки`
-
----
-
-## Phase 2: Модели базы данных и админ-панель
-
-### [x] 2.1 Создать приложение accounts с моделью Player
-
-**Что сделать:**
-- Создать директорию `backend/apps/` и файл `backend/apps/__init__.py`
-- Создать приложение: `cd backend && uv run python manage.py startapp accounts apps/accounts`
-- Создать `apps/accounts/models.py`:
-  ```python
-  from django.contrib.auth.models import AbstractUser
-  from django.db import models
-
-  class Player(AbstractUser):
-      """Расширенная модель игрока с игровыми данными."""
-      nickname = models.CharField(max_length=50, unique=True, verbose_name="Ник")
-      avatar = models.CharField(max_length=50, default="default", verbose_name="Аватар")
-      total_score = models.PositiveIntegerField(default=0, verbose_name="Общий счёт")
-
-      class Meta:
-          verbose_name = "Игрок"
-          verbose_name_plural = "Игроки"
-          ordering = ["-total_score"]
-
-      def __str__(self) -> str:
-          return self.nickname or self.username
-  ```
-- В `config/settings/base.py` добавить:
-  - `AUTH_USER_MODEL = "accounts.Player"`
-  - `"apps.accounts"` в INSTALLED_APPS
-  - В UNFOLD config добавить `"django.contrib.auth"` переопределение
-- В `apps/accounts/apps.py` изменить `name = "apps.accounts"`
-- Создать `apps/accounts/admin.py`:
-  ```python
-  from unfold.admin import ModelAdmin
-  from django.contrib import admin
-  from .models import Player
-
-  @admin.register(Player)
-  class PlayerAdmin(ModelAdmin):
-      list_display = ["username", "nickname", "email", "total_score", "date_joined", "is_active"]
-      list_filter = ["is_active", "date_joined"]
-      search_fields = ["username", "nickname", "email"]
-      ordering = ["-total_score"]
-  ```
-- Создать миграции: `uv run python manage.py makemigrations accounts`
-- Применить: `uv run python manage.py migrate`
-
-**Проверка:** `uv run python manage.py check` без ошибок, миграция применена.
-**Коммит:** `feat: добавить модель Player (кастомный пользователь)`
-
----
-
-### [x] 2.2 Создать модели игровой логики (Level, EcoAction, GameSession, GameProgress, ActionLog)
-
-**Что сделать:**
-- Создать приложение: `uv run python manage.py startapp game apps/game`
-- В `apps/game/apps.py` — `name = "apps.game"`
-- Добавить `"apps.game"` в INSTALLED_APPS
-- Создать `apps/game/models.py` со следующими моделями (все с type hints, verbose_name, ordering, __str__):
-
-  **Level:**
-  ```python
-  class Level(models.Model):
-      number = models.PositiveSmallIntegerField(unique=True, verbose_name="Номер")
-      name_uz = models.CharField(max_length=100, verbose_name="Название (уз)")
-      description_uz = models.TextField(verbose_name="Описание (уз)")
-      required_score = models.PositiveIntegerField(default=0, verbose_name="Очков для разблокировки")
-      map_config = models.JSONField(default=dict, verbose_name="Конфигурация карты")
-      ecosystem_initial = models.JSONField(default=dict, verbose_name="Начальные индикаторы")
-      # ecosystem_initial пример: {"air": 30, "water": 25, "soil": 20, "biodiversity": 15}
-
-      class Meta:
-          verbose_name = "Уровень"
-          verbose_name_plural = "Уровни"
-          ordering = ["number"]
-
-      def __str__(self) -> str:
-          return f"Level {self.number}: {self.name_uz}"
-  ```
-
-  **EcoAction:**
-  ```python
-  class ActionCategory(models.TextChoices):
-      FLORA = "FLORA", "Флора"
-      WATER = "WATER", "Вода"
-      WASTE = "WASTE", "Отходы"
-      ENERGY = "ENERGY", "Энергия"
-      FAUNA = "FAUNA", "Фауна"
-
-  class EcoAction(models.Model):
-      key = models.CharField(max_length=50, unique=True)
-      name_uz = models.CharField(max_length=100)
-      description_uz = models.TextField()
-      category = models.CharField(max_length=10, choices=ActionCategory.choices)
-      score_value = models.PositiveIntegerField(default=10)
-      air_impact = models.FloatField(default=0.0)
-      water_impact = models.FloatField(default=0.0)
-      soil_impact = models.FloatField(default=0.0)
-      biodiversity_impact = models.FloatField(default=0.0)
-      cooldown_seconds = models.PositiveIntegerField(default=5)
-      unlock_level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name="actions")
-      sprite_key = models.CharField(max_length=50, default="default")
-      # ... Meta, __str__
-  ```
-
-  **GameSession:**
-  ```python
-  class GameSession(models.Model):
-      player = models.ForeignKey("accounts.Player", on_delete=models.CASCADE, related_name="sessions")
-      level = models.ForeignKey(Level, on_delete=models.CASCADE)
-      started_at = models.DateTimeField(auto_now_add=True)
-      ended_at = models.DateTimeField(null=True, blank=True)
-      is_active = models.BooleanField(default=True)
-      # Meta, __str__
-  ```
-
-  **GameProgress:**
-  ```python
-  class GameProgress(models.Model):
-      player = models.ForeignKey("accounts.Player", on_delete=models.CASCADE, related_name="progress")
-      level = models.ForeignKey(Level, on_delete=models.CASCADE)
-      score = models.PositiveIntegerField(default=0)
-      air_quality = models.FloatField(default=0.0)
-      water_purity = models.FloatField(default=0.0)
-      soil_health = models.FloatField(default=0.0)
-      biodiversity = models.FloatField(default=0.0)
-      actions_performed = models.JSONField(default=dict)
-      completed = models.BooleanField(default=False)
-      completed_at = models.DateTimeField(null=True, blank=True)
-      updated_at = models.DateTimeField(auto_now=True)
-
-      class Meta:
-          unique_together = ("player", "level")
-          # ...
-  ```
-
-  **ActionLog:**
-  ```python
-  class ActionLog(models.Model):
-      session = models.ForeignKey(GameSession, on_delete=models.CASCADE, related_name="action_logs")
-      action = models.ForeignKey(EcoAction, on_delete=models.CASCADE)
-      performed_at = models.DateTimeField(auto_now_add=True)
-      position_x = models.FloatField(default=0)
-      position_y = models.FloatField(default=0)
-      result_delta = models.JSONField(default=dict)
-      # Meta, __str__
-  ```
-
-- Создать миграции и применить
-
-**Проверка:** `uv run python manage.py makemigrations game && uv run python manage.py migrate && uv run python manage.py check`
-**Коммит:** `feat: добавить модели Level, EcoAction, GameSession, GameProgress, ActionLog`
-
----
-
-### [x] 2.3 Создать модели Achievement, Education, Leaderboard
-
-**Что сделать:**
-- В `apps/game/models.py` добавить:
-  ```python
-  class ConditionType(models.TextChoices):
-      SCORE = "SCORE", "Очки"
-      ACTION_COUNT = "ACTION_COUNT", "Количество действий"
-      LEVEL_COMPLETE = "LEVEL_COMPLETE", "Завершение уровня"
-      INDICATOR = "INDICATOR", "Индикатор"
-
-  class Achievement(models.Model):
-      key = models.CharField(max_length=50, unique=True)
-      name_uz = models.CharField(max_length=100)
-      description_uz = models.TextField()
-      icon = models.CharField(max_length=50, default="star")
-      condition_type = models.CharField(max_length=20, choices=ConditionType.choices)
-      condition_value = models.JSONField(default=dict)
-      # condition_value примеры:
-      # ACTION_COUNT: {"action_key": "plant_tree", "count": 10}
-      # SCORE: {"min_score": 1000}
-      # LEVEL_COMPLETE: {"level_number": 1}
-      # INDICATOR: {"indicator": "air", "min_value": 80}
-
-  class PlayerAchievement(models.Model):
-      player = models.ForeignKey("accounts.Player", on_delete=models.CASCADE, related_name="achievements")
-      achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
-      unlocked_at = models.DateTimeField(auto_now_add=True)
-
-      class Meta:
-          unique_together = ("player", "achievement")
-  ```
-
-- Создать приложение education: `uv run python manage.py startapp education apps/education`
-- В `apps/education/models.py`:
-  ```python
-  class EducationalContent(models.Model):
-      title_uz = models.CharField(max_length=200)
-      body_uz = models.TextField()
-      category = models.CharField(max_length=10, choices=ActionCategory.choices)
-      image = models.ImageField(upload_to="education/", blank=True)
-      order = models.PositiveSmallIntegerField(default=0)
-      is_published = models.BooleanField(default=True)
-      created_at = models.DateTimeField(auto_now_add=True)
-      # Meta: ordering = ["order"], __str__
-
-  class EcoFact(models.Model):
-      text_uz = models.CharField(max_length=300)
-      source = models.CharField(max_length=200, blank=True)
-      category = models.CharField(max_length=10, choices=ActionCategory.choices)
-      # __str__
-  ```
-  - Импортировать `ActionCategory` из `apps.game.models`
-
-- Создать приложение leaderboard: `uv run python manage.py startapp leaderboard apps/leaderboard`
-- В `apps/leaderboard/models.py`:
-  ```python
-  class LeaderboardEntry(models.Model):
-      player = models.OneToOneField("accounts.Player", on_delete=models.CASCADE, related_name="leaderboard_entry")
-      total_score = models.PositiveIntegerField(default=0)
-      levels_completed = models.PositiveSmallIntegerField(default=0)
-      achievements_count = models.PositiveSmallIntegerField(default=0)
-      rank = models.PositiveIntegerField(default=0, db_index=True)
-      updated_at = models.DateTimeField(auto_now=True)
-      # Meta: ordering = ["rank"], __str__
-  ```
-
-- Добавить все три новых приложения в INSTALLED_APPS
-- Создать и применить миграции
-
-**Проверка:** `uv run python manage.py makemigrations && uv run python manage.py migrate && uv run python manage.py check`
-**Коммит:** `feat: добавить модели Achievement, EducationalContent, EcoFact, LeaderboardEntry`
-
----
-
-### [x] 2.4 Настроить Unfold Admin для всех моделей
-
-**Что сделать:**
-- В `config/settings/base.py` настроить Unfold:
-  ```python
-  UNFOLD = {
-      "SITE_TITLE": "EcoGame Admin",
-      "SITE_HEADER": "EcoGame — Boshqaruv paneli",
-      "SITE_URL": "/",
-      "COLORS": {
-          "primary": {"50": "240 253 244", "500": "34 197 94", "900": "20 83 45"},
-      },
-  }
-  ```
-- Создать `apps/game/admin.py` с регистрацией Level, EcoAction, GameSession, GameProgress, ActionLog, Achievement, PlayerAchievement через `unfold.admin.ModelAdmin`:
-  - Level: list_display=[number, name_uz, required_score], list_filter=[number]
-  - EcoAction: list_display=[key, name_uz, category, score_value], list_filter=[category]
-  - GameProgress: list_display=[player, level, score, completed], list_filter=[completed]
-  - Achievement: list_display=[key, name_uz, condition_type]
-- Создать `apps/education/admin.py`:
-  - EducationalContent: list_display=[title_uz, category, is_published, order], list_editable=[order, is_published]
-  - EcoFact: list_display=[text_uz, category]
-- Создать `apps/leaderboard/admin.py`:
-  - LeaderboardEntry: list_display=[player, total_score, rank, levels_completed]
-
-**Проверка:** Запустить сервер, войти в http://localhost:8000/admin/ — видна Unfold-панель со всеми моделями.
-**Коммит:** `feat: настроить Unfold Admin для всех моделей`
-
----
-
-### [x] 2.5 Создать фикстуры с контентом на узбекском языке
-
-**Что сделать:**
-- Создать `backend/fixtures/` директорию
-- Создать `backend/fixtures/levels.json` — 4 уровня:
-  ```json
-  [
-    {"model": "game.level", "pk": 1, "fields": {
-      "number": 1,
-      "name_uz": "Kichik hovli",
-      "description_uz": "O'z hovlingizni yashil va toza qiling. Daraxt turing, gullar oching, chiqindilarni tozalang.",
-      "required_score": 0,
-      "map_config": {"width": 20, "height": 15, "zones": [{"type": "FLORA", "x": 5, "y": 5}, {"type": "WATER", "x": 15, "y": 8}, {"type": "WASTE", "x": 10, "y": 12}, {"type": "ENERGY", "x": 3, "y": 10}]},
-      "ecosystem_initial": {"air": 30, "water": 25, "soil": 20, "biodiversity": 15}
-    }},
-    {"model": "game.level", "pk": 2, "fields": {
-      "number": 2,
-      "name_uz": "Mahalla",
-      "description_uz": "Mahallangizni ekologik toza qiling. Ko'proq daraxt o'tqazing, ariqlarni tozalang.",
-      "required_score": 500,
-      "map_config": {"width": 30, "height": 20, "zones": [{"type": "FLORA", "x": 8, "y": 5}, {"type": "FLORA", "x": 22, "y": 10}, {"type": "WATER", "x": 15, "y": 15}, {"type": "WASTE", "x": 5, "y": 18}, {"type": "WASTE", "x": 25, "y": 3}, {"type": "ENERGY", "x": 20, "y": 18}, {"type": "FAUNA", "x": 10, "y": 10}]},
-      "ecosystem_initial": {"air": 25, "water": 20, "soil": 15, "biodiversity": 10}
-    }},
-    {"model": "game.level", "pk": 3, "fields": {
-      "number": 3,
-      "name_uz": "Shahar",
-      "description_uz": "Shahar ekologiyasini yaxshilang. Sanoat korxonalari ifloslanishga qarshi kurashing.",
-      "required_score": 1500,
-      "map_config": {"width": 40, "height": 25},
-      "ecosystem_initial": {"air": 15, "water": 15, "soil": 10, "biodiversity": 8}
-    }},
-    {"model": "game.level", "pk": 4, "fields": {
-      "number": 4,
-      "name_uz": "Viloyat",
-      "description_uz": "Butun viloyat ekologiyasini tiklang. Orol dengizi kabi muammolarga qarshi kurashing.",
-      "required_score": 3000,
-      "map_config": {"width": 50, "height": 30},
-      "ecosystem_initial": {"air": 10, "water": 10, "soil": 8, "biodiversity": 5}
-    }}
-  ]
-  ```
-
-- Создать `backend/fixtures/eco_actions.json` — 12 действий (все с `unlock_level` FK):
-  - plant_tree (FLORA, air_impact: 1.5, biodiversity_impact: 1.2, score: 20)
-  - plant_flowers (FLORA, biodiversity_impact: 0.8, score: 10)
-  - care_garden (FLORA, soil_impact: 1.0, biodiversity_impact: 0.5, score: 15)
-  - clean_water (WATER, water_impact: 2.0, biodiversity_impact: 1.0, score: 25)
-  - save_water (WATER, water_impact: 0.8, score: 10)
-  - sort_waste (WASTE, soil_impact: 1.5, score: 20)
-  - recycle (WASTE, soil_impact: 1.0, air_impact: 0.5, score: 15)
-  - install_solar (ENERGY, air_impact: 2.0, score: 30, unlock_level: 2)
-  - save_energy (ENERGY, air_impact: 0.8, score: 10)
-  - protect_animal (FAUNA, biodiversity_impact: 2.5, score: 30, unlock_level: 2)
-  - bird_house (FAUNA, biodiversity_impact: 1.5, score: 20)
-  - save_fish (FAUNA, water_impact: 1.2, biodiversity_impact: 1.8, score: 25, unlock_level: 3)
-
-- Создать `backend/fixtures/achievements.json` — 10 достижений
-- Создать `backend/fixtures/educational_content.json` — 5 статей на узбекском
-- Создать `backend/fixtures/eco_facts.json` — 15 фактов на узбекском
-
-- Загрузить фикстуры:
-  ```bash
-  uv run python manage.py loaddata fixtures/levels.json fixtures/eco_actions.json fixtures/achievements.json fixtures/educational_content.json fixtures/eco_facts.json
-  ```
-
-**Проверка:** Данные видны в Django Admin (уровни, действия, достижения).
-**Коммит:** `feat: добавить фикстуры с узбекским контентом`
-
----
-
-### [x] 2.6 Написать unit-тесты для моделей
-
-**Что сделать:**
-- Создать `apps/accounts/tests/__init__.py` и `apps/accounts/tests/test_models.py`:
-  - `test_player_creation` — создание игрока с nickname
-  - `test_player_nickname_unique` — IntegrityError при дублировании
-  - `test_player_str` — __str__ возвращает nickname
-  - `test_player_default_values` — total_score=0, avatar="default"
-
-- Создать `apps/game/tests/__init__.py` и `apps/game/tests/test_models.py`:
-  - `test_level_creation` — создание уровня
-  - `test_level_ordering` — уровни упорядочены по number
-  - `test_eco_action_creation` — создание с impact-значениями
-  - `test_game_progress_unique_together` — уникальность (player, level)
-  - `test_achievement_creation` — достижение с JSONField условием
-  - `test_player_achievement_unique` — уникальная связь
-
-- Создать `apps/education/tests/__init__.py` и `apps/education/tests/test_models.py`:
-  - `test_educational_content_creation`
-  - `test_eco_fact_str`
-
-- Запустить ruff: `uv run ruff check --fix .`
-
-**Проверка:** `uv run pytest -v` — все тесты зелёные.
-**Коммит:** `test: добавить unit-тесты для всех моделей`
-
----
-
-## Phase 3: Backend API — Аутентификация
-
-### [x] 3.1 Создать API аутентификации
-
-**Что сделать:**
-- Создать `apps/accounts/serializers.py`:
-  ```python
-  class RegisterSerializer(serializers.ModelSerializer):
-      password = serializers.CharField(write_only=True, min_length=8)
-      password_confirm = serializers.CharField(write_only=True)
-
-      class Meta:
-          model = Player
-          fields = ["username", "nickname", "email", "password", "password_confirm"]
-
-      def validate(self, attrs: dict) -> dict:
-          if attrs["password"] != attrs.pop("password_confirm"):
-              raise serializers.ValidationError({"password_confirm": "Parollar mos kelmadi"})
-          return attrs
-
-      def create(self, validated_data: dict) -> Player:
-          return Player.objects.create_user(**validated_data)
-
-  class PlayerSerializer(serializers.ModelSerializer):
-      class Meta:
-          model = Player
-          fields = ["id", "username", "nickname", "email", "avatar", "total_score", "date_joined"]
-          read_only_fields = ["id", "username", "total_score", "date_joined"]
-  ```
-
-- Создать `apps/accounts/views.py`:
-  ```python
-  class RegisterView(CreateAPIView):
-      serializer_class = RegisterSerializer
-      permission_classes = [AllowAny]
-
-  class PlayerProfileView(RetrieveUpdateAPIView):
-      serializer_class = PlayerSerializer
-      permission_classes = [IsAuthenticated]
-
-      def get_object(self) -> Player:
-          return self.request.user
-  ```
-
-- Создать `apps/accounts/urls.py`:
-  ```python
-  urlpatterns = [
-      path("register/", RegisterView.as_view()),
-      path("login/", TokenObtainPairView.as_view()),
-      path("token/refresh/", TokenRefreshView.as_view()),
-      path("me/", PlayerProfileView.as_view()),
-  ]
-  ```
-
-- Обновить `config/urls.py`:
-  ```python
-  urlpatterns = [
-      path("admin/", admin.site.urls),
-      path("api/v1/auth/", include("apps.accounts.urls")),
-  ]
-  ```
-
-**Проверка:** `uv run python manage.py check` без ошибок. Проверить через curl или Postman: POST /api/v1/auth/register/, POST /api/v1/auth/login/.
-**Коммит:** `feat: добавить API аутентификации (регистрация, JWT, профиль)`
-
----
-
-### [x] 3.2 Написать тесты для API аутентификации
-
-**Что сделать:**
-- Создать `apps/accounts/tests/test_api.py`:
-  - `test_register_success` — POST /api/v1/auth/register/ → 201, возвращает данные игрока
-  - `test_register_password_mismatch` — пароли не совпадают → 400
-  - `test_register_duplicate_username` → 400
-  - `test_login_success` → 200, возвращает access + refresh
-  - `test_login_wrong_password` → 401
-  - `test_token_refresh` → 200, новый access token
-  - `test_profile_get_authenticated` → 200, данные текущего игрока
-  - `test_profile_update_nickname` → 200, nickname обновлён
-  - `test_profile_unauthorized` → 401
-
-- Использовать `pytest.fixture` с `@pytest.fixture def player(db)` для создания тестового игрока
-- Использовать `APIClient` из DRF
-
-**Проверка:** `uv run pytest apps/accounts/ -v` — все тесты зелёные.
-**Коммит:** `test: добавить тесты API аутентификации`
-
----
-
-## Phase 4: Backend API — Игровая логика
-
-### [x] 4.1 Создать GameService
-
-**Что сделать:**
-- Создать `apps/game/services.py`:
-  ```python
-  from django.db import transaction
-  from django.utils import timezone
-
-  class GameService:
-      """Бизнес-логика игры. Все мутации состояния проходят через этот сервис."""
-
-      @staticmethod
-      @transaction.atomic
-      def start_session(player: Player, level: Level) -> tuple[GameSession, GameProgress]:
-          """Начать сессию. Создаёт GameProgress если не существует."""
-          session = GameSession.objects.create(player=player, level=level)
-          progress, _ = GameProgress.objects.get_or_create(
-              player=player,
-              level=level,
-              defaults={
-                  "air_quality": level.ecosystem_initial.get("air", 30),
-                  "water_purity": level.ecosystem_initial.get("water", 25),
-                  "soil_health": level.ecosystem_initial.get("soil", 20),
-                  "biodiversity": level.ecosystem_initial.get("biodiversity", 15),
-              }
-          )
-          return session, progress
-
-      @staticmethod
-      @transaction.atomic
-      def end_session(session: GameSession) -> GameProgress:
-          """Завершить сессию. Обновить total_score игрока."""
-          session.ended_at = timezone.now()
-          session.is_active = False
-          session.save(update_fields=["ended_at", "is_active"])
-          progress = GameProgress.objects.get(player=session.player, level=session.level)
-          # Обновить total_score игрока (сумма всех score по уровням)
-          from django.db.models import Sum
-          total = GameProgress.objects.filter(player=session.player).aggregate(Sum("score"))["score__sum"] or 0
-          session.player.total_score = total
-          session.player.save(update_fields=["total_score"])
-          return progress
-
-      @staticmethod
-      @transaction.atomic
-      def perform_actions(session: GameSession, actions: list[dict]) -> tuple[GameProgress, list[Achievement]]:
-          """Обработать батч действий. Обновить прогресс.
-          actions = [{"action_key": str, "position_x": float, "position_y": float}]
-          """
-          progress = GameProgress.objects.select_for_update().get(player=session.player, level=session.level)
-
-          for action_data in actions:
-              try:
-                  action = EcoAction.objects.get(key=action_data["action_key"])
-              except EcoAction.DoesNotExist:
-                  continue
-
-              # Применить impact на индикаторы
-              new_state = GameService.calculate_ecosystem(progress, action)
-              progress.air_quality = new_state["air"]
-              progress.water_purity = new_state["water"]
-              progress.soil_health = new_state["soil"]
-              progress.biodiversity = new_state["biodiversity"]
-
-              # Начислить очки
-              progress.score += action.score_value
-
-              # Обновить счётчик действий
-              performed = progress.actions_performed
-              performed[action.key] = performed.get(action.key, 0) + 1
-              progress.actions_performed = performed
-
-              # Записать лог
-              delta = {"air": new_state["air"] - progress.air_quality,
-                       "water": new_state["water"] - progress.water_purity}
-              ActionLog.objects.create(
-                  session=session, action=action,
-                  position_x=action_data.get("position_x", 0),
-                  position_y=action_data.get("position_y", 0),
-                  result_delta=delta
-              )
-
-          # Проверить завершение уровня
-          if GameService.check_level_completion(progress):
-              progress.completed = True
-              progress.completed_at = timezone.now()
-
-          progress.save()
-
-          # Проверить достижения
-          new_achievements = GameService.check_achievements(session.player, progress)
-          return progress, new_achievements
-
-      @staticmethod
-      def calculate_ecosystem(progress: GameProgress, action: EcoAction) -> dict:
-          """Рассчитать новые значения индикаторов после действия."""
-          SCALE = 10.0  # Множитель для float impact значений
-          return {
-              "air": min(100.0, max(0.0, progress.air_quality + action.air_impact * SCALE)),
-              "water": min(100.0, max(0.0, progress.water_purity + action.water_impact * SCALE)),
-              "soil": min(100.0, max(0.0, progress.soil_health + action.soil_impact * SCALE)),
-              "biodiversity": min(100.0, max(0.0, progress.biodiversity + action.biodiversity_impact * SCALE)),
-          }
-
-      @staticmethod
-      def check_achievements(player: Player, progress: GameProgress) -> list[Achievement]:
-          """Выдать новые достижения. Возвращает список только что разблокированных."""
-          already_unlocked = set(player.achievements.values_list("achievement_id", flat=True))
-          all_achievements = Achievement.objects.exclude(id__in=already_unlocked)
-          newly_unlocked = []
-
-          for achievement in all_achievements:
-              if GameService._check_condition(achievement, player, progress):
-                  PlayerAchievement.objects.create(player=player, achievement=achievement)
-                  newly_unlocked.append(achievement)
-
-          return newly_unlocked
-
-      @staticmethod
-      def _check_condition(achievement: Achievement, player: Player, progress: GameProgress) -> bool:
-          """Проверить условие достижения."""
-          cv = achievement.condition_value
-          ct = achievement.condition_type
-          if ct == "SCORE":
-              return progress.score >= cv.get("min_score", 0)
-          elif ct == "ACTION_COUNT":
-              key = cv.get("action_key", "")
-              count = cv.get("count", 1)
-              return progress.actions_performed.get(key, 0) >= count
-          elif ct == "LEVEL_COMPLETE":
-              return progress.completed and progress.level.number == cv.get("level_number", 1)
-          elif ct == "INDICATOR":
-              indicator = cv.get("indicator", "air")
-              min_val = cv.get("min_value", 80)
-              vals = {"air": progress.air_quality, "water": progress.water_purity,
-                      "soil": progress.soil_health, "biodiversity": progress.biodiversity}
-              return vals.get(indicator, 0) >= min_val
-          return False
-
-      @staticmethod
-      def check_level_completion(progress: GameProgress) -> bool:
-          """Уровень завершён когда все 4 индикатора >= 80."""
-          return all([
-              progress.air_quality >= 80,
-              progress.water_purity >= 80,
-              progress.soil_health >= 80,
-              progress.biodiversity >= 80,
-          ])
-  ```
-
-**Проверка:** `uv run python manage.py check` без ошибок.
-**Коммит:** `feat: добавить GameService с бизнес-логикой игры`
-
----
-
-### [x] 4.2 Создать сериализаторы и вьюхи для Game API
-
-**Что сделать:**
-- Создать `apps/game/serializers.py` с:
-  - `LevelSerializer` — все поля + computed `is_unlocked` через `SerializerMethodField`
-  - `EcoActionSerializer` — все поля EcoAction
-  - `GameProgressSerializer` — прогресс с вложенным LevelSerializer
-  - `ActionBatchSerializer` — `{"actions": [{"action_key": str, "position_x": float, "position_y": float}]}`
-  - `GameSessionSerializer` — данные сессии
-  - `AchievementSerializer` — с `is_unlocked` полем
-  - `PlayerAchievementSerializer` — с вложенным AchievementSerializer
-
-- Создать `apps/game/views.py`:
-  - `LevelListView` — GET /api/v1/game/levels/ (AllowAny)
-  - `LevelDetailView` — GET /api/v1/game/levels/{id}/
-  - `EcoActionListView` — GET /api/v1/game/actions/?level={id}
-  - `GameProgressListView` — GET /api/v1/game/progress/ (текущий игрок)
-  - `GameProgressDetailView` — GET /api/v1/game/progress/{level_id}/
-  - `SessionStartView` — POST /api/v1/game/sessions/start/
-  - `SessionEndView` — POST /api/v1/game/sessions/{id}/end/
-  - `ActionSubmitView` — POST /api/v1/game/sessions/{id}/actions/
-  - `AchievementListView` — GET /api/v1/game/achievements/
-  - `MyAchievementsView` — GET /api/v1/game/achievements/my/
-
-- Создать `apps/game/urls.py` и подключить к `config/urls.py` через `path("api/v1/game/", ...)`
-
-**Проверка:** `uv run python manage.py check`. Протестировать через curl: получить список уровней.
-**Коммит:** `feat: добавить Game API (уровни, действия, прогресс, сессии, достижения)`
-
----
-
-### [x] 4.3 Создать Education API, Leaderboard API и Django signals
-
-**Что сделать:**
-- Создать `apps/education/serializers.py`, `views.py`, `urls.py`:
-  - GET /api/v1/education/articles/ — список статей (AllowAny, фильтр ?category=)
-  - GET /api/v1/education/articles/{id}/ — детали
-  - GET /api/v1/education/facts/random/ — случайный факт (AllowAny)
-
-- Создать `apps/leaderboard/serializers.py`, `views.py`, `urls.py`:
-  - GET /api/v1/leaderboard/ — топ 50, пагинация (AllowAny)
-  - GET /api/v1/leaderboard/me/ — ранг текущего игрока (IsAuthenticated)
-
-- Создать `apps/leaderboard/signals.py`:
-  ```python
-  from django.db.models.signals import post_save
-  from django.dispatch import receiver
-  from apps.game.models import GameProgress, PlayerAchievement
-  from .models import LeaderboardEntry
-
-  @receiver(post_save, sender=GameProgress)
-  def update_leaderboard_on_progress(sender, instance: GameProgress, **kwargs) -> None:
-      """Обновить лидерборд при изменении прогресса."""
-      from django.db.models import Sum, Count
-      player = instance.player
-      stats = GameProgress.objects.filter(player=player).aggregate(
-          total=Sum("score"),
-          completed=Count("id", filter=models.Q(completed=True))
-      )
-      achievement_count = player.achievements.count()
-      entry, _ = LeaderboardEntry.objects.get_or_create(player=player)
-      entry.total_score = stats["total"] or 0
-      entry.levels_completed = stats["completed"] or 0
-      entry.achievements_count = achievement_count
-      entry.save(update_fields=["total_score", "levels_completed", "achievements_count", "updated_at"])
-      # Пересчитать ранги
-      for rank, e in enumerate(LeaderboardEntry.objects.order_by("-total_score"), start=1):
-          if e.rank != rank:
-              LeaderboardEntry.objects.filter(pk=e.pk).update(rank=rank)
-  ```
-
-- Подключить signals в `apps/leaderboard/apps.py` → `ready()`
-- Добавить все URLs в `config/urls.py`
+- Полностью заменить `backend/apps/game/services.py` новым QuizService
+- Реализовать все методы:
+
+```python
+import math
+import random
+from datetime import date
+from typing import Any
+
+from django.db.models import Count, Q, Sum
+from django.conf import settings
+
+from .models import (
+    Achievement, ActionCategory, Answer, ConditionType,
+    DailyChallenge, PlayerAchievement, Question, QuizAnswer,
+    QuizMode, QuizSession
+)
+
+
+class QuizService:
+    BASE_POINTS = 100
+    STREAK_MULTIPLIERS = {0: 1.0, 1: 1.0, 2: 1.5, 3: 2.0}
+    STREAK_MAX_MULTIPLIER = 3.0
+    MARATHON_MAX_QUESTIONS = 100
+    RANK_TITLES = [
+        (5000, "Eko-ustoz"),
+        (3000, "Eko-qahramon"),
+        (1500, "Eko-mutaxassis"),
+        (500, "Tabiat do'sti"),
+        (100, "Ekologik talaba"),
+        (0, "Yangi o'quvchi"),
+    ]
+
+    @staticmethod
+    def get_rank_title(total_score: int) -> str:
+        for threshold, title in QuizService.RANK_TITLES:
+            if total_score >= threshold:
+                return title
+        return "Yangi o'quvchi"
+
+    @staticmethod
+    def calculate_score(is_correct: bool, time_spent_ms: int, time_limit: int, current_streak: int) -> int:
+        if not is_correct:
+            return 0
+        streak = min(current_streak, 4)
+        multiplier = QuizService.STREAK_MULTIPLIERS.get(streak, QuizService.STREAK_MAX_MULTIPLIER)
+        time_limit_ms = time_limit * 1000
+        time_ratio = max(0.0, 1.0 - time_spent_ms / time_limit_ms)
+        time_factor = 1.0 + 0.5 * time_ratio
+        return math.floor(QuizService.BASE_POINTS * multiplier * time_factor)
+
+    @staticmethod
+    def get_questions_for_mode(mode: str, category: str | None, count: int = 10) -> list:
+        qs = Question.objects.filter(is_active=True).prefetch_related("answers")
+        if mode == QuizMode.CATEGORY and category:
+            qs = qs.filter(category=category)
+        elif mode == QuizMode.MARATHON:
+            pass  # all questions
+        questions = list(qs)
+        random.shuffle(questions)
+        if mode in [QuizMode.QUICK, QuizMode.DAILY]:
+            questions = questions[:count]
+        elif mode == QuizMode.MARATHON:
+            questions = questions[:QuizService.MARATHON_MAX_QUESTIONS]
+        return questions
+
+    @staticmethod
+    def start_session(player, mode: str, category: str | None = None) -> tuple:
+        """Returns (QuizSession, list[Question])"""
+        if mode == QuizMode.DAILY:
+            daily = QuizService.get_daily_challenge()
+            questions = list(daily.questions.filter(is_active=True).prefetch_related("answers"))
+            random.shuffle(questions)
+        else:
+            questions = QuizService.get_questions_for_mode(mode, category)
+
+        session = QuizSession.objects.create(
+            player=player,
+            mode=mode,
+            category=category,
+            total_questions=len(questions),
+        )
+        return session, questions
+
+    @staticmethod
+    def submit_answer(session: QuizSession, question_id: int, answer_id: int | None, time_spent_ms: int) -> dict:
+        try:
+            question = Question.objects.prefetch_related("answers").get(pk=question_id, is_active=True)
+        except Question.DoesNotExist:
+            raise ValueError(f"Question {question_id} not found")
+
+        # Check duplicate
+        if QuizAnswer.objects.filter(session=session, question_id=question_id).exists():
+            raise ValueError("Already answered this question")
+
+        correct_answer = question.answers.filter(is_correct=True).first()
+        is_correct = False
+
+        if answer_id is not None:
+            try:
+                selected = Answer.objects.get(pk=answer_id, question=question)
+                is_correct = selected.is_correct
+            except Answer.DoesNotExist:
+                selected = None
+        else:
+            selected = None  # timeout
+
+        # Update streak
+        if is_correct:
+            session.current_streak += 1
+            session.max_streak = max(session.max_streak, session.current_streak)
+        else:
+            session.current_streak = 0
+
+        points = QuizService.calculate_score(is_correct, time_spent_ms, question.time_limit, session.current_streak - 1 if is_correct else 0)
+
+        if is_correct:
+            session.score += points
+            session.correct_count += 1
+
+        streak_val = session.current_streak
+        streak_mult = QuizService.STREAK_MULTIPLIERS.get(min(streak_val, 4), QuizService.STREAK_MAX_MULTIPLIER)
+
+        QuizAnswer.objects.create(
+            session=session,
+            question=question,
+            selected_answer=selected,
+            is_correct=is_correct,
+            time_spent_ms=time_spent_ms,
+        )
+        session.save(update_fields=["score", "correct_count", "current_streak", "max_streak"])
+
+        is_game_over = session.mode == QuizMode.MARATHON and not is_correct
+
+        return {
+            "is_correct": is_correct,
+            "correct_answer_id": correct_answer.id if correct_answer else None,
+            "explanation_uz": question.explanation_uz,
+            "points_earned": points,
+            "streak": streak_val,
+            "streak_multiplier": streak_mult,
+            "time_bonus": max(0, points - QuizService.BASE_POINTS),
+            "total_score": session.score,
+            "is_game_over": is_game_over,
+        }
+
+    @staticmethod
+    def end_session(session: QuizSession) -> dict:
+        from django.utils import timezone
+        session.finished_at = timezone.now()
+        session.save(update_fields=["finished_at"])
+
+        accuracy = session.correct_count / session.total_questions if session.total_questions > 0 else 0.0
+
+        # Update player total_score
+        player = session.player
+        total = QuizSession.objects.filter(
+            player=player, finished_at__isnull=False
+        ).aggregate(t=Sum("score"))["t"] or 0
+        player.__class__.objects.filter(pk=player.pk).update(total_score=total)
+
+        achievements = QuizService.check_quiz_achievements(player, session)
+
+        return {
+            "session": session,
+            "accuracy": round(accuracy, 3),
+            "rank_title": QuizService.get_rank_title(total),
+            "achievements_unlocked": achievements,
+        }
+
+    @staticmethod
+    def get_daily_challenge(target_date=None) -> DailyChallenge:
+        if target_date is None:
+            target_date = date.today()
+        challenge, created = DailyChallenge.objects.get_or_create(
+            date=target_date,
+            defaults={"bonus_score": 50}
+        )
+        if created:
+            questions = list(Question.objects.filter(is_active=True).order_by("?")[:10])
+            challenge.questions.set(questions)
+        return challenge
+
+    @staticmethod
+    def get_player_stats(player) -> dict:
+        sessions = QuizSession.objects.filter(player=player, finished_at__isnull=False)
+        total_quizzes = sessions.count()
+        total_correct = sessions.aggregate(t=Sum("correct_count"))["t"] or 0
+        total_questions = sessions.aggregate(t=Sum("total_questions"))["t"] or 0
+        best_streak = sessions.aggregate(m=models_max("max_streak"))["m"] or 0
+        accuracy = total_correct / total_questions if total_questions > 0 else 0.0
+
+        per_category = {}
+        for cat in ActionCategory.values:
+            cat_sessions = sessions.filter(category=cat)
+            cat_correct = cat_sessions.aggregate(t=Sum("correct_count"))["t"] or 0
+            cat_total = cat_sessions.aggregate(t=Sum("total_questions"))["t"] or 0
+            per_category[cat] = {
+                "total": cat_total,
+                "correct": cat_correct,
+                "accuracy": round(cat_correct / cat_total, 3) if cat_total else 0.0,
+            }
+
+        return {
+            "total_quizzes": total_quizzes,
+            "total_correct": total_correct,
+            "accuracy_pct": round(accuracy * 100, 1),
+            "best_streak": best_streak,
+            "daily_streak": 0,  # TODO: calculate consecutive days
+            "rank_title": QuizService.get_rank_title(player.total_score),
+            "per_category": per_category,
+        }
+
+    @staticmethod
+    def check_quiz_achievements(player, session: QuizSession) -> list:
+        all_achievements = Achievement.objects.all()
+        earned = set(PlayerAchievement.objects.filter(player=player).values_list("achievement_id", flat=True))
+        new_achievements = []
+
+        total_quizzes = QuizSession.objects.filter(player=player, finished_at__isnull=False).count()
+
+        for ach in all_achievements:
+            if ach.id in earned:
+                continue
+            unlocked = False
+            cv = ach.condition_value
+
+            if ach.condition_type == ConditionType.SCORE:
+                unlocked = player.total_score >= cv.get("min_score", 0)
+            elif ach.condition_type == ConditionType.QUIZ_COUNT:
+                unlocked = total_quizzes >= cv.get("count", 1)
+            elif ach.condition_type == ConditionType.STREAK:
+                unlocked = session.max_streak >= cv.get("min_streak", 5)
+            elif ach.condition_type == ConditionType.LEVEL_COMPLETE:
+                pass  # skip level-based for now
+
+            if unlocked:
+                pa = PlayerAchievement.objects.create(player=player, achievement=ach)
+                new_achievements.append(ach)
+                earned.add(ach.id)
+
+        return new_achievements
+```
+
+- Добавить `from django.db.models import Max as models_max` в импорты
 
 **Проверка:** `uv run python manage.py check`
-**Коммит:** `feat: добавить Education API, Leaderboard API, Django signals`
+**Коммит:** `feat: Phase 2 — QuizService (scoring, streak, daily challenge, achievements)`
 
 ---
 
-### [x] 4.4 Написать тесты для Game API и запустить полный набор
+## Phase 3: Backend — Quiz API
+
+### [ ] 3.1 Создать сериализаторы для квиза
 
 **Что сделать:**
-- Создать `apps/game/tests/test_services.py`:
-  - `test_start_session_creates_progress` — GameService.start_session создаёт прогресс
-  - `test_perform_actions_updates_indicators` — индикаторы меняются
-  - `test_ecosystem_calculation` — проверка формулы (clamp 0-100)
-  - `test_achievement_unlock` — достижение выдаётся при выполнении условия
-  - `test_level_completion_at_80` — уровень завершается при all >= 80
+- Открыть `backend/apps/game/serializers.py`
+- УДАЛИТЬ: EcoActionSerializer, ActionLogSerializer, GameSessionSerializer если есть
+- СОХРАНИТЬ: AchievementSerializer, PlayerAchievementSerializer (если есть)
+- ДОБАВИТЬ все новые сериализаторы:
 
-- Создать `apps/game/tests/test_api.py`:
-  - `test_levels_list_unauthorized` — 200 (AllowAny)
-  - `test_start_session_creates_progress` — полный flow
-  - `test_action_batch_submit` — батч обрабатывается
+```python
+from rest_framework import serializers
+from .models import (Answer, Question, QuizSession, QuizAnswer,
+                     DailyChallenge, Achievement, PlayerAchievement, MiniGameScore)
 
-- Создать `apps/leaderboard/tests/test_api.py`:
-  - `test_leaderboard_ordered_by_score` — правильный порядок
-  - `test_signal_updates_leaderboard` — сигнал срабатывает
 
-- Запустить ruff на весь backend: `uv run ruff check --fix .`
-- Запустить все тесты: `uv run pytest -v --tb=short`
+class AnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Answer
+        fields = ["id", "text_uz", "order"]  # НЕ включать is_correct
 
-**Проверка:** Все тесты зелёные, ruff без ошибок.
-**Коммит:** `test: добавить тесты Game API и Leaderboard, исправить линт`
+
+class AnswerWithCorrectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Answer
+        fields = ["id", "text_uz", "order", "is_correct"]
+
+
+class QuestionSerializer(serializers.ModelSerializer):
+    answers = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Question
+        fields = ["id", "text_uz", "category", "difficulty", "question_type",
+                  "image", "time_limit", "source", "answers"]
+
+    def get_answers(self, obj):
+        answers = list(obj.answers.all())
+        random.shuffle(answers)
+        return AnswerSerializer(answers, many=True).data
+
+
+class QuizSessionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuizSession
+        fields = ["id", "mode", "category", "started_at", "finished_at",
+                  "score", "correct_count", "total_questions", "max_streak"]
+
+
+class QuizSessionCreateSerializer(serializers.Serializer):
+    mode = serializers.ChoiceField(choices=QuizMode.choices)
+    category = serializers.ChoiceField(choices=ActionCategory.choices, required=False, allow_null=True)
+
+    def validate(self, data):
+        if data["mode"] == "CATEGORY" and not data.get("category"):
+            raise serializers.ValidationError({"category": "Category mode requires a category."})
+        return data
+
+
+class SubmitAnswerSerializer(serializers.Serializer):
+    question_id = serializers.IntegerField()
+    answer_id = serializers.IntegerField(required=False, allow_null=True)
+    time_spent_ms = serializers.IntegerField(min_value=0, max_value=120000)
+
+
+class DailyChallengeSerializer(serializers.ModelSerializer):
+    questions = QuestionSerializer(many=True, read_only=True)
+    is_completed = serializers.SerializerMethodField()
+
+    class Meta:
+        model = DailyChallenge
+        fields = ["id", "date", "questions", "bonus_score", "is_completed"]
+
+    def get_is_completed(self, obj):
+        request = self.context.get("request")
+        if not request or not request.user.is_authenticated:
+            return False
+        return QuizSession.objects.filter(
+            player=request.user,
+            mode="DAILY",
+            started_at__date=obj.date,
+            finished_at__isnull=False,
+        ).exists()
+
+
+class MiniGameScoreSerializer(serializers.Serializer):
+    score = serializers.IntegerField(min_value=0)
+    correct_count = serializers.IntegerField(min_value=0)
+    total_items = serializers.IntegerField(min_value=1)
+
+
+class AchievementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Achievement
+        fields = ["id", "key", "name_uz", "description_uz", "icon"]
+
+
+class PlayerAchievementSerializer(serializers.ModelSerializer):
+    achievement = AchievementSerializer(read_only=True)
+
+    class Meta:
+        model = PlayerAchievement
+        fields = ["id", "achievement", "unlocked_at"]
+```
+
+- Добавить `import random` в начало файла
+- Добавить `from .models import QuizMode, ActionCategory`
+
+**Проверка:** `uv run python manage.py check`
+**Коммит:** `feat: Phase 3 — Quiz сериализаторы`
 
 ---
 
-## Phase 5: Frontend — Роутинг, Auth, API-клиент
-
-### [x] 5.1 Создать API-клиент и TypeScript типы
+### [ ] 3.2 Создать Quiz views и обновить URL
 
 **Что сделать:**
-- Создать `src/api/types.ts` — строгие TypeScript типы (без `any`):
-  ```typescript
-  export interface Player {
-    id: number;
-    username: string;
-    nickname: string;
-    email: string;
-    avatar: string;
-    total_score: number;
-    date_joined: string;
-  }
+- Открыть `backend/apps/game/views.py`
+- УДАЛИТЬ: LevelViewSet, EcoActionListView, SessionStartView, SessionEndView, ActionSubmitView, GameProgressListView если есть (они ссылаются на удалённые модели)
+- СОХРАНИТЬ: AchievementListView, PlayerAchievementListView
+- ДОБАВИТЬ новые views:
 
-  export interface EcosystemState {
-    air: number;
-    water: number;
-    soil: number;
-    biodiversity: number;
-  }
+```python
+from rest_framework import generics, permissions, status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import Question, QuizSession, DailyChallenge, MiniGameScore, ActionCategory
+from .serializers import (
+    QuestionSerializer, QuizSessionSerializer, QuizSessionCreateSerializer,
+    SubmitAnswerSerializer, DailyChallengeSerializer, MiniGameScoreSerializer,
+    AchievementSerializer, PlayerAchievementSerializer
+)
+from .services import QuizService
 
-  export interface Level {
-    id: number;
-    number: number;
-    name_uz: string;
-    description_uz: string;
-    required_score: number;
-    map_config: MapConfig;
-    ecosystem_initial: EcosystemState;
-    is_unlocked: boolean;
-  }
 
-  export interface MapConfig {
-    width: number;
-    height: number;
-    zones: MapZone[];
-  }
+class QuestionListView(generics.ListAPIView):
+    """GET /api/v1/game/quiz/questions/?category=X&difficulty=N&limit=10"""
+    serializer_class = QuestionSerializer
+    permission_classes = [permissions.AllowAny]
 
-  export interface MapZone {
-    type: "FLORA" | "WATER" | "WASTE" | "ENERGY" | "FAUNA";
-    x: number;
-    y: number;
-  }
+    def get_queryset(self):
+        qs = Question.objects.filter(is_active=True).prefetch_related("answers")
+        category = self.request.query_params.get("category")
+        difficulty = self.request.query_params.get("difficulty")
+        if category in ActionCategory.values:
+            qs = qs.filter(category=category)
+        if difficulty and difficulty.isdigit():
+            qs = qs.filter(difficulty=int(difficulty))
+        return qs.order_by("?")[:int(self.request.query_params.get("limit", 20))]
 
-  export interface EcoAction {
-    id: number;
-    key: string;
-    name_uz: string;
-    description_uz: string;
-    category: "FLORA" | "WATER" | "WASTE" | "ENERGY" | "FAUNA";
-    score_value: number;
-    air_impact: number;
-    water_impact: number;
-    soil_impact: number;
-    biodiversity_impact: number;
-    cooldown_seconds: number;
-    sprite_key: string;
-  }
 
-  export interface GameProgress {
-    id: number;
-    level: Level;
-    score: number;
-    air_quality: number;
-    water_purity: number;
-    soil_health: number;
-    biodiversity: number;
-    actions_performed: Record<string, number>;
-    completed: boolean;
-    completed_at: string | null;
-    updated_at: string;
-  }
+class QuizSessionStartView(APIView):
+    """POST /api/v1/game/quiz/sessions/ {mode, category?}"""
+    permission_classes = [permissions.IsAuthenticated]
 
-  export interface GameSession {
-    id: number;
-    level: number;
-    started_at: string;
-    ended_at: string | null;
-    is_active: boolean;
-  }
+    def post(self, request):
+        serializer = QuizSessionCreateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        session, questions = QuizService.start_session(
+            player=request.user,
+            mode=serializer.validated_data["mode"],
+            category=serializer.validated_data.get("category"),
+        )
+        session_data = QuizSessionSerializer(session).data
+        session_data["questions"] = QuestionSerializer(questions, many=True).data
+        return Response(session_data, status=status.HTTP_201_CREATED)
 
-  export interface Achievement {
-    id: number;
-    key: string;
-    name_uz: string;
-    description_uz: string;
-    icon: string;
-    condition_type: string;
-    is_unlocked: boolean;
-  }
 
-  export interface LeaderboardEntry {
-    rank: number;
-    player_nickname: string;
-    player_avatar: string;
-    total_score: number;
-    levels_completed: number;
-    achievements_count: number;
-  }
+class QuizAnswerSubmitView(APIView):
+    """POST /api/v1/game/quiz/sessions/{session_id}/answer/"""
+    permission_classes = [permissions.IsAuthenticated]
 
-  export interface EducationalContent {
-    id: number;
-    title_uz: string;
-    body_uz: string;
-    category: string;
-    image: string;
-    order: number;
-  }
+    def post(self, request, session_id):
+        try:
+            session = QuizSession.objects.get(pk=session_id, player=request.user, finished_at__isnull=True)
+        except QuizSession.DoesNotExist:
+            return Response({"detail": "Session not found or already finished."}, status=status.HTTP_404_NOT_FOUND)
 
-  export interface EcoFact {
-    id: number;
-    text_uz: string;
-    source: string;
-    category: string;
-  }
+        serializer = SubmitAnswerSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-  export interface AuthTokens {
-    access: string;
-    refresh: string;
-  }
+        try:
+            result = QuizService.submit_answer(
+                session=session,
+                question_id=serializer.validated_data["question_id"],
+                answer_id=serializer.validated_data.get("answer_id"),
+                time_spent_ms=serializer.validated_data["time_spent_ms"],
+            )
+        except ValueError as e:
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-  export interface RegisterData {
-    username: string;
-    nickname: string;
-    email: string;
-    password: string;
-    password_confirm: string;
-  }
-  ```
+        return Response(result)
 
-- Создать `src/api/client.ts`:
-  - Axios instance с `baseURL: import.meta.env.VITE_API_URL`
-  - Request interceptor: добавляет Bearer token из localStorage
-  - Response interceptor: при 401 пробует refresh, при неудаче очищает токены
 
-- Создать `src/api/auth.ts`, `src/api/game.ts`, `src/api/education.ts`, `src/api/leaderboard.ts` — все с правильными типами возвращаемых значений
+class QuizSessionEndView(APIView):
+    """POST /api/v1/game/quiz/sessions/{session_id}/end/"""
+    permission_classes = [permissions.IsAuthenticated]
 
-**Проверка:** `npm run build` — без TypeScript ошибок.
-**Коммит:** `feat: добавить API-клиент и TypeScript типы`
+    def post(self, request, session_id):
+        try:
+            session = QuizSession.objects.get(pk=session_id, player=request.user, finished_at__isnull=True)
+        except QuizSession.DoesNotExist:
+            return Response({"detail": "Session not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        result = QuizService.end_session(session)
+        return Response({
+            "session": QuizSessionSerializer(result["session"]).data,
+            "accuracy": result["accuracy"],
+            "rank_title": result["rank_title"],
+            "achievements_unlocked": AchievementSerializer(result["achievements_unlocked"], many=True).data,
+        })
+
+
+class DailyChallengeView(APIView):
+    """GET /api/v1/game/quiz/daily/"""
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        challenge = QuizService.get_daily_challenge()
+        return Response(DailyChallengeSerializer(challenge, context={"request": request}).data)
+
+
+class PlayerStatsView(APIView):
+    """GET /api/v1/game/quiz/stats/"""
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        stats = QuizService.get_player_stats(request.user)
+        return Response(stats)
+
+
+class MiniGameScoreView(APIView):
+    """POST /api/v1/game/mini-game/sort/score/"""
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        serializer = MiniGameScoreSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        score_obj = MiniGameScore.objects.create(
+            player=request.user,
+            game_type="SORTING",
+            **serializer.validated_data,
+        )
+        # Добавить к total_score игрока
+        request.user.__class__.objects.filter(pk=request.user.pk).update(
+            total_score=request.user.__class__.objects.get(pk=request.user.pk).total_score + score_obj.score
+        )
+        return Response({"score": score_obj.score, "message": "Natija saqlandi!"}, status=status.HTTP_201_CREATED)
+
+
+class AchievementListView(generics.ListAPIView):
+    serializer_class = AchievementSerializer
+    permission_classes = [permissions.AllowAny]
+    queryset = Achievement.objects.all().order_by("condition_type", "key")
+    pagination_class = None
+
+
+class PlayerAchievementListView(generics.ListAPIView):
+    serializer_class = PlayerAchievementSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    pagination_class = None
+
+    def get_queryset(self):
+        return PlayerAchievement.objects.filter(
+            player=self.request.user
+        ).select_related("achievement").order_by("-unlocked_at")
+```
+
+- Открыть `backend/apps/game/urls.py` и ЗАМЕНИТЬ:
+```python
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    # Quiz
+    path("quiz/questions/", views.QuestionListView.as_view(), name="quiz-questions"),
+    path("quiz/sessions/", views.QuizSessionStartView.as_view(), name="quiz-session-start"),
+    path("quiz/sessions/<int:session_id>/answer/", views.QuizAnswerSubmitView.as_view(), name="quiz-answer"),
+    path("quiz/sessions/<int:session_id>/end/", views.QuizSessionEndView.as_view(), name="quiz-session-end"),
+    path("quiz/daily/", views.DailyChallengeView.as_view(), name="quiz-daily"),
+    path("quiz/stats/", views.PlayerStatsView.as_view(), name="quiz-stats"),
+    # Mini-game
+    path("mini-game/sort/score/", views.MiniGameScoreView.as_view(), name="mini-game-sort"),
+    # Achievements
+    path("achievements/", views.AchievementListView.as_view(), name="achievements"),
+    path("achievements/my/", views.PlayerAchievementListView.as_view(), name="my-achievements"),
+]
+```
+
+**Проверка:** `uv run python manage.py check`
+**Коммит:** `feat: Phase 3 — Quiz API endpoints (questions, sessions, answer, daily, stats)`
 
 ---
 
-### [x] 5.2 Создать Zustand stores и i18n
+## Phase 4: Backend — Signals и Leaderboard
+
+### [ ] 4.1 Обновить leaderboard signals для QuizSession
 
 **Что сделать:**
-- Создать `src/i18n/uz.json` — полный файл переводов:
-  ```json
+- Открыть `backend/apps/leaderboard/signals.py`
+- УДАЛИТЬ/ЗАМЕНИТЬ сигнал для GameProgress (заменить на QuizSession)
+- ДОБАВИТЬ:
+```python
+from django.db.models import Sum
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+from apps.game.models import PlayerAchievement, QuizSession
+from apps.accounts.models import Player
+from .models import LeaderboardEntry
+
+
+@receiver(post_save, sender=QuizSession)
+def update_leaderboard_on_quiz(sender, instance: QuizSession, **kwargs):
+    """Обновить лидерборд при завершении квиза."""
+    if instance.finished_at is None:
+        return  # только для завершённых сессий
+
+    player = instance.player
+    # Пересчитать total_score из всех завершённых сессий
+    quiz_total = QuizSession.objects.filter(
+        player=player, finished_at__isnull=False
+    ).aggregate(total=Sum("score"))["total"] or 0
+
+    # Обновить поле игрока
+    Player.objects.filter(pk=player.pk).update(total_score=quiz_total)
+
+    # Обновить LeaderboardEntry
+    quizzes_count = QuizSession.objects.filter(player=player, finished_at__isnull=False).count()
+    achievement_count = PlayerAchievement.objects.filter(player=player).count()
+
+    entry, _ = LeaderboardEntry.objects.get_or_create(player=player)
+    entry.total_score = quiz_total
+    entry.levels_completed = quizzes_count  # repurposed: теперь хранит количество квизов
+    entry.achievements_count = achievement_count
+    entry.save(update_fields=["total_score", "levels_completed", "achievements_count", "updated_at"])
+
+    # Пересчитать ранги
+    for rank, e in enumerate(LeaderboardEntry.objects.order_by("-total_score"), start=1):
+        if e.rank != rank:
+            LeaderboardEntry.objects.filter(pk=e.pk).update(rank=rank)
+
+
+@receiver(post_save, sender=PlayerAchievement)
+def update_leaderboard_on_achievement(sender, instance: PlayerAchievement, **kwargs):
+    """Обновить счётчик достижений."""
+    count = PlayerAchievement.objects.filter(player=instance.player).count()
+    LeaderboardEntry.objects.filter(player=instance.player).update(achievements_count=count)
+```
+
+**Проверка:** `uv run python manage.py check`
+**Коммит:** `feat: Phase 4 — leaderboard signal для QuizSession`
+
+---
+
+## Phase 5: Backend — Фикстуры (150 вопросов)
+
+### [ ] 5.1 Создать fixtures/questions.json
+
+**Что сделать:**
+- Создать файл `backend/fixtures/questions.json`
+- 150 вопросов: по 30 на каждую категорию (FLORA, WATER, WASTE, ENERGY, FAUNA)
+- Формат Django fixture, pk = 1..150
+- Каждый вопрос — запись Question + 2-4 записи Answer
+- Answer pk начинается с 1001 (чтобы не конфликтовать)
+- Примерная структура:
+```json
+[
   {
-    "app_name": "EcoGame",
-    "tagline": "Tabiatni asrang, o'yin orqali o'rganang",
-    "nav": {
-      "home": "Bosh sahifa",
-      "play": "O'ynash",
-      "leaderboard": "Yetakchilar",
-      "education": "Ta'lim",
-      "profile": "Profil",
-      "login": "Kirish",
-      "register": "Ro'yxatdan o'tish",
-      "logout": "Chiqish"
-    },
-    "game": {
-      "air_quality": "Havo sifati",
-      "water_purity": "Suv tozaligi",
-      "soil_health": "Tuproq holati",
-      "biodiversity": "Biologik xilma-xillik",
-      "score": "Ball",
-      "level": "Daraja",
-      "start": "Boshlash",
-      "pause": "Pauza",
-      "resume": "Davom ettirish",
-      "quit": "Chiqish",
-      "level_complete": "Daraja tugallandi!",
-      "loading": "Yuklanmoqda..."
-    },
-    "auth": {
-      "username": "Foydalanuvchi nomi",
-      "password": "Parol",
-      "confirm_password": "Parolni tasdiqlang",
-      "nickname": "Nik",
-      "email": "Elektron pochta",
-      "login_btn": "Kirish",
-      "register_btn": "Ro'yxatdan o'tish",
-      "no_account": "Hisobingiz yo'qmi?",
-      "have_account": "Hisobingiz bormi?"
-    },
-    "levels": {
-      "locked": "Qulflangan",
-      "unlocked": "Ochiq",
-      "completed": "Bajarildi",
-      "required_score": "Kerakli ball"
-    },
-    "achievements": {
-      "title": "Yutuqlar",
-      "unlocked_at": "Ochilgan"
-    },
-    "education": {
-      "title": "Ekologik ta'lim",
-      "read_more": "Ko'proq o'qish",
-      "fact_of_day": "Kunning ekologik fakti"
+    "model": "game.question",
+    "pk": 1,
+    "fields": {
+      "text_uz": "O'zbekistonda bir yilda o'rtacha necha kun quyoshli bo'ladi?",
+      "category": "ENERGY",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "O'zbekiston quyoshli kunlar soni bo'yicha dunyoda yetakchi o'rinlardan birini egallaydi. Bu quyosh energiyasini keng qo'llash imkonini beradi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston Quyosh energiyasi instituti",
+      "related_article": null,
+      "is_active": true
     }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1001,
+    "fields": {"question": 1, "text_uz": "150 kun", "is_correct": false, "order": 1}
+  },
+  {
+    "model": "game.answer",
+    "pk": 1002,
+    "fields": {"question": 1, "text_uz": "200 kun", "is_correct": false, "order": 2}
+  },
+  {
+    "model": "game.answer",
+    "pk": 1003,
+    "fields": {"question": 1, "text_uz": "300 kun", "is_correct": true, "order": 3}
+  },
+  {
+    "model": "game.answer",
+    "pk": 1004,
+    "fields": {"question": 1, "text_uz": "350 kun", "is_correct": false, "order": 4}
   }
-  ```
+]
+```
 
-- Создать `src/i18n/index.ts`:
-  ```typescript
-  import uz from "./uz.json";
+- Написать 150 вопросов в узбекском языке (латиница) по темам:
+  - ENERGY (pk 1-30): quyosh energiyasi, LED, energiya tejash, CO2, elektr, vetro, bio-gaz
+  - WATER (pk 31-60): Orol dengizi, Amudaryo, Sirdaryo, suv tejash, ifloslanish, qayta ishlatish
+  - FLORA (pk 61-90): daraxt, o'rmon, o'simlik, fotosintez, CO2 yutish, ekish
+  - WASTE (pk 91-120): plastik, shisha, qog'oz, batareya, elektron, decomposition, qayta ishlash
+  - FAUNA (pk 121-150): Qizil kitob, jayron, qunduz, qushlar, baliq, tabiat qo'riqxonalari
 
-  type NestedKey<T extends object> = {
-    [K in keyof T]: T[K] extends object ? `${string & K}.${string & keyof T[K]}` : string & K;
-  }[keyof T];
+- Каждый вопрос должен содержать реальный образовательный факт об экологии Узбекистана
 
-  export function t(key: string): string {
-    const keys = key.split(".");
-    let result: unknown = uz;
-    for (const k of keys) {
-      if (typeof result === "object" && result !== null) {
-        result = (result as Record<string, unknown>)[k];
-      }
-    }
-    return typeof result === "string" ? result : key;
-  }
-  ```
-
-- Создать `src/stores/authStore.ts`, `src/stores/gameStore.ts`, `src/stores/uiStore.ts`
-  - authStore: player, tokens, isAuthenticated, login, logout, fetchProfile
-  - gameStore: currentLevel, currentSession, progress, ecosystem, score, levels, actions, achievements
-  - uiStore: isLoading, сеттеры
-
-**Проверка:** `npm run build` без ошибок.
-**Коммит:** `feat: добавить Zustand stores и i18n (узбекский)`
+**Проверка:** `uv run python manage.py loaddata fixtures/questions.json`
+**Коммит:** `feat: Phase 5 — 150 quiz вопросов на узбекском языке`
 
 ---
 
-### [x] 5.3 Настроить роутинг и создать Layout, страницы
+### [ ] 5.2 Создать fixtures/quiz_achievements.json
 
 **Что сделать:**
-- Создать `src/components/Layout.tsx` — с навигацией на узбекском
-- Создать `src/components/ProtectedRoute.tsx` — редирект на /login
-- Создать `src/components/HealthBar.tsx` — переиспользуемая полоска индикатора (с цветовой кодировкой red/yellow/green)
-- Создать `src/components/LoadingScreen.tsx` — спиннер + EcoFact
-- Настроить React Router в `src/App.tsx`:
-  ```typescript
-  // Routes:
-  // / → MainMenu
-  // /login → LoginPage
-  // /register → RegisterPage
-  // /play/:levelId → GamePage (protected)
-  // /leaderboard → LeaderboardPage
-  // /education → EducationPage
-  // /education/:id → EducationDetailPage
-  // /profile → ProfilePage (protected)
-  ```
-- Создать все страницы (полноценные, не плейсхолдеры):
-  - `LoginPage.tsx` — форма, zod валидация, тексты на узбекском
-  - `RegisterPage.tsx` — форма с полями, валидация
-  - `MainMenu.tsx` — сетка уровней, статистика игрока, EcoFact
-  - `LeaderboardPage.tsx` — таблица с рангами
-  - `EducationPage.tsx` — список статей с фильтрами
-  - `EducationDetailPage.tsx` — полная статья
-  - `ProfilePage.tsx` — достижения, статистика
+- Создать `backend/fixtures/quiz_achievements.json` с 10 достижениями:
+```json
+[
+  {"model": "game.achievement", "pk": 1, "fields": {"key": "first_quiz", "name_uz": "Birinchi viktorina", "description_uz": "Birinchi viktorinani tugatdingiz!", "icon": "star", "condition_type": "QUIZ_COUNT", "condition_value": {"count": 1}}},
+  {"model": "game.achievement", "pk": 2, "fields": {"key": "quiz_veteran", "name_uz": "Viktorina ishqibozi", "description_uz": "10 ta viktorinani tugatdingiz", "icon": "trophy", "condition_type": "QUIZ_COUNT", "condition_value": {"count": 10}}},
+  {"model": "game.achievement", "pk": 3, "fields": {"key": "perfect_score", "name_uz": "Mukammal natija", "description_uz": "Viktorinada barcha savollarga to'g'ri javob berdingiz", "icon": "crown", "condition_type": "SCORE", "condition_value": {"min_score": 1000}}},
+  {"model": "game.achievement", "pk": 4, "fields": {"key": "streak_5", "name_uz": "5 ta ketma-ket", "description_uz": "5 ta savolga ketma-ket to'g'ri javob berdingiz", "icon": "fire", "condition_type": "STREAK", "condition_value": {"min_streak": 5}}},
+  {"model": "game.achievement", "pk": 5, "fields": {"key": "streak_10", "name_uz": "O'n ketma-ket", "description_uz": "10 ta savolga ketma-ket to'g'ri javob berdingiz", "icon": "bolt", "condition_type": "STREAK", "condition_value": {"min_streak": 10}}},
+  {"model": "game.achievement", "pk": 6, "fields": {"key": "eco_expert", "name_uz": "Eko-mutaxassis", "description_uz": "1500 ball to'pladingiz", "icon": "leaf", "condition_type": "SCORE", "condition_value": {"min_score": 1500}}},
+  {"model": "game.achievement", "pk": 7, "fields": {"key": "eco_master", "name_uz": "Eko-ustoz", "description_uz": "5000 ball to'pladingiz", "icon": "crown", "condition_type": "SCORE", "condition_value": {"min_score": 5000}}},
+  {"model": "game.achievement", "pk": 8, "fields": {"key": "water_lover", "name_uz": "Suv himoyachisi", "description_uz": "Suv bo'yicha 20 ta viktorina o'tdingiz", "icon": "water", "condition_type": "QUIZ_COUNT", "condition_value": {"count": 20}}},
+  {"model": "game.achievement", "pk": 9, "fields": {"key": "nature_friend", "name_uz": "Tabiat do'sti", "description_uz": "500 ball to'pladingiz", "icon": "tree", "condition_type": "SCORE", "condition_value": {"min_score": 500}}},
+  {"model": "game.achievement", "pk": 10, "fields": {"key": "marathon_hero", "name_uz": "Marafon qahramoni", "description_uz": "Marafon rejimida 20 ta savolga to'g'ri javob berdingiz", "icon": "star", "condition_type": "STREAK", "condition_value": {"min_streak": 20}}}
+]
+```
 
-**Проверка:** `npm run build`. `npm run dev` → проверить все страницы, навигация работает, тексты на узбекском.
-**Коммит:** `feat: добавить роутинг, Layout, все страницы приложения`
+**Проверка:** `uv run python manage.py loaddata fixtures/quiz_achievements.json`
+**Коммит:** `feat: Phase 5 — quiz achievements fixture (10 достижений)`
 
 ---
 
-## Phase 6: Phaser.js — Базовая настройка
+## Phase 6: Backend — Тесты
 
-### [x] 6.1 Создать EventBus и PhaserGame компонент
+### [ ] 6.1 Написать тесты для Quiz моделей и сервиса
 
 **Что сделать:**
-- Создать `src/game/events/EventBus.ts`:
-  ```typescript
-  import Phaser from "phaser";
+- Обновить `backend/apps/game/tests/test_models.py` — убрать тесты для EcoAction/ActionLog, добавить:
+  - TestQuestionModel: create, defaults, difficulty validation, active filter
+  - TestAnswerModel: ordering, FK cascade, is_correct
+  - TestQuizSessionModel: create quick/marathon/daily, default values
+  - TestQuizAnswerModel: unique_together constraint
+  - TestDailyChallengeModel: date unique
+- Обновить `backend/apps/game/tests/test_services.py` — убрать ecosystem тесты, добавить:
+  - TestCalculateScore: correct with streak 1/2/3/4, incorrect=0, time bonus
+  - TestStartSession: quick mode 10 questions, category mode filters, marathon <= 100
+  - TestSubmitAnswer: correct increases streak, wrong resets, marathon game_over
+  - TestEndSession: sets finished_at, calculates accuracy, updates player.total_score
+  - TestDailyChallenge: auto-creates, returns same for same date
+  - TestGetRankTitle: boundary values (0, 99, 100, 499, 500, ...)
+  - TestCheckAchievements: SCORE threshold, QUIZ_COUNT threshold, STREAK threshold
+- Обновить `backend/apps/game/tests/test_api.py` — убрать sandbox тесты, добавить:
+  - TestQuizSessionAPI: start, unauthorized, invalid mode
+  - TestSubmitAnswerAPI: correct/incorrect, duplicate, wrong session
+  - TestEndSessionAPI: returns results with accuracy
+  - TestDailyChallengeAPI: get challenge, is_completed flag
+  - TestPlayerStatsAPI: returns stats after quiz
+  - TestFullQuizFlow: start → answer×10 → end → check score
+- Обновить `backend/apps/leaderboard/tests/test_api.py`: добавить test для QuizSession signal
 
-  export type GameEventMap = {
-    "score-updated": { score: number };
-    "ecosystem-changed": { air: number; water: number; soil: number; biodiversity: number };
-    "action-performed": { actionKey: string; positionX: number; positionY: number };
-    "achievement-unlocked": { achievementKey: string; nameUz: string; icon: string };
-    "level-completed": { levelNumber: number };
-    "game-paused": Record<string, never>;
-    "game-resumed": Record<string, never>;
+**Проверка:** `uv run pytest -v` — все тесты зелёные
+**Коммит:** `test: Phase 6 — тесты для Quiz моделей, сервиса и API`
+
+---
+
+## Phase 7: Frontend — Убрать Phaser, Quiz Types & Store
+
+### [ ] 7.1 Удалить Phaser, обновить types, создать quizStore
+
+**Что сделать:**
+- Удалить директорию: `frontend/src/game/` (все файлы)
+- Удалить файлы: `frontend/src/pages/GamePage.tsx`, `frontend/src/components/game/ToolbarPanel.tsx`, `frontend/src/components/game/ToolButton.tsx`, `frontend/src/components/HealthBar.tsx`, `frontend/src/hooks/useGameSync.ts`
+- В `frontend/package.json` — убрать `"phaser"` из dependencies
+- Запустить `cd frontend && npm uninstall phaser`
+- Полностью переписать `frontend/src/api/types.ts`:
+  - УБРАТЬ: EcosystemState, MapZone, MapConfig, EcoAction, ActionItem, EcosystemConfig
+  - ОСТАВИТЬ: Player, AuthTokens, RegisterData, LoginData, PaginatedResponse, ActionCategory, Achievement, PlayerAchievement, LeaderboardEntry, EducationalContent, EcoFact
+  - ДОБАВИТЬ quiz types: QuestionType, QuizMode, Answer, Question, QuizSession, AnswerResult, QuizResult, PlayerStats, DailyChallenge, SortingItem
+- Создать `frontend/src/api/quiz.ts`:
+  ```typescript
+  import { apiClient } from "./client";
+  import type { ... } from "./types";
+
+  export const quizApi = {
+    getQuestions: (params?) => apiClient.get<PaginatedResponse<Question>>("/game/quiz/questions/", { params }),
+    startSession: (data: { mode: QuizMode; category?: ActionCategory }) =>
+      apiClient.post<QuizSession & { questions: Question[] }>("/game/quiz/sessions/", data),
+    submitAnswer: (sessionId: number, data: { question_id: number; answer_id: number | null; time_spent_ms: number }) =>
+      apiClient.post<AnswerResult>(`/game/quiz/sessions/${sessionId}/answer/`, data),
+    endSession: (sessionId: number) =>
+      apiClient.post<QuizResult>(`/game/quiz/sessions/${sessionId}/end/`),
+    getDailyChallenge: () => apiClient.get<DailyChallenge>("/game/quiz/daily/"),
+    getStats: () => apiClient.get<PlayerStats>("/game/quiz/stats/"),
+    getAchievements: () => apiClient.get<PaginatedResponse<Achievement>>("/game/achievements/"),
+    getMyAchievements: () => apiClient.get<PaginatedResponse<PlayerAchievement>>("/game/achievements/my/"),
+    submitMiniGameScore: (data: { score: number; correct_count: number; total_items: number }) =>
+      apiClient.post("/game/mini-game/sort/score/", data),
   };
-
-  export const EventBus = new Phaser.Events.EventEmitter();
   ```
+- Создать `frontend/src/stores/quizStore.ts` с Zustand:
+  - State: currentSession, questions, currentQuestionIndex, lastResult, showExplanation, score, streak, correctCount, quizResult, playerStats, dailyChallenge, isLoading
+  - Actions: startQuiz, submitAnswer, nextQuestion, endQuiz, loadStats, loadDailyChallenge, reset
+- Обновить `frontend/src/App.tsx`:
+  - Убрать импорты GamePage
+  - Добавить роуты: `/quiz/quick`, `/quiz/category/:category`, `/quiz/daily`, `/quiz/marathon`, `/quiz/results/:sessionId`, `/mini-game/sort`
+  - Временно поставить заглушки для новых страниц (QuizPlayPage, QuizResultsPage, EcoSortingPage) — просто `<div>Coming soon</div>`
 
-- Создать `src/game/data/constants.ts`:
-  ```typescript
-  export const GAME_WIDTH = 800;
-  export const GAME_HEIGHT = 600;
-  export const TILE_SIZE = 32;
-  export const INDICATOR_MAX = 100;
-  export const INDICATOR_COMPLETION_THRESHOLD = 80;
-  export const SYNC_INTERVAL_MS = 15_000;
-  export const DECAY_RATE = { air: 0.02, water: 0.015, soil: 0.01, biodiversity: 0.025 };
-  export const ECOSYSTEM_SCALE = 10.0;
-  ```
-
-- Создать `src/game/PhaserGame.tsx`:
-  ```typescript
-  interface PhaserGameProps {
-    levelId: number;
-    levelConfig: Level;
-    onEcosystemChange: (state: EcosystemState) => void;
-    onScoreChange: (score: number) => void;
-    onActionPerformed: (actionKey: string, posX: number, posY: number) => void;
-    onAchievementUnlocked: (key: string, nameUz: string) => void;
-    onLevelCompleted: (levelNumber: number) => void;
-  }
-
-  export const PhaserGame = forwardRef<Phaser.Game, PhaserGameProps>(({ levelConfig, ...handlers }, ref) => {
-    const gameContainerRef = useRef<HTMLDivElement>(null);
-    const gameRef = useRef<Phaser.Game | null>(null);
-
-    useEffect(() => {
-      if (!gameContainerRef.current) return;
-
-      const config: Phaser.Types.Core.GameConfig = {
-        type: Phaser.AUTO,
-        width: GAME_WIDTH,
-        height: GAME_HEIGHT,
-        parent: gameContainerRef.current,
-        scene: [BootScene, PreloadScene, MainScene, HUDScene],
-        physics: { default: "arcade", arcade: { debug: false } },
-        scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
-        audio: { disableWebAudio: false },
-      };
-
-      const game = new Phaser.Game(config);
-      game.registry.set("levelConfig", levelConfig);
-      gameRef.current = game;
-
-      // Подписки на EventBus
-      EventBus.on("ecosystem-changed", handlers.onEcosystemChange);
-      EventBus.on("score-updated", (d: { score: number }) => handlers.onScoreChange(d.score));
-      // ... остальные события
-
-      return () => {
-        EventBus.removeAllListeners();
-        game.destroy(true);
-        gameRef.current = null;
-      };
-    }, []);
-
-    return <div ref={gameContainerRef} className="w-full h-full" />;
-  });
-  ```
-
-- Создать `src/pages/GamePage.tsx`:
-  - Загружает данные уровня, рендерит `<PhaserGame>`, синхронизирует с API
-
-**Проверка:** `npm run build` без ошибок.
-**Коммит:** `feat: добавить EventBus и PhaserGame компонент`
+**Проверка:** `npm run build`
+**Коммит:** `feat: Phase 7 — убрать Phaser, добавить quiz types/store/API`
 
 ---
 
-### [x] 6.2 Создать игровые сцены (Boot, Preload, HUD)
+## Phase 8: Frontend — Quiz UI компоненты
+
+### [ ] 8.1 Создать компоненты для квиза
 
 **Что сделать:**
-- Создать `src/game/scenes/BootScene.ts`:
-  - preload: загрузить логотип (минимальный ассет)
-  - create: перейти к PreloadScene
+- Создать директорию `frontend/src/components/quiz/`
+- Создать файлы (все компоненты с TypeScript, Tailwind CSS, без emoji кроме иконок Lucide):
 
-- Создать `src/game/scenes/PreloadScene.ts`:
-  - preload: создать прогресс-бар, загрузить все ассеты:
-    ```typescript
-    // Тайлсет
-    this.load.image("tileset", "/assets/sprites/tileset.png");
-    // Спрайты
-    this.load.spritesheet("trees", "/assets/sprites/trees.png", { frameWidth: 32, frameHeight: 64 });
-    this.load.spritesheet("player", "/assets/sprites/player.png", { frameWidth: 32, frameHeight: 48 });
-    // UI
-    this.load.image("ui-icons", "/assets/ui/icons.png");
-    // Звуки
-    this.load.audio("plant", "/assets/audio/plant.mp3");
-    this.load.audio("ambient", "/assets/audio/ambient.mp3");
-    ```
-  - create: показать случайный EcoFact (из registry), через 2 сек → MainScene
+**`QuizHeader.tsx`** — прогресс-бар + счёт + стрик:
+```tsx
+interface QuizHeaderProps {
+  current: number; total: number; score: number; streak: number; streakMultiplier: number;
+}
+// Показать: "Savol N / M" + прогресс-бар + "Jami: X ball" + streak badge если streak >= 2
+```
 
-- Создать `src/game/scenes/HUDScene.ts`:
-  - Параллельная сцена с индикаторами
-  - Четыре HealthBar-подобных полоски (рисуются через Phaser Graphics)
-  - Счёт в правом верхнем углу
-  - Кнопка паузы
-  - Метод `showAchievementToast(nameUz, icon)` — анимированное уведомление
-  - Слушает EventBus "ecosystem-changed" и "score-updated"
+**`Timer.tsx`** — круговой SVG таймер:
+```tsx
+interface TimerProps { timeLimit: number; onTimeUp: () => void; active: boolean; }
+// SVG circle с stroke-dashoffset анимацией
+// Цвет: зелёный > 50%, жёлтый > 20%, красный <= 20%
+// useEffect с 100ms interval для плавности
+```
 
-- Создать `src/game/scenes/MainScene.ts` (скелет):
-  - create(): инициализировать TileMap, создать зоны
-  - update(): вызывать ecosystem tick
+**`AnswerButton.tsx`** — кнопка ответа:
+```tsx
+interface AnswerButtonProps {
+  answer: Answer; state: "idle" | "selected" | "correct" | "incorrect";
+  onClick: () => void; disabled: boolean;
+}
+// idle: белый border. selected: синий. correct: зелёный + CheckCircle. incorrect: красный + XCircle
+```
 
-**Проверка:** `npm run build`. `npm run dev` → /play/1 → загрузочный экран с прогресс-баром, затем пустая сцена с HUD.
-**Коммит:** `feat: добавить игровые сцены Boot, Preload, HUD`
+**`QuestionCard.tsx`** — карточка вопроса:
+```tsx
+interface QuestionCardProps {
+  question: Question; onAnswer: (answerId: number | null) => void;
+  answerState: Record<number, "idle" | "selected" | "correct" | "incorrect">;
+  disabled: boolean;
+}
+// Заголовок вопроса + grid 2 колонки AnswerButton
+// TRUE_FALSE: 2 кнопки в ряд (Ha / Yo'q)
+```
+
+**`StreakCounter.tsx`** — бейдж стрика:
+```tsx
+interface StreakCounterProps { streak: number; multiplier: number; }
+// Показывать только если streak >= 2
+// 🔥 иконка (Flame из lucide) + "5 ketma-ket! ×2.0"
+```
+
+**`ExplanationPanel.tsx`** — пояснение после ответа:
+```tsx
+interface ExplanationPanelProps {
+  isCorrect: boolean; explanation: string; pointsEarned: number;
+  onNext: () => void; articleId?: number;
+}
+// Зелёный/красный banner + explanation text + "Maqolani o'qish" ссылка + "Keyingi" кнопка
+```
+
+**`CategorySelector.tsx`** — выбор категории:
+```tsx
+// Grid из 5 категорий с иконками (TreeDeciduous/Droplets/Recycle/SunMedium/Bird)
+// onClick возвращает ActionCategory
+```
+
+**`ModeCard.tsx`** — карточка режима для главной:
+```tsx
+interface ModeCardProps {
+  title: string; description: string; icon: React.ReactNode;
+  color: string; onClick: () => void; badge?: string;
+}
+```
+
+**Проверка:** `npm run build`
+**Коммит:** `feat: Phase 8 — Quiz UI компоненты (Timer, QuestionCard, ExplanationPanel, ...)`
 
 ---
 
-### [x] 6.3 Создать игровые ассеты (спрайты, звуки)
+## Phase 9: Frontend — Quiz Pages
+
+### [ ] 9.1 Создать QuizPlayPage и QuizResultsPage
 
 **Что сделать:**
-- Создать директории: `public/assets/sprites/`, `public/assets/audio/`, `public/assets/ui/`
-- Создать минимальные PNG ассеты (пиксель-арт или цветные прямоугольники):
-  - `tileset.png` (320x320, 10x10 тайлов 32x32) — трава, земля, вода, песок, камень, цветок, дерево-пень, мусор, панель, забор
-  - `trees.png` (96x64, 3 кадра: саженец, маленькое дерево, большое дерево)
-  - `water.png` (64x32, 2 кадра: грязная, чистая вода)
-  - `player.png` (32x48, спрайт персонажа)
-  - `animals.png` (32x32 x4 кадра: птица, рыба, олень, бабочка)
-  - `icons.png` (16x16 x4: иконки воздух, вода, почва, биоразнообразие)
-  - `particles.png` (8x8, для эффектов)
-  - Если создание PNG затруднено — скачать свободные ассеты с OpenGameArt.org и указать лицензию
-- Создать `public/assets/audio/`:
-  - `ambient.mp3` — фоновые звуки природы (30 сек, loop)
-  - `plant.mp3` — звук посадки
-  - `water_clean.mp3` — звук воды
-  - `achievement.mp3` — звук достижения
-  - `click.mp3` — звук клика
-  - Можно использовать свободные звуки с freesound.org или сгенерировать через Tone.js
+- Создать `frontend/src/pages/QuizPlayPage.tsx`:
+  - Props: не нужны, читает mode из URL params / route state
+  - useParams для category в category mode
+  - useEffect: при монтировании вызвать `quizStore.startQuiz(mode, category)`
+  - Флоу: loading → вопросы → [показать вопрос → ответ → 2-3 сек explanation → следующий] → results
+  - Компоненты: QuizHeader + Timer + QuestionCard + ExplanationPanel
+  - При завершении: navigate(`/quiz/results/${session.id}`)
+  - Для Marathon: при `is_game_over=true` сразу завершить
 
-**Проверка:** Все файлы существуют в `public/assets/`, PreloadScene загружает без 404 ошибок в консоли.
-**Коммит:** `feat: добавить игровые ассеты (спрайты, звуки)`
+- Создать `frontend/src/pages/QuizResultsPage.tsx`:
+  - useParams: sessionId
+  - Показать: итоговый счёт (крупно), accuracy (%), max_streak, rank_title
+  - Список разблокированных достижений (если есть)
+  - Кнопки: "Yana o'ynash" → /quiz/quick, "Bosh menyu" → /
+  - Анимация появления (CSS transition)
 
----
+- Полностью переписать `frontend/src/pages/MainMenu.tsx`:
+  - Hero секция (зелёный градиент) с названием EcoGame
+  - Сетка 2×2 карточек режимов: Quick Play, By Category, Daily Challenge, Marathon
+  - Карточка мини-игры "Chiqindi saralash"
+  - Статистика игрока (если авторизован): rank_title, total_score, daily streak
+  - Daily eco-fact (оставить)
+  - Ссылки: Education, Leaderboard
 
-## Phase 7: Phaser.js — Геймплей
-
-### [x] 7.1 Создать игровые объекты
-
-**Что сделать:**
-- Создать `src/game/objects/InteractiveZone.ts`:
-  - Extends Phaser.GameObjects.Zone
-  - `zoneType: "FLORA" | "WATER" | "WASTE" | "ENERGY" | "FAUNA"`
-  - Пульсирующая подсветка при hover
-  - Метод `showActionMenu(actions: EcoAction[])` — показать меню действий
-  - Метод `hideActionMenu()`
-
-- Создать `src/game/objects/Tree.ts`:
-  - Extends Phaser.GameObjects.Sprite
-  - Состояния через enum: EMPTY, SAPLING, GROWING, MATURE
-  - Метод `plant()` — анимация роста (tween scale)
-
-- Создать `src/game/objects/WaterSource.ts`:
-  - Tint для визуализации (0x8B4513 → 0x4169E1)
-  - Метод `clean()` — tween изменения tint
-
-- Создать `src/game/objects/WasteBin.ts`, `SolarPanel.ts`, `Animal.ts` — аналогично
-
-**Проверка:** `npm run build` без TypeScript ошибок.
-**Коммит:** `feat: добавить игровые объекты (Tree, WaterSource, WasteBin, SolarPanel, Animal)`
-
----
-
-### [x] 7.2 Создать системы (EcosystemManager, ActionSystem, ScoreSystem)
-
-**Что сделать:**
-- Создать `src/game/systems/EcosystemManager.ts`:
-  ```typescript
-  export class EcosystemManager {
-    private state: EcosystemState;
-    private decayTimer = 0;
-
-    constructor(initialState: EcosystemState) {
-      this.state = { ...initialState };
-    }
-
-    tick(delta: number): void {
-      this.decayTimer += delta;
-      if (this.decayTimer < 1000) return; // Каждую секунду
-      this.decayTimer = 0;
-
-      // Деградация
-      this.state.air = Math.max(0, this.state.air - DECAY_RATE.air);
-      this.state.water = Math.max(0, this.state.water - DECAY_RATE.water);
-      this.state.soil = Math.max(0, this.state.soil - DECAY_RATE.soil);
-      this.state.biodiversity = Math.max(0, this.state.biodiversity - DECAY_RATE.biodiversity);
-
-      // Compound effect: высокое биоразнообразие улучшает всё
-      if (this.state.biodiversity > 50) {
-        const bonus = (this.state.biodiversity - 50) * 0.001;
-        this.state.air = Math.min(100, this.state.air + bonus);
-        this.state.water = Math.min(100, this.state.water + bonus);
-        this.state.soil = Math.min(100, this.state.soil + bonus);
-      }
-
-      EventBus.emit("ecosystem-changed", { ...this.state });
-    }
-
-    applyAction(action: Pick<EcoAction, "air_impact" | "water_impact" | "soil_impact" | "biodiversity_impact">): void {
-      this.state.air = Math.min(100, Math.max(0, this.state.air + action.air_impact * ECOSYSTEM_SCALE));
-      this.state.water = Math.min(100, Math.max(0, this.state.water + action.water_impact * ECOSYSTEM_SCALE));
-      this.state.soil = Math.min(100, Math.max(0, this.state.soil + action.soil_impact * ECOSYSTEM_SCALE));
-      this.state.biodiversity = Math.min(100, Math.max(0, this.state.biodiversity + action.biodiversity_impact * ECOSYSTEM_SCALE));
-      EventBus.emit("ecosystem-changed", { ...this.state });
-    }
-
-    getState(): EcosystemState { return { ...this.state }; }
-    isLevelComplete(): boolean {
-      return this.state.air >= 80 && this.state.water >= 80 && this.state.soil >= 80 && this.state.biodiversity >= 80;
-    }
+- Обновить `frontend/src/i18n/uz.json`:
+  ```json
+  "quiz": {
+    "title": "Ekologik viktorina",
+    "quick": "Tezkor o'yin",
+    "quick_desc": "10 ta tasodifiy savol",
+    "category": "Kategoriya bo'yicha",
+    "category_desc": "Bir kategoriyadan barcha savollar",
+    "daily": "Kunlik vazifa",
+    "daily_desc": "Har kuni yangi savollar + bonus",
+    "marathon": "Marafon",
+    "marathon_desc": "Birinchi xatogacha o'ynang",
+    "correct": "To'g'ri!",
+    "wrong": "Noto'g'ri!",
+    "time_up": "Vaqt tugadi!",
+    "next_question": "Keyingi savol",
+    "results": "Natijalar",
+    "accuracy": "Aniqlik",
+    "your_score": "Sizning ballingiz",
+    "best_streak": "Eng uzun ketma-ketlik",
+    "play_again": "Qayta o'ynash",
+    "select_category": "Kategoriya tanlang"
+  },
+  "categories": {
+    "FLORA": "O'simliklar",
+    "WATER": "Suv",
+    "WASTE": "Chiqindi",
+    "ENERGY": "Energiya",
+    "FAUNA": "Hayvonlar"
+  },
+  "mini_game": {
+    "title": "Chiqindi saralash",
+    "desc": "Chiqindilarni to'g'ri idishga joylashtiring",
+    "recyclable": "Qayta ishlanadigan",
+    "organic": "Organik",
+    "landfill": "Poligon",
+    "drag_hint": "Chiqindini ushlab, kerakli idishga tashlang",
+    "correct": "To'g'ri!",
+    "wrong": "Noto'g'ri idish!"
   }
   ```
 
-- Создать `src/game/systems/ActionSystem.ts`:
-  - Управляет кулдаунами (Map<actionKey, lastUsedTime>)
-  - Метод `performAction(zone, action, scene)` — проверяет кулдаун, запускает анимацию объекта, вызывает ecosystemManager.applyAction(), emit "action-performed"
-  - Метод `canPerform(actionKey)` — проверяет кулдаун
-
-- Создать `src/game/systems/ScoreSystem.ts`:
-  - Накапливает score
-  - Метод `addPoints(points, combo?)` — добавить очки с опциональным комбо-множителем
-  - Emit "score-updated"
-
-**Проверка:** `npm run build` без ошибок.
-**Коммит:** `feat: добавить системы EcosystemManager, ActionSystem, ScoreSystem`
+**Проверка:** `npm run build`
+**Коммит:** `feat: Phase 9 — QuizPlayPage, QuizResultsPage, новая MainMenu`
 
 ---
 
-### [x] 7.3 Реализовать полноценный MainScene
+## Phase 10: Frontend — Eco-sorting мини-игра
+
+### [ ] 10.1 Создать мини-игру сортировки отходов
 
 **Что сделать:**
-- Полностью реализовать `src/game/scenes/MainScene.ts`:
-  - `create()`:
-    1. Получить levelConfig из `this.game.registry.get("levelConfig")`
-    2. Создать фоновый слой тайлов (программно, без Tiled):
-       ```typescript
-       // Создать TileMap программно
-       const map = this.make.tilemap({ width: config.map_config.width, height: config.map_config.height, tileWidth: TILE_SIZE, tileHeight: TILE_SIZE });
-       const tileset = map.addTilesetImage("tileset");
-       const layer = map.createBlankLayer("ground", tileset);
-       // Заполнить базовыми тайлами (трава)
-       layer.fill(0); // tile index 0 = grass
-       ```
-    3. Создать InteractiveZone для каждой зоны из config.map_config.zones
-    4. Создать игровые объекты в зонах (Tree в FLORA зонах, WaterSource в WATER, и т.д.)
-    5. Инициализировать EcosystemManager, ActionSystem, ScoreSystem
-    6. Настроить camera bounds (если карта больше экрана — прокрутка)
-    7. Запустить HUDScene: `this.scene.launch("HUDScene")`
-    8. Настроить input: `this.input.on("pointerdown", ...)`
+- Создать `frontend/src/data/sortingItems.ts`:
+```typescript
+export type BinType = "recyclable" | "organic" | "landfill";
 
-  - `update(time, delta)`:
-    1. `this.ecosystemManager.tick(delta)`
-    2. Обновить визуальное состояние:
-       - Фоновый цвет (небо) на основе air_quality
-       - Tint воды на основе water_purity
-       - Видимость животных на основе biodiversity
-    3. Проверить level completion: если `ecosystemManager.isLevelComplete()` → `EventBus.emit("level-completed", ...)`
+export interface SortingItem {
+  id: string;
+  name_uz: string;
+  emoji: string;  // здесь можно emoji т.к. это игровые иконки предметов
+  correct_bin: BinType;
+  points: number;
+}
 
-  - Обработка кликов на InteractiveZone:
-    - Показать выпадающее меню с доступными действиями (Phaser Graphics + Text)
-    - При выборе действия: `actionSystem.performAction(zone, action, this)`
+export const SORTING_ITEMS: SortingItem[] = [
+  { id: "plastic_bottle", name_uz: "Plastik shisha", emoji: "🧴", correct_bin: "recyclable", points: 10 },
+  { id: "glass_jar", name_uz: "Shisha banka", emoji: "🫙", correct_bin: "recyclable", points: 10 },
+  { id: "paper", name_uz: "Qog'oz", emoji: "📄", correct_bin: "recyclable", points: 10 },
+  { id: "cardboard", name_uz: "Karton quti", emoji: "📦", correct_bin: "recyclable", points: 10 },
+  { id: "aluminum_can", name_uz: "Alyuminiy banka", emoji: "🥫", correct_bin: "recyclable", points: 10 },
+  { id: "food_waste", name_uz: "Ovqat qoldiqlari", emoji: "🍌", correct_bin: "organic", points: 10 },
+  { id: "leaves", name_uz: "Barglar", emoji: "🍂", correct_bin: "organic", points: 10 },
+  { id: "eggshell", name_uz: "Tuxum po'chog'i", emoji: "🥚", correct_bin: "organic", points: 10 },
+  { id: "coffee_grounds", name_uz: "Qahva qoldig'i", emoji: "☕", correct_bin: "organic", points: 10 },
+  { id: "flower", name_uz: "Gul", emoji: "🌻", correct_bin: "organic", points: 10 },
+  { id: "battery", name_uz: "Batareya", emoji: "🔋", correct_bin: "landfill", points: 15 },
+  { id: "phone", name_uz: "Eski telefon", emoji: "📱", correct_bin: "landfill", points: 15 },
+  { id: "diaper", name_uz: "Bir martalik taomil", emoji: "🧷", correct_bin: "landfill", points: 10 },
+  { id: "chip_bag", name_uz: "Chips paketi", emoji: "🛍️", correct_bin: "landfill", points: 10 },
+  { id: "styrofoam", name_uz: "Styrofoam", emoji: "📦", correct_bin: "landfill", points: 10 },
+  { id: "metal_can", name_uz: "Metal quti", emoji: "🥫", correct_bin: "recyclable", points: 10 },
+  { id: "newspaper", name_uz: "Gazeta", emoji: "📰", correct_bin: "recyclable", points: 10 },
+  { id: "fruit_peel", name_uz: "Meva po'chog'i", emoji: "🍊", correct_bin: "organic", points: 10 },
+  { id: "light_bulb", name_uz: "Chiroq (energiyatejamkor)", emoji: "💡", correct_bin: "landfill", points: 15 },
+  { id: "wire", name_uz: "Sim", emoji: "🔌", correct_bin: "landfill", points: 15 },
+];
+```
 
-- Реализовать простое меню действий (ActionMenu) как часть MainScene — список кнопок при клике на зону
+- Создать `frontend/src/components/mini-game/WasteBin.tsx`:
+  - Props: binType, label, color, onDrop, isHighlighted
+  - HTML5 onDragOver + onDrop handlers
+  - Визуал: большой контейнер с иконкой + label, highlight при drag over
 
-**Проверка:** `npm run dev` → /play/1 → карта рендерится, клик на зону показывает меню действий, выполнение действия меняет индикаторы в HUD.
-**Коммит:** `feat: реализовать полноценный MainScene с геймплеем`
+- Создать `frontend/src/components/mini-game/WasteItem.tsx`:
+  - Props: item, draggable
+  - HTML5 draggable=true + onDragStart
+  - Показывает emoji + name_uz
+
+- Создать `frontend/src/components/mini-game/SortingGame.tsx`:
+  - State: currentItemIndex, score, correctCount, phase ("playing" | "feedback" | "done")
+  - Shuffle items при старте
+  - Показывает текущий item + 3 bin'а
+  - Обрабатывает drop: correct/incorrect flash, pause 1.5s, следующий item
+  - Touch support: onTouchStart + три tap-target zone (для мобильных: кнопки под item)
+  - Завершение при всех 20 items или 5 ошибках
+
+- Создать `frontend/src/pages/EcoSortingPage.tsx`:
+  - Импортирует SortingGame
+  - При завершении: вызвать `quizApi.submitMiniGameScore(...)` + показать результат
+  - Кнопки: "Yana o'ynash", "Bosh menyu"
+
+- Добавить роут в `App.tsx`: `<Route path="/mini-game/sort" element={<ProtectedRoute><EcoSortingPage /></ProtectedRoute>} />`
+- Добавить карточку мини-игры в MainMenu с ссылкой `/mini-game/sort`
+
+**Проверка:** `npm run build`
+**Коммит:** `feat: Phase 10 — Eco-sorting мини-игра (drag & drop, 20 предметов)`
 
 ---
 
-### [x] 7.4 Подключить Phaser к API синхронизации
+## Phase 11: ВКР — Дипломная работа с нуля
+
+### [ ] 11.1 Написать Введение
 
 **Что сделать:**
-- Обновить `src/pages/GamePage.tsx`:
-  - При маунте: вызвать `gameStore.startGame(levelId)` → POST /sessions/start/
-  - Буфер действий: `const actionsBuffer = useRef<ActionData[]>([])`
-  - Слушать EventBus "action-performed" → push в буфер
-  - `useEffect` с `setInterval(SYNC_INTERVAL_MS)`:
-    - Если буфер не пуст: POST /sessions/{id}/actions/ с буфером, очистить буфер
-  - Слушать "level-completed" → POST /sessions/{id}/end/ → показать поздравление → navigate("/")
-  - Cleanup: при анмаунте → отправить остаток буфера → POST /sessions/{id}/end/
+- Полностью переписать `docs/vkr/introduction.md`
+- Объём: 5-6 страниц (≈ 2500-3000 слов)
+- Структура:
+  ```
+  ВВЕДЕНИЕ
+  
+  Актуальность темы (1-1.5 стр):
+  - Экологические проблемы Узбекистана (Аральское море, загрязнение воздуха, воды)
+  - Необходимость экологического образования молодёжи
+  - Роль цифровых технологий и геймификации в образовании
+  - Нехватка образовательных игр на узбекском языке
 
-- Создать `src/hooks/useGameSync.ts`:
-  ```typescript
-  export function useGameSync(sessionId: number | null) {
-    const actionsBufferRef = useRef<ActionData[]>([]);
+  Степень изученности проблемы (0.5 стр):
+  - Краткий обзор мировых исследований геймификации в образовании
+  - Ссылки на 3-4 научных источника
+  
+  Цель работы: разработать веб-приложение "Экологическая викторина" на узбекском языке
+  
+  Задачи (пронумерованный список 5-7 пунктов):
+  1. Анализ существующих аналогов экологических образовательных игр
+  2. Проектирование архитектуры системы
+  3. Разработка базы данных вопросов на узбекском языке
+  4. Реализация квиз-движка с системой очков и достижений
+  5. Реализация мини-игры сортировки отходов
+  6. Тестирование и публикация приложения
+  
+  Объект исследования: процесс экологического образования молодёжи
+  Предмет исследования: программное обеспечение для геймифицированного экологического обучения
+  
+  Методы исследования: анализ литературы, прототипирование, тестирование
+  
+  Практическая значимость:
+  - Первая экологическая викторина на узбекском языке
+  - Открытый исходный код, возможность масштабирования
+  
+  Структура работы:
+  - Глава 1: анализ предметной области
+  - Глава 2: проектирование
+  - Глава 3: реализация
+  - Глава 4: тестирование
+  ```
+- Форматирование: Times New Roman 14pt, межстрочный 1.5, поля 30/10/20/20
 
-    const addAction = useCallback((action: ActionData) => {
-      actionsBufferRef.current.push(action);
-    }, []);
+**Проверка:** Файл существует, объём 2500+ слов
+**Коммит:** `docs: ВКР — Введение (актуальность, цель, задачи)`
 
-    const flush = useCallback(async () => {
-      if (!sessionId || actionsBufferRef.current.length === 0) return;
-      const actions = [...actionsBufferRef.current];
-      actionsBufferRef.current = [];
-      await submitActions(sessionId, actions);
-    }, [sessionId]);
+---
 
-    useEffect(() => {
-      const interval = setInterval(flush, SYNC_INTERVAL_MS);
-      return () => { clearInterval(interval); flush(); };
-    }, [flush]);
+### [ ] 11.2 Написать Главу 1 — Аналитическая часть
 
-    return { addAction };
-  }
+**Что сделать:**
+- Полностью переписать `docs/vkr/chapter1_analysis.md`
+- Объём: 15-20 страниц (≈ 8000-10000 слов)
+- Структура:
+  ```
+  ГЛАВА 1. АНАЛИЗ ПРЕДМЕТНОЙ ОБЛАСТИ
+  
+  1.1 Экологические проблемы Узбекистана (3-4 стр)
+      - Катастрофа Аральского моря (исторический контекст, последствия)
+      - Загрязнение воздуха в Ташкенте и промышленных регионах
+      - Деградация почв и опустынивание
+      - Проблема бытовых отходов и переработки
+      - Сокращение биоразнообразия (Красная книга Узбекистана)
+      - Государственные программы по охране природы
+      - Ссылки: UNEP, UN Uzbekistan, IISD, WorldBank
+  
+  1.2 Геймификация в образовании (3-4 стр)
+      - Определение геймификации (Deterding et al., 2011)
+      - Психологические основы: мотивация, вовлечённость, reward systems
+      - Теория самодетерминации и внешняя/внутренняя мотивация
+      - Эффективность геймификации в экологическом образовании (coralQuest, EcoHeroes)
+      - Форматы: викторины, симуляторы, ролевые игры
+      - Исследования Kahoot, Quizizz — влияние на усвоение материала
+      - Таксономия Блума: от запоминания до применения через игровые механики
+  
+  1.3 Анализ существующих аналогов (4-5 стр)
+      - Таблица сравнения 5-6 аналогов:
+        | Система | Тип | Язык | Экологический контент | Геймификация | Платформа |
+      - Kahoot (общий quiz, не экологический)
+      - Quizizz (аналогичный)
+      - EcoHeroes (экологический, мобильный, MIT App Inventor)
+      - coralQuest (морская экология, лидерборд)
+      - EPA Games (экологический, но не викторина)
+      - Viktorina UZ (узбекский quiz, но не экологический)
+      - Вывод: ниша узбекскоязычных экологических викторин пустая
+  
+  1.4 Требования к разрабатываемой системе (2-3 стр)
+      - Функциональные требования (12-15 пунктов)
+      - Нефункциональные требования (производительность, безопасность, доступность)
+      - Требования к контенту (язык, тематика, источники)
+  
+  1.5 Обоснование выбора технологий (2-3 стр)
+      - Django REST Framework vs Flask/FastAPI/Node.js
+      - React vs Vue/Angular
+      - PostgreSQL vs MySQL/MongoDB
+      - Docker + Coolify для деплоя
+      - Сравнительная таблица технологий
+  
+  Выводы по главе 1 (0.5 стр)
   ```
 
-**Проверка:** Сыграть уровень → проверить в Django Admin что ActionLog записи появляются, GameProgress обновляется.
-**Коммит:** `feat: подключить Phaser к API синхронизации`
+**Проверка:** Файл существует, объём 8000+ слов, ≥5 источников цитируется
+**Коммит:** `docs: ВКР — Глава 1 (анализ предметной области, аналоги, требования)`
 
 ---
 
-## Phase 8: Достижения, полировка, интеграция
-
-### [x] 8.1 Реализовать систему достижений и уведомлений
+### [ ] 11.3 Написать Главу 2 — Проектная часть
 
 **Что сделать:**
-- В `src/game/systems/ActionSystem.ts` добавить проверку достижений:
-  - После каждого действия: `checkAchievements(actionsPerformed, score, ecosystemState)`
-  - Сравнить с условиями из `gameStore.achievements`
-  - Если unlock → `EventBus.emit("achievement-unlocked", ...)`
-  - `EventBus.emit` не `emit` дважды — хранить Set уже выданных
-
-- В `src/game/scenes/HUDScene.ts` реализовать `showAchievementToast()`:
-  - Phaser Graphics + Text с фоном
-  - Tween: slide-in снизу → пауза 3 сек → fade-out
-  - Звук `achievement.mp3`
-
-- В `src/pages/GamePage.tsx`:
-  - Слушать "achievement-unlocked" → `toast.success(nameUz)` через react-hot-toast
-  - Обновить `gameStore.achievements`
-
-**Проверка:** Посадить 1 дерево → toast "Birinchi daraxt" появляется в HUD и в React UI.
-**Коммит:** `feat: реализовать систему достижений и уведомлений`
-
----
-
-### [x] 8.2 Создать карты для всех 4 уровней и добавить звуки
-
-**Что сделать:**
-- Обновить MainScene для поддержки разных размеров карт и наборов зон (из levelConfig.map_config)
-- Создать генератор карт `src/game/data/mapGenerator.ts`:
-  - Функция `generateMap(config: MapConfig)` — возвращает расположение тайлов и объектов
-  - Level 1 (Kichik hovli): маленький двор с домом, садом, арыком
-  - Level 2 (Mahalla): несколько домов, парк, канал
-  - Level 3 (Shahar): городские блоки, река, завод
-  - Level 4 (Viloyat): разнообразный ландшафт, символическое "Оральское озеро"
-
-- Добавить звуки в MainScene:
-  ```typescript
-  this.sound.add("ambient", { loop: true, volume: 0.3 }).play();
+- Полностью переписать `docs/vkr/chapter2_design.md`
+- Объём: 15-20 страниц (≈ 8000-10000 слов)
+- Структура:
   ```
-- Добавить звуки в объекты при выполнении действий
+  ГЛАВА 2. ПРОЕКТИРОВАНИЕ СИСТЕМЫ
+  
+  2.1 Архитектура системы (2-3 стр)
+      - Клиент-серверная архитектура
+      - Компонентная диаграмма (текстовое описание + Mermaid)
+      - Взаимодействие: React (Vite) → nginx → Django REST → PostgreSQL
+      - JWT аутентификация: access/refresh token flow
+      - Docker Compose сервисы и их взаимодействие
+      - Рисунок X.1 — Архитектура системы
+  
+  2.2 Проектирование базы данных (4-5 стр)
+      - ER-диаграмма всех сущностей (текстовое Mermaid описание)
+      - Описание каждой таблицы/модели:
+        Player, Question, Answer, QuizSession, QuizAnswer, DailyChallenge,
+        Achievement, PlayerAchievement, MiniGameScore, LeaderboardEntry,
+        EducationalContent, EcoFact
+      - Обоснование выбора типов данных
+      - Индексы и ограничения (unique_together, validators)
+      - Рисунок X.2 — ER-диаграмма базы данных
+  
+  2.3 Проектирование REST API (3-4 стр)
+      - Принципы REST API в проекте
+      - Таблица всех endpoints (метод, путь, авторизация, описание)
+      - Примеры запросов/ответов для ключевых endpoints
+      - JWT аутентификация: заголовок Authorization: Bearer <token>
+      - Пагинация ответов
+      - Обработка ошибок (400, 401, 403, 404)
+  
+  2.4 Алгоритм системы оценивания (2-3 стр)
+      - Формула расчёта очков (streak_multiplier × time_factor × BASE)
+      - Таблица streak multiplier
+      - Пример расчёта для разных сценариев
+      - Алгоритм проверки достижений
+      - Псевдокод check_achievements
+      - Рисунок X.3 — Блок-схема расчёта очков
+  
+  2.5 Проектирование интерфейса (3-4 стр)
+      - Use Case диаграмма (текстовое описание)
+      - Wireframes страниц (текстовое описание макетов):
+        Главное меню → Квиз-экран → Результаты → Мини-игра → Профиль
+      - Принципы UX: доступность, отклик <100мс, мобильный дизайн
+      - Цветовая схема (зелёная тематика, экологические цвета)
+      - Рисунок X.4 — Прототип главного меню
+      - Рисунок X.5 — Прототип экрана вопроса
+  
+  Выводы по главе 2 (0.5 стр)
+  ```
 
-- Кнопка mute в HUDScene — переключает `this.sound.mute`
-
-**Проверка:** Все 4 уровня запускаются, карты различаются визуально, звук играет.
-**Коммит:** `feat: создать карты для 4 уровней, добавить звуки`
+**Проверка:** Файл существует, объём 8000+ слов
+**Коммит:** `docs: ВКР — Глава 2 (архитектура, БД, API, алгоритм оценивания)`
 
 ---
 
-### [x] 8.3 Полировка UI, responsive дизайн, финальный E2E тест
+### [ ] 11.4 Написать Главу 3 — Реализация
 
 **Что сделать:**
-- Обновить CSS/Tailwind стили:
-  - Природная цветовая палитра (emerald, sky, amber, green)
-  - Анимации переходов (CSS transitions)
-  - Красивые карточки уровней
-  - Стилизация форм
+- Полностью переписать `docs/vkr/chapter3_implementation.md`
+- Объём: 15-20 страниц (≈ 8000-10000 слов)
+- Структура:
+  ```
+  ГЛАВА 3. РЕАЛИЗАЦИЯ СИСТЕМЫ
+  
+  3.1 Реализация серверной части (4-5 стр)
+      - Django проект: структура, settings (dev/prod), BASE_DIR
+      - Модель Question: код + объяснение полей
+      - QuizService.calculate_score: листинг + объяснение алгоритма
+      - QuizService.submit_answer: листинг ключевых частей
+      - QuizService.end_session + обновление лидерборда через signal
+      - API View QuizSessionStartView: код + объяснение
+      - Рисунок X.1 — Скриншот Django Admin (Question)
+  
+  3.2 Реализация клиентской части (4-5 стр)
+      - Zustand quizStore: структура состояния
+      - QuizPlayPage: компонентная иерархия, useEffect для old quiz
+      - Timer: SVG circle + useEffect interval
+      - AnswerButton: state machine (idle/selected/correct/incorrect)
+      - ExplanationPanel: показ после ответа
+      - Рисунок X.2 — Скриншот экрана вопроса в браузере
+      - Рисунок X.3 — Скриншот результатов квиза
+  
+  3.3 Реализация мини-игры (3-4 стр)
+      - HTML5 Drag and Drop API: draggable, onDragStart, onDrop
+      - Touch Events: touchstart/touchend для мобильных
+      - SortingGame компонент: state machine игры
+      - Алгоритм проверки правильности бина
+      - Рисунок X.4 — Скриншот мини-игры сортировки
+  
+  3.4 Аутентификация и безопасность (2-3 стр)
+      - JWT: access (15 мин) + refresh (7 дней) токены
+      - Анонимный пользователь: session_key, auto-create, claim account
+      - CORS настройки для prod
+      - HTTPS через Traefik + Let's Encrypt
+      - Валидация на уровне сериализаторов DRF
+  
+  3.5 Деплой и DevOps (2-3 стр)
+      - Docker Compose: 4 сервиса (postgres, backend, frontend, nginx)
+      - Dockerfile backend: python 3.12-slim, uv, gunicorn
+      - Dockerfile frontend: Node 20 multi-stage, nginx:alpine
+      - Coolify: GUI деплой, auto SSL, rollback
+      - GitHub → Coolify CI/CD (manual deploy)
+      - Рисунок X.5 — Скриншот Coolify dashboard
+  
+  Выводы по главе 3 (0.5 стр)
+  ```
+- Включить реальные фрагменты кода (листинги) из проекта
 
-- Responsive дизайн:
-  - Mobile (375px): вертикальный layout, touch controls
-  - Tablet (768px): адаптивная сетка
-  - Desktop (1280px): полный layout
-
-- E2E тест (выполнить вручную, задокументировать):
-  1. Открыть / → MainMenu
-  2. Нажать "Ro'yxatdan o'tish" → RegisterPage
-  3. Зарегистрироваться → автологин
-  4. Выбрать Level 1 → /play/1
-  5. Подождать загрузку → MainScene
-  6. Кликнуть на FLORA зону → меню действий
-  7. Выбрать "Daraxt ekish" → анимация, индикаторы растут, счёт +20
-  8. Получить достижение "Birinchi daraxt" → toast
-  9. Сыграть до завершения уровня (все >= 80) → поздравление
-  10. Вернуться в MainMenu → Level 2 разблокирован
-  11. Перейти /leaderboard → свой ник в таблице
-  12. Перейти /education → прочитать статью
-  13. Перейти /profile → достижения видны
-
-**Проверка:** Весь E2E сценарий работает без ошибок.
-**Коммит:** `feat: полировка UI, responsive дизайн, E2E проверка`
+**Проверка:** Файл существует, объём 8000+ слов, включает листинги кода
+**Коммит:** `docs: ВКР — Глава 3 (реализация сервера, клиента, мини-игры, деплой)`
 
 ---
 
-## Phase 9: Docker и деплой на ecogame.fullfocus.dev
-
-### [x] 9.1 Создать production Docker-конфигурацию
+### [ ] 11.5 Написать Главу 4 — Тестирование
 
 **Что сделать:**
-- Обновить `backend/Dockerfile` для production (с collectstatic, gunicorn)
-- Создать `frontend/Dockerfile` (multi-stage: build + nginx):
-  ```dockerfile
-  FROM node:20-alpine AS builder
-  WORKDIR /app
-  COPY package.json package-lock.json ./
-  RUN npm ci
-  COPY . .
-  ARG VITE_API_URL
-  ENV VITE_API_URL=$VITE_API_URL
-  RUN npm run build
+- Полностью переписать `docs/vkr/chapter4_testing.md`
+- Объём: 5-8 страниц (≈ 2500-4000 слов)
+- Структура:
+  ```
+  ГЛАВА 4. ТЕСТИРОВАНИЕ И ОЦЕНКА
 
-  FROM nginx:alpine
-  COPY --from=builder /app/dist /usr/share/nginx/html
-  COPY nginx.conf /etc/nginx/conf.d/default.conf
+  4.1 Стратегия тестирования (1 стр)
+      - Пирамида тестирования: Unit → Integration → E2E
+      - Инструменты: pytest (backend), TypeScript strict mode (frontend)
+
+  4.2 Модульное тестирование (2-3 стр)
+      - Backend: pytest + pytest-django
+      - Таблица тест-кейсов по модулям:
+        | Класс теста | Кол-во тестов | Покрытие |
+        | TestQuizService | 10 | scoring, streak, achievements |
+        | TestQuestionModel | 5 | validation, ordering |
+        | TestQuizAPIFlow | 8 | start/answer/end |
+      - Результат: N тестов пройдено, 0 failed
+      - Листинг ключевого теста (TestCalculateScore)
+      - Рисунок X.1 — Вывод pytest -v
+
+  4.3 Интеграционное тестирование (1-2 стр)
+      - Full quiz flow test: start → answer×10 → end → check leaderboard
+      - Тест сигнала лидерборда
+      - Тест анонимной аутентификации и claim
+
+  4.4 Тестирование интерфейса (1-2 стр)
+      - Тестирование в Chrome DevTools (mobile emulation)
+      - Проверка на реальном мобильном устройстве (touch events)
+      - Браузерная совместимость: Chrome, Firefox, Safari
+      - Рисунок X.2 — Скриншот на мобильном устройстве
+
+  4.5 Нагрузочное тестирование (0.5-1 стр)
+      - Среда: production сервер (89.167.60.96)
+      - Инструмент: Apache Benchmark / curl
+      - Результат: X req/sec при N одновременных пользователях
+
+  Выводы по главе 4 (0.5 стр)
   ```
-- Создать `frontend/nginx.conf` (SPA конфиг):
-  ```nginx
-  server {
-    listen 80;
-    root /usr/share/nginx/html;
-    index index.html;
-    location / { try_files $uri $uri/ /index.html; }
-  }
-  ```
-- Создать `nginx/Dockerfile` и `nginx/nginx.conf` (reverse proxy):
-  - / → frontend:80
-  - /api/ → backend:8000
-  - /admin/ → backend:8000
-  - /static/ → файлы
-- Создать production `docker-compose.yml` с сервисами: postgres, backend, frontend, nginx
-- Создать `backend/entrypoint.sh`:
+
+**Проверка:** Файл существует, объём 2500+ слов
+**Коммит:** `docs: ВКР — Глава 4 (тестирование: unit, integration, UI)`
+
+---
+
+### [ ] 11.6 Написать Заключение, Список литературы, Приложения
+
+**Что сделать:**
+- Переписать `docs/vkr/conclusion.md` (2-3 стр):
+  - Что было сделано (перечисление выполненных задач)
+  - Научная новизна (первая экологическая викторина на узбекском)
+  - Практическая значимость
+  - Перспективы развития (мобильное приложение, AR, мультиплеер)
+
+- Полностью переписать `docs/vkr/bibliography.md` — 20+ источников в ГОСТ Р 7.0.5-2008:
+  - Отечественные источники: постановления правительства Узбекистана по экологии
+  - Международные: UNEP, FAO, UNESCO доклады по экологии
+  - Научные статьи: геймификация в образовании (Deterding 2011, Hamari 2014, Deci 2000)
+  - Книги: Django docs, React docs
+  - Интернет-ресурсы (не более 5)
+
+- Переписать `docs/vkr/appendix_a_code.md`:
+  - QuizService.calculate_score (полный листинг)
+  - QuizService.submit_answer (полный листинг)
+  - QuestionSerializer (полный листинг)
+  - quizStore.ts (полный листинг)
+  - Timer.tsx (полный листинг)
+
+- Переписать `docs/vkr/appendix_b_screenshots.md`:
+  - Список и описания 8-10 скриншотов приложения
+  - (Скриншоты будут добавлены после деплоя)
+
+- Переписать `docs/vkr/appendix_c_er_diagram.md`:
+  - Полная ER-диаграмма в Mermaid синтаксисе
+  - Описание каждой связи
+
+- Создать `docs/vkr/appendix_d_api_docs.md`:
+  - Полная документация всех API endpoints
+  - Для каждого: Method, URL, Auth, Request body, Response, Errors
+
+**Проверка:** Все файлы в docs/vkr/ существуют, bibliography.md содержит 20+ источников
+**Коммит:** `docs: ВКР — Заключение, Библиография, Приложения А-Г`
+
+---
+
+## Phase 12: Deploy + Презентация
+
+### [ ] 12.1 Задеплоить на production и протестировать
+
+**Что сделать:**
+- Проверить `docker-compose.yml` — убедиться что конфигурация актуальна
+- Подключиться по SSH: `ssh -p 2222 deploy@89.167.60.96`
+- Выполнить на сервере:
   ```bash
-  #!/bin/bash
-  uv run python manage.py migrate
-  uv run python manage.py collectstatic --noinput
-  exec uv run gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 3
+  cd /opt/coolify/applications/<app-id>
+  git pull origin main
+  docker compose up --build -d
+  docker compose exec backend uv run python manage.py migrate
+  docker compose exec backend uv run python manage.py loaddata fixtures/questions.json fixtures/quiz_achievements.json fixtures/educational_content.json fixtures/eco_facts.json
   ```
+- Проверить: `curl https://ecogame.fullfocus.dev/api/v1/game/quiz/questions/`
+- Проверить: `curl https://ecogame.fullfocus.dev/api/v1/game/quiz/daily/` — с JWT токеном
+- Открыть https://ecogame.fullfocus.dev в браузере:
+  - Анонимный вход → квиз Quick play → 10 вопросов → результаты → лидерборд
+  - Мини-игра → сортировка → результат
+  - Регистрация → профиль → достижения
 
-**Проверка:** `docker compose up --build` — все 4 сервиса работают, http://localhost — сайт доступен.
-**Коммит:** `chore: добавить production Docker конфигурацию`
+**Проверка:** Все страницы работают, квиз завершается, счёт попадает в лидерборд
+**Коммит:** `chore: production deploy quiz pivot — ecogame.fullfocus.dev`
 
 ---
 
-### [x] 9.2 Настроить GitHub репозиторий и задеплоить через Coolify
+### [ ] 12.2 Создать презентацию (Gamma)
 
 **Что сделать:**
-- Создать репозиторий на GitHub:
-  ```bash
-  gh repo create ecogame-diploma --private --source=. --push
-  # или через GitHub web UI, затем git remote add origin ... && git push -u origin main
-  ```
-- Убедиться что .env НЕ в репозитории (проверить .gitignore)
-- Войти в Coolify: https://coolify.fullfocus.dev
-- Создать новый проект "EcoGame"
-- Добавить Resource → Docker Compose → выбрать GitHub репозиторий
-- Настроить Environment Variables в Coolify (НЕ хранить в файлах!):
-  - DJANGO_SECRET_KEY (сгенерировать: `python -c "import secrets; print(secrets.token_urlsafe(50))"`)
-  - DJANGO_DEBUG=False
-  - DJANGO_ALLOWED_HOSTS=ecogame.fullfocus.dev
-  - DATABASE_URL=postgres://ecogame:STRONG_PASSWORD@postgres:5432/ecogame
-  - POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD
-  - CORS_ALLOWED_ORIGINS=https://ecogame.fullfocus.dev
-  - VITE_API_URL=https://ecogame.fullfocus.dev/api/v1
-- Настроить домен: ecogame.fullfocus.dev → SSL через Let's Encrypt
-- Нажать Deploy
-- После деплоя загрузить данные:
-  ```bash
-  ssh -p 2222 deploy@89.167.60.96 "cd ecogame && docker compose exec backend uv run python manage.py loaddata fixtures/levels.json fixtures/eco_actions.json fixtures/achievements.json fixtures/educational_content.json fixtures/eco_facts.json"
-  ```
+- Создать презентацию через Gamma (https://gamma.app) или в Google Slides
+- 12-15 слайдов:
+  1. Титульный: EcoGame — Экологическая викторина (имя, группа, научрук)
+  2. Актуальность: экологические проблемы Узбекистана
+  3. Нехватка решений: нет экологических викторин на узбекском
+  4. Цель и задачи
+  5. Демо: скриншоты главного меню + режимы квиза
+  6. Демо: экран вопроса с таймером и стриком
+  7. Демо: результаты + достижения
+  8. Мини-игра: сортировка отходов
+  9. Архитектура системы
+  10. База данных: ER-диаграмма
+  11. Тестирование: N тестов, результаты
+  12. Deploy: ecogame.fullfocus.dev — демо в прямом эфире
+  13. Заключение: что сделано + научная новизна + перспективы
+  14. Список литературы (ключевые источники)
+  15. Спасибо + QR-код на сайт
 
-**Проверка:** Открыть https://ecogame.fullfocus.dev — сайт работает по HTTPS, игра загружается, API отвечает.
-**Коммит:** `chore: настроить деплой на ecogame.fullfocus.dev через Coolify`
+- Сохранить ссылку на презентацию в `docs/presentation/README.md`
 
----
-
-## Phase 10: Документация — ВКР и презентация
-
-### [x] 10.1 Написать Главу 1 ВКР: Аналитическая часть
-
-**Что сделать:**
-- Создать `docs/vkr/chapter1_analysis.md` (или .docx), структура:
-
-  **1.1 Анализ экологической ситуации в Узбекистане** (~5 стр.)
-  - Статистика загрязнения воздуха: ссылка на IQAir, данные по Ташкенту
-  - Проблема Аральского моря: история, текущее состояние (осталось 10% воды), последствия
-  - Проблема твёрдых отходов: статистика ТБО в Узбекистане
-  - Биоразнообразие: Красная книга Узбекистана — сколько видов под угрозой
-  - Государственные программы: "Yashil makon", стратегия развития 2022-2026
-
-  **1.2 Геймификация в экологическом образовании** (~5 стр.)
-  - Определение и принципы геймификации
-  - Теория потока (Mihaly Csikszentmihalyi) — почему игры увлекают
-  - Обзор аналогов (таблица: Eco, Recycle Rush, Toca Nature, SimEarth, EcoSim)
-  - Эффективность: исследования о влиянии игр на экологическое поведение
-  - Преимущество узбекского языка для целевой аудитории
-
-  **1.3 Обзор технологий** (~5 стр.)
-  - Backend: Django vs FastAPI vs Node.js (таблица сравнения) → выбор Django (экосистема, ORM, безопасность)
-  - Frontend: React vs Vue vs Angular → выбор React (размер сообщества, Phaser интеграция)
-  - Game Engine: Phaser.js vs PixiJS vs Three.js → выбор Phaser.js (2D специализация, тайлмапы)
-  - Docker и Coolify для деплоя
-
-  **1.4 Выводы по главе 1** (~1 стр.)
-
-- Оформление (ГОСТ Р 7.0.5-2008): Times New Roman 14pt, 1.5 интервал, отступ первой строки 1.25 см, поля: лево 2.5, право 1, верх 2, низ 2 см
-- Минимум 15 источников в этой главе
-
-**Проверка:** Файл создан, минимум 15 страниц текста, 15+ ссылок на источники.
-**Коммит:** `docs: написать Главу 1 ВКР — аналитическая часть`
-
----
-
-### [x] 10.2 Написать Главу 2 ВКР: Проектная часть
-
-**Что сделать:**
-- Создать `docs/vkr/chapter2_design.md`:
-
-  **2.1 Архитектура приложения** (~4 стр.)
-  - Диаграмма компонентов (Mermaid или Excalidraw): Client → Nginx → Backend API → PostgreSQL; Client → Phaser Game Engine
-  - Клиент-серверная архитектура с описанием
-  - Диаграмма развёртывания: Docker containers на сервере 89.167.60.96, домен ecogame.fullfocus.dev
-
-  **2.2 Проектирование базы данных** (~4 стр.)
-  - ER-диаграмма всех моделей (с атрибутами и связями)
-  - Описание каждой таблицы (назначение, ключевые поля)
-  - Обоснование использования JSONField для map_config и condition_value
-
-  **2.3 REST API** (~3 стр.)
-  - Таблица всех эндпоинтов (метод, путь, auth, описание)
-  - Пример запроса и ответа для POST /sessions/{id}/actions/
-  - JWT аутентификация: flow диаграмма
-
-  **2.4 Игровая механика** (~5 стр.)
-  - Концепция экосимулятора: 4 индикатора, деградация, compound effects
-  - Система уровней: описание 4 уровней с требованиями
-  - Таблица действий: ключ → влияние на индикаторы → очки
-  - Система достижений: таблица условий
-  - State Machine диаграмма игры
-  - Use Case диаграмма
-
-  **2.5 Пользовательский интерфейс** (~3 стр.)
-  - Wireframes/макеты: MainMenu, GamePage, Leaderboard, Education, Profile
-  - Мобильная адаптация
-
-  **2.6 Выводы** (~1 стр.)
-
-- Создать диаграммы в Mermaid и вставить в документ как код (рендерится при просмотре на GitHub)
-
-**Проверка:** Файл создан, все диаграммы присутствуют, 15-20 страниц.
-**Коммит:** `docs: написать Главу 2 ВКР — проектная часть`
-
----
-
-### [x] 10.3 Написать Главу 3 ВКР: Реализация
-
-**Что сделать:**
-- Создать `docs/vkr/chapter3_implementation.md`:
-
-  **3.1 Среда разработки** (~2 стр.)
-  - Инструменты с версиями
-  - Структура монорепозитория (дерево файлов)
-
-  **3.2 Серверная часть** (~5 стр.)
-  - Модели: код Player, GameProgress, GameService.perform_actions
-  - Админ-панель Unfold (скриншоты)
-  - Django signals для лидерборда
-
-  **3.3 Клиентская часть** (~5 стр.)
-  - Zustand store архитектура
-  - EventBus паттерн: схема + код PhaserGame.tsx
-  - Сцены: Boot → Preload → Main → HUD (скриншоты)
-  - EcosystemManager: формулы + код tick()
-
-  **3.4 Локализация** (~2 стр.)
-  - i18n файл uz.json (фрагмент)
-  - Образовательный контент на узбекском (примеры фактов и статей)
-
-  **3.5 Развёртывание** (~3 стр.)
-  - Docker Compose схема
-  - Nginx конфигурация
-  - Coolify deployment скриншоты
-  - SSL сертификат
-
-  **3.6 Выводы** (~1 стр.)
-
-- Сделать скриншоты (не менее 10):
-  - Unfold Admin с данными
-  - MainMenu страница
-  - Игровой процесс (карта + HUD)
-  - После выполнения действия (изменение индикаторов)
-  - Toast достижения
-  - Leaderboard
-  - Education статья
-  - Profile страница
-  - Coolify Dashboard
-
-**Проверка:** Файл создан, 15-20 страниц, 10+ скриншотов вставлены.
-**Коммит:** `docs: написать Главу 3 ВКР — реализация`
-
----
-
-### [x] 10.4 Написать Главу 4, Введение, Заключение, Список литературы
-
-**Что сделать:**
-- Создать `docs/vkr/chapter4_testing.md`:
-  - 4.1 Модульное тестирование: вывод `pytest -v --tb=short`, coverage report (цель 80%+)
-  - 4.2 Интеграционное: описание E2E сценария из Phase 8.3
-  - 4.3 Пользовательское: описание метода (анкета для 5-10 студентов группы)
-  - 4.4 Результаты: таблица метрик (время сессии, уровней пройдено, средняя оценка)
-  - 4.5 Выводы
-
-- Создать `docs/vkr/introduction.md`:
-  - Актуальность (проблемы экологии + польза геймификации)
-  - Цель: "Разработать веб-приложение 'EcoGame' — экологическую игру-симулятор на узбекском языке"
-  - Задачи (5-6 пунктов):
-    1. Анализ экологической ситуации и аналогов
-    2. Проектирование архитектуры и базы данных
-    3. Разработка серверной части (Django REST API)
-    4. Разработка клиентской части (React + Phaser.js)
-    5. Создание образовательного контента на узбекском
-    6. Тестирование и развёртывание
-  - Объект, предмет, методы, практическая значимость
-
-- Создать `docs/vkr/conclusion.md`:
-  - Перечисление достигнутых результатов по задачам
-  - Новизна: первая экологическая игра-симулятор на узбекском языке
-  - Перспективы: мобильное приложение, мультиплеер, новые уровни (Aralsiz dengiz), AR-режим
-
-- Создать `docs/vkr/bibliography.md` — минимум 30 источников:
-  - 10+ книг (Django, React, Phaser.js, экология, геймификация, образование)
-  - 10+ статей (научные журналы по экологическому образованию через игры)
-  - 5+ интернет-ресурсов (документация, IQAir, UNEP данные)
-  - 5+ нормативных документов (экологическое законодательство Узбекистана)
-  - ГОСТ Р 7.0.5-2008 оформление
-
-- Создать `docs/vkr/appendices/`:
-  - appendix_a_code.md — листинги ключевых файлов
-  - appendix_b_screenshots.md — скриншоты всех экранов
-  - appendix_c_er_diagram.md — полноразмерная ER-диаграмма
-
-**Проверка:** Все разделы ВКР созданы, общий объём оценочно 60-80 страниц, 30+ источников.
-**Коммит:** `docs: написать Главу 4, Введение, Заключение, Список литературы`
-
----
-
-### [x] 10.5 Создать презентацию для защиты
-
-**Что сделать:**
-- Создать `docs/presentation/slides.md` (структура слайдов):
-
-  **Слайд 1: Титульный**
-  - Название: "Разработка экологической игры по охране окружающей среды (на узбекском языке)"
-  - Автор: Рузибаев Жахонгир Дилмуратович, 036-21 SMMr
-  - Руководители: Узакова М.А., Абидова Ш.Б.
-  - Год: 2025
-
-  **Слайд 2: Актуальность**
-  - Проблемы экологии Узбекистана (3 пункта с цифрами)
-  - QR-код на сайт игры
-
-  **Слайд 3: Цель и задачи**
-  - Цель (1 предложение)
-  - 6 задач (список)
-
-  **Слайд 4: Обзор аналогов**
-  - Таблица сравнения (4 игры vs EcoGame)
-
-  **Слайд 5: Архитектура**
-  - Диаграмма компонентов
-
-  **Слайд 6: Стек технологий**
-  - Логотипы: Django + DRF + PostgreSQL / React + Phaser.js + Zustand / Docker + Coolify
-
-  **Слайд 7: База данных**
-  - ER-диаграмма (упрощённая)
-
-  **Слайд 8: Игровая механика**
-  - Схема: 4 индикатора → действия → изменения → достижения
-
-  **Слайд 9: Демо — MainMenu**
-  - Скриншот MainMenu
-
-  **Слайд 10: Демо — Геймплей**
-  - Скриншот игры (карта + HUD до и после действий)
-
-  **Слайд 11: Демо — Дополнительные страницы**
-  - Скриншоты: Leaderboard, Education, Profile
-
-  **Слайд 12: Развёртывание**
-  - Схема Docker + Coolify
-  - URL: ecogame.fullfocus.dev с QR-кодом
-
-  **Слайд 13: Результаты тестирования**
-  - pytest coverage: X%
-  - Таблица E2E сценариев
-
-  **Слайд 14: Заключение и перспективы**
-  - 3 достигнутых результата
-  - 3 перспективы развития
-
-  **Слайд 15: Спасибо за внимание**
-  - URL игры + QR-код
-  - Контакты
-
-- Если возможно — конвертировать в PPTX или Google Slides
-
-**Проверка:** Структура презентации создана, 15 слайдов, все скриншоты из работающего приложения.
-**Коммит:** `docs: создать презентацию для защиты`
-
----
-
-# ALL PHASES COMPLETE
+**Проверка:** Презентация существует, ссылка сохранена, 12-15 слайдов
+**Коммит:** `docs: создать ссылку на презентацию к защите`

@@ -1,0 +1,127 @@
+- generic [ref=e3]:
+  - generic [ref=e8]:
+    - generic [ref=e10] [cursor=pointer]: dock_to_right
+    - heading "Администрирование сайта" [level=1] [ref=e12]:
+      - generic [ref=e13]: Администрирование сайта
+  - generic [ref=e17]:
+    - table "Аккаунты" [ref=e20]:
+      - caption [ref=e21]:
+        - link "Аккаунты" [ref=e22] [cursor=pointer]:
+          - /url: /admin/accounts/
+      - rowgroup [ref=e23]:
+        - row "Игроки add" [ref=e24]:
+          - rowheader "Игроки" [ref=e25]:
+            - link "Игроки" [ref=e26] [cursor=pointer]:
+              - /url: /admin/accounts/player/
+          - cell "add" [ref=e27]:
+            - link "add" [ref=e29] [cursor=pointer]:
+              - /url: /admin/accounts/player/add/
+              - generic [ref=e30]: add
+    - table "Игра" [ref=e33]:
+      - caption [ref=e34]:
+        - link "Игра" [ref=e35] [cursor=pointer]:
+          - /url: /admin/game/
+      - rowgroup [ref=e36]:
+        - row "Достижения add" [ref=e37]:
+          - rowheader "Достижения" [ref=e38]:
+            - link "Достижения" [ref=e39] [cursor=pointer]:
+              - /url: /admin/game/achievement/
+          - cell "add" [ref=e40]:
+            - link "add" [ref=e42] [cursor=pointer]:
+              - /url: /admin/game/achievement/add/
+              - generic [ref=e43]: add
+        - row "Достижения игроков add" [ref=e44]:
+          - rowheader "Достижения игроков" [ref=e45]:
+            - link "Достижения игроков" [ref=e46] [cursor=pointer]:
+              - /url: /admin/game/playerachievement/
+          - cell "add" [ref=e47]:
+            - link "add" [ref=e49] [cursor=pointer]:
+              - /url: /admin/game/playerachievement/add/
+              - generic [ref=e50]: add
+        - row "Лог действий add" [ref=e51]:
+          - rowheader "Лог действий" [ref=e52]:
+            - link "Лог действий" [ref=e53] [cursor=pointer]:
+              - /url: /admin/game/actionlog/
+          - cell "add" [ref=e54]:
+            - link "add" [ref=e56] [cursor=pointer]:
+              - /url: /admin/game/actionlog/add/
+              - generic [ref=e57]: add
+        - row "Прогресс игроков add" [ref=e58]:
+          - rowheader "Прогресс игроков" [ref=e59]:
+            - link "Прогресс игроков" [ref=e60] [cursor=pointer]:
+              - /url: /admin/game/gameprogress/
+          - cell "add" [ref=e61]:
+            - link "add" [ref=e63] [cursor=pointer]:
+              - /url: /admin/game/gameprogress/add/
+              - generic [ref=e64]: add
+        - row "Сессии add" [ref=e65]:
+          - rowheader "Сессии" [ref=e66]:
+            - link "Сессии" [ref=e67] [cursor=pointer]:
+              - /url: /admin/game/gamesession/
+          - cell "add" [ref=e68]:
+            - link "add" [ref=e70] [cursor=pointer]:
+              - /url: /admin/game/gamesession/add/
+              - generic [ref=e71]: add
+        - row "Уровни add" [ref=e72]:
+          - rowheader "Уровни" [ref=e73]:
+            - link "Уровни" [ref=e74] [cursor=pointer]:
+              - /url: /admin/game/level/
+          - cell "add" [ref=e75]:
+            - link "add" [ref=e77] [cursor=pointer]:
+              - /url: /admin/game/level/add/
+              - generic [ref=e78]: add
+        - row "Экодействия add" [ref=e79]:
+          - rowheader "Экодействия" [ref=e80]:
+            - link "Экодействия" [ref=e81] [cursor=pointer]:
+              - /url: /admin/game/ecoaction/
+          - cell "add" [ref=e82]:
+            - link "add" [ref=e84] [cursor=pointer]:
+              - /url: /admin/game/ecoaction/add/
+              - generic [ref=e85]: add
+    - table "Лидерборд" [ref=e88]:
+      - caption [ref=e89]:
+        - link "Лидерборд" [ref=e90] [cursor=pointer]:
+          - /url: /admin/leaderboard/
+      - rowgroup [ref=e91]:
+        - row "Лидерборд add" [ref=e92]:
+          - rowheader "Лидерборд" [ref=e93]:
+            - link "Лидерборд" [ref=e94] [cursor=pointer]:
+              - /url: /admin/leaderboard/leaderboardentry/
+          - cell "add" [ref=e95]:
+            - link "add" [ref=e97] [cursor=pointer]:
+              - /url: /admin/leaderboard/leaderboardentry/add/
+              - generic [ref=e98]: add
+    - table "Образование" [ref=e101]:
+      - caption [ref=e102]:
+        - link "Образование" [ref=e103] [cursor=pointer]:
+          - /url: /admin/education/
+      - rowgroup [ref=e104]:
+        - row "Образовательные статьи add" [ref=e105]:
+          - rowheader "Образовательные статьи" [ref=e106]:
+            - link "Образовательные статьи" [ref=e107] [cursor=pointer]:
+              - /url: /admin/education/educationalcontent/
+          - cell "add" [ref=e108]:
+            - link "add" [ref=e110] [cursor=pointer]:
+              - /url: /admin/education/educationalcontent/add/
+              - generic [ref=e111]: add
+        - row "Экофакты add" [ref=e112]:
+          - rowheader "Экофакты" [ref=e113]:
+            - link "Экофакты" [ref=e114] [cursor=pointer]:
+              - /url: /admin/education/ecofact/
+          - cell "add" [ref=e115]:
+            - link "add" [ref=e117] [cursor=pointer]:
+              - /url: /admin/education/ecofact/add/
+              - generic [ref=e118]: add
+    - table "Пользователи и группы" [ref=e121]:
+      - caption [ref=e122]:
+        - link "Пользователи и группы" [ref=e123] [cursor=pointer]:
+          - /url: /admin/auth/
+      - rowgroup [ref=e124]:
+        - row "Группы add" [ref=e125]:
+          - rowheader "Группы" [ref=e126]:
+            - link "Группы" [ref=e127] [cursor=pointer]:
+              - /url: /admin/auth/group/
+          - cell "add" [ref=e128]:
+            - link "add" [ref=e130] [cursor=pointer]:
+              - /url: /admin/auth/group/add/
+              - generic [ref=e131]: add

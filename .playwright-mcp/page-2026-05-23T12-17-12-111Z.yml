@@ -1,0 +1,24 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - heading "Welcome back to EcoGame Admin" [level=1] [ref=e6]:
+      - generic [ref=e7]: Welcome back to
+      - generic [ref=e8]: EcoGame Admin
+    - generic [ref=e9]:
+      - paragraph [ref=e10]: Пожалуйста, исправьте ошибку ниже.
+      - generic [ref=e11]: Пожалуйста, введите корректные имя пользователя и пароль учётной записи. Оба поля могут быть чувствительны к регистру.
+    - generic [ref=e12]:
+      - generic [ref=e14]:
+        - generic [ref=e15]: Имя пользователя*
+        - textbox "Имя пользователя*" [ref=e16]: admin
+      - generic [ref=e18]:
+        - generic [ref=e19]: Пароль*
+        - textbox "Пароль*" [ref=e20]
+      - button "Войти arrow_forward" [ref=e22] [cursor=pointer]:
+        - text: Войти
+        - generic [ref=e23]: arrow_forward
+  - generic [ref=e24]:
+    - link "arrow_back Return to site" [ref=e25] [cursor=pointer]:
+      - /url: /
+      - generic [ref=e26]: arrow_back
+      - text: Return to site
+    - generic [ref=e30] [cursor=pointer]: computer

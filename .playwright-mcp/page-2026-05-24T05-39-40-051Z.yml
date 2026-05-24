@@ -1,0 +1,70 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "EcoGame" [ref=e6] [cursor=pointer]:
+        - /url: /
+        - img [ref=e7]
+        - text: EcoGame
+      - navigation [ref=e10]:
+        - link "Bosh sahifa" [ref=e11] [cursor=pointer]:
+          - /url: /
+        - link "Yetakchilar" [ref=e12] [cursor=pointer]:
+          - /url: /leaderboard
+        - link "Ta'lim" [ref=e13] [cursor=pointer]:
+          - /url: /education
+        - link "O'yinchi_d0a843" [ref=e129] [cursor=pointer]:
+          - /url: /profile
+        - button "Chiqish" [ref=e130]
+  - main [ref=e16]:
+    - generic [ref=e131]:
+      - generic [ref=e132]:
+        - heading "Toshkent hovlisi" [level=1] [ref=e133]
+        - button "Chiqish" [ref=e134]:
+          - img [ref=e135]
+          - text: Chiqish
+      - generic [ref=e137]:
+        - generic [ref=e138]:
+          - paragraph [ref=e139]: Havo sifati
+          - paragraph [ref=e142]: 60.6%
+        - generic [ref=e143]:
+          - paragraph [ref=e144]: Suv tozaligi
+          - paragraph [ref=e147]: 20.0%
+        - generic [ref=e148]:
+          - paragraph [ref=e149]: Tuproq holati
+          - paragraph [ref=e152]: 47.4%
+        - generic [ref=e153]:
+          - paragraph [ref=e154]: Biologik xilma-xillik
+          - paragraph [ref=e156]: 0.0%
+      - generic [ref=e157]: "Ball: 0"
+      - generic [ref=e160]:
+        - generic [ref=e161]:
+          - generic [ref=e162]:
+            - img [ref=e163]
+            - text: "141"
+          - generic [ref=e170]: "200"
+        - generic [ref=e171]:
+          - button "O'simliklar" [ref=e172]
+          - button "Suv" [ref=e173]
+          - button "Chiqindi" [ref=e174]
+          - button "Energiya" [ref=e175]
+          - button "Hayvonlar" [ref=e176]
+        - generic [ref=e177]:
+          - button "Bog' parvarishi 15" [ref=e178]:
+            - img [ref=e180]
+            - generic [ref=e184]: Bog' parvarishi
+            - generic [ref=e185]:
+              - img [ref=e186]
+              - text: "15"
+          - button "Gul ekish 10" [ref=e191]:
+            - img [ref=e193]
+            - generic [ref=e198]: Gul ekish
+            - generic [ref=e199]:
+              - img [ref=e200]
+              - text: "10"
+          - button "Daraxt ekish 20" [active] [ref=e205]:
+            - img [ref=e207]
+            - generic [ref=e209]: Daraxt ekish
+            - generic [ref=e210]:
+              - img [ref=e211]
+              - text: "20"
+        - paragraph [ref=e216]: Joylashtirish uchun xaritaga bosing

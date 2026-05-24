@@ -1,0 +1,37 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "🌿 EcoGame" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e7]:
+        - link "Bosh sahifa" [ref=e8] [cursor=pointer]:
+          - /url: /
+        - link "Yetakchilar" [ref=e9] [cursor=pointer]:
+          - /url: /leaderboard
+        - link "Ta'lim" [ref=e10] [cursor=pointer]:
+          - /url: /education
+        - link "Jahon" [ref=e11] [cursor=pointer]:
+          - /url: /profile
+        - button "Chiqish" [ref=e12]
+      - button "Menu" [ref=e13]: ☰
+  - main [ref=e14]:
+    - generic [ref=e15]:
+      - heading "Mening profilim" [level=1] [ref=e16]
+      - generic [ref=e17]:
+        - generic [ref=e18]:
+          - generic [ref=e19]: 🌿
+          - generic [ref=e20]:
+            - generic [ref=e21]:
+              - heading "Jahon" [level=2] [ref=e22]
+              - button "Tahrirlash" [ref=e23]
+            - paragraph [ref=e24]: "@testuser2025"
+        - generic [ref=e25]:
+          - generic [ref=e26]:
+            - paragraph [ref=e27]: Umumiy ball
+            - paragraph [ref=e28]: "0"
+          - generic [ref=e29]:
+            - paragraph [ref=e30]: Yutuqlar
+            - paragraph [ref=e31]: 0/0
+      - generic [ref=e32]:
+        - heading "Yutuqlar" [level=2] [ref=e33]
+        - paragraph [ref=e35]: Hali yutuq yo'q. O'ynashni boshlang!

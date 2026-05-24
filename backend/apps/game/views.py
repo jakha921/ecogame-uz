@@ -5,11 +5,9 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Achievement, EcoAction, GameProgress, GameSession, Level, PlayerAchievement
+from .models import Achievement, GameProgress, GameSession, Level, PlayerAchievement
 from .serializers import (
     AchievementSerializer,
-    ActionBatchSerializer,
-    EcoActionSerializer,
     GameProgressSerializer,
     GameSessionSerializer,
     LevelSerializer,
@@ -22,18 +20,6 @@ class LevelViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Level.objects.all().order_by("number")
     serializer_class = LevelSerializer
     permission_classes = [AllowAny]
-
-
-class EcoActionListView(generics.ListAPIView):
-    serializer_class = EcoActionSerializer
-    permission_classes = [AllowAny]
-
-    def get_queryset(self):
-        qs = EcoAction.objects.select_related("unlock_level").all()
-        level_number = self.request.query_params.get("level")
-        if level_number:
-            qs = qs.filter(unlock_level__number__lte=level_number)
-        return qs
 
 
 class GameProgressListView(generics.ListAPIView):
@@ -62,7 +48,6 @@ class SessionStartView(APIView):
                 status=status.HTTP_403_FORBIDDEN,
             )
 
-        # Close any existing active session for this level
         GameSession.objects.filter(player=request.user, level=level, is_active=True).update(
             is_active=False
         )
@@ -80,20 +65,6 @@ class SessionEndView(APIView):
         progress = GameService.end_session(session)
         serializer = GameProgressSerializer(progress, context={"request": request})
         return Response(serializer.data)
-
-
-class ActionSubmitView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request: Request, session_id: int) -> Response:
-        session = get_object_or_404(GameSession, pk=session_id, player=request.user, is_active=True)
-
-        serializer = ActionBatchSerializer(data=request.data)
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-        progress = GameService.perform_actions(session, serializer.validated_data["actions"])
-        return Response(GameProgressSerializer(progress, context={"request": request}).data)
 
 
 class AchievementListView(generics.ListAPIView):

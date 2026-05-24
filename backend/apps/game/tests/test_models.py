@@ -6,11 +6,14 @@ from apps.game.models import (
     Achievement,
     ActionCategory,
     ConditionType,
-    EcoAction,
     GameProgress,
     GameSession,
     Level,
     PlayerAchievement,
+    Question,
+    QuestionType,
+    QuizMode,
+    QuizSession,
 )
 
 Player = get_user_model()
@@ -34,24 +37,6 @@ def player():
         username="gametestuser",
         nickname="GameTestNick",
         password="securepass123",
-    )
-
-
-@pytest.fixture
-def eco_action(level):
-    return EcoAction.objects.create(
-        key="test_action_unique",
-        name_uz="Test harakat",
-        description_uz="Test tavsif",
-        category=ActionCategory.FLORA,
-        score_value=10,
-        air_impact=1.0,
-        water_impact=0.5,
-        soil_impact=0.3,
-        biodiversity_impact=0.8,
-        cooldown_seconds=5,
-        unlock_level=level,
-        sprite_key="test_sprite",
     )
 
 
@@ -81,59 +66,6 @@ class TestLevelModel:
                 map_config={},
                 ecosystem_initial={},
             )
-
-
-@pytest.mark.django_db
-class TestEcoActionModel:
-    def test_create_eco_action(self, eco_action):
-        assert eco_action.pk is not None
-        assert eco_action.key == "test_action_unique"
-        assert eco_action.category == ActionCategory.FLORA
-
-    def test_impact_values(self, eco_action):
-        assert eco_action.air_impact == 1.0
-        assert eco_action.water_impact == 0.5
-        assert eco_action.biodiversity_impact == 0.8
-
-    def test_key_unique(self, eco_action, level):
-        with pytest.raises(IntegrityError):
-            EcoAction.objects.create(
-                key="test_action_unique",
-                name_uz="Duplicate",
-                description_uz="Dup",
-                category=ActionCategory.WATER,
-                score_value=5,
-                air_impact=0,
-                water_impact=0,
-                soil_impact=0,
-                biodiversity_impact=0,
-                cooldown_seconds=1,
-                unlock_level=level,
-                sprite_key="dup",
-            )
-
-    def test_category_choices(self, eco_action, level):
-        for category in [
-            ActionCategory.WATER,
-            ActionCategory.WASTE,
-            ActionCategory.ENERGY,
-            ActionCategory.FAUNA,
-        ]:
-            action = EcoAction.objects.create(
-                key=f"test_cat_{category}",
-                name_uz=f"Cat {category}",
-                description_uz="desc",
-                category=category,
-                score_value=5,
-                air_impact=0,
-                water_impact=0,
-                soil_impact=0,
-                biodiversity_impact=0,
-                cooldown_seconds=1,
-                unlock_level=level,
-                sprite_key="sprite",
-            )
-            assert action.category == category
 
 
 @pytest.mark.django_db
@@ -191,9 +123,10 @@ class TestAchievementModel:
         for i, ctype in enumerate(
             [
                 ConditionType.SCORE,
-                ConditionType.ACTION_COUNT,
-                ConditionType.LEVEL_COMPLETE,
-                ConditionType.INDICATOR,
+                ConditionType.QUIZ_COUNT,
+                ConditionType.STREAK,
+                ConditionType.DAILY_STREAK,
+                ConditionType.CATEGORY_MASTER,
             ]
         ):
             ach = Achievement.objects.create(
@@ -248,3 +181,67 @@ class TestGameSessionModel:
     def test_session_str(self, player, level):
         session = GameSession.objects.create(player=player, level=level)
         assert str(session) is not None
+
+
+@pytest.mark.django_db
+class TestQuestionModel:
+    def test_create_question(self):
+        q = Question.objects.create(
+            text_uz="O'zbekistonda eng ko'p uchraydigan daraxt?",
+            category=ActionCategory.FLORA,
+            difficulty=1,
+            question_type=QuestionType.MCQ,
+            explanation_uz="Tut daraxti O'zbekistonda keng tarqalgan.",
+            time_limit=30,
+        )
+        assert q.pk is not None
+        assert q.is_active is True
+        assert q.difficulty == 1
+
+    def test_question_str(self):
+        q = Question.objects.create(
+            text_uz="Test savol?",
+            category=ActionCategory.WATER,
+            difficulty=2,
+            question_type=QuestionType.TRUE_FALSE,
+            explanation_uz="Izoh",
+        )
+        assert "WATER" in str(q) or "savol" in str(q).lower() or "Test" in str(q)
+
+    def test_difficulty_choices(self):
+        for diff in [1, 2, 3]:
+            q = Question.objects.create(
+                text_uz=f"Savol {diff}",
+                category=ActionCategory.ENERGY,
+                difficulty=diff,
+                question_type=QuestionType.MCQ,
+                explanation_uz="Izoh",
+            )
+            assert q.difficulty == diff
+
+
+@pytest.mark.django_db
+class TestQuizSessionModel:
+    def test_create_quiz_session(self, player):
+        session = QuizSession.objects.create(
+            player=player,
+            mode=QuizMode.QUICK,
+            total_questions=10,
+        )
+        assert session.pk is not None
+        assert session.score == 0
+        assert session.current_streak == 0
+        assert session.max_streak == 0
+
+    def test_category_mode(self, player):
+        session = QuizSession.objects.create(
+            player=player,
+            mode=QuizMode.CATEGORY,
+            category=ActionCategory.FLORA,
+            total_questions=5,
+        )
+        assert session.category == ActionCategory.FLORA
+
+    def test_str_representation(self, player):
+        session = QuizSession.objects.create(player=player, mode=QuizMode.MARATHON)
+        assert "MARATHON" in str(session) or str(session)

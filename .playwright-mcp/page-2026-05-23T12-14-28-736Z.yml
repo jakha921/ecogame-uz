@@ -1,0 +1,63 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "🌿 EcoGame" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e7]:
+        - link "Bosh sahifa" [ref=e8] [cursor=pointer]:
+          - /url: /
+        - link "Yetakchilar" [ref=e9] [cursor=pointer]:
+          - /url: /leaderboard
+        - link "Ta'lim" [ref=e10] [cursor=pointer]:
+          - /url: /education
+        - link "Jahon" [ref=e32] [cursor=pointer]:
+          - /url: /profile
+        - button "Chiqish" [ref=e33]
+      - button "Menu" [ref=e13]: ☰
+  - main [ref=e14]:
+    - generic [ref=e34]:
+      - generic [ref=e35]:
+        - heading "🌿 EcoGame" [level=1] [ref=e36]
+        - paragraph [ref=e37]: Ekologiyani o'yin orqali o'rgan va muhofaza qil!
+      - generic [ref=e38]:
+        - generic [ref=e39]:
+          - paragraph [ref=e40]: Profil
+          - paragraph [ref=e41]: Jahon
+        - generic [ref=e42]:
+          - paragraph [ref=e43]: Umumiy ball
+          - paragraph [ref=e44]: 0 ball
+      - generic [ref=e45]:
+        - paragraph [ref=e46]: Kunning ekologik fakti
+        - paragraph [ref=e47]: LED chiroq an'anaviy chiroqqa qaraganda 75% kam energiya sarflaydi va 25 baravar uzoqroq yonadi.
+        - paragraph [ref=e48]: — IEA
+      - generic [ref=e49]:
+        - heading "Darajalar" [level=2] [ref=e50]
+        - generic [ref=e51]:
+          - generic [ref=e52]:
+            - generic [ref=e53]:
+              - generic [ref=e54]: Daraja 1
+              - text: ✓
+            - heading "Kichik hovli" [level=2] [ref=e55]
+            - paragraph [ref=e56]: O'z hovlingizni yashil va toza qiling. Daraxt turing, gullar oching, chiqindilarni tozalang. Bu eng birinchi qadamingiz!
+            - button "Boshlash" [ref=e57]
+          - generic [ref=e58]:
+            - generic [ref=e59]:
+              - generic [ref=e60]: Daraja 2
+              - text: 🔒
+            - heading "Mahalla" [level=2] [ref=e61]
+            - paragraph [ref=e62]: Mahallangizni ekologik toza qiling. Ko'proq daraxt o'tqazing, ariqlarni tozalang, qo'shnilaringizga namuna bo'ling!
+            - paragraph [ref=e63]: "Kerakli ball: 500 ball"
+          - generic [ref=e64]:
+            - generic [ref=e65]:
+              - generic [ref=e66]: Daraja 3
+              - text: 🔒
+            - heading "Shahar" [level=2] [ref=e67]
+            - paragraph [ref=e68]: Shahar ekologiyasini yaxshilang. Sanoat korxonalari ifloslanishiga qarshi kurashing. Bu juda muhim vazifa!
+            - paragraph [ref=e69]: "Kerakli ball: 1500 ball"
+          - generic [ref=e70]:
+            - generic [ref=e71]:
+              - generic [ref=e72]: Daraja 4
+              - text: 🔒
+            - heading "Viloyat" [level=2] [ref=e73]
+            - paragraph [ref=e74]: Butun viloyat ekologiyasini tiklang. Orol dengizi singari muammolarga qarshi kurashing. Siz qahramonsiz!
+            - paragraph [ref=e75]: "Kerakli ball: 3000 ball"

@@ -1,0 +1,21 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - heading "Welcome back to EcoGame Admin" [level=1] [ref=e6]:
+      - generic [ref=e7]: Welcome back to
+      - generic [ref=e8]: EcoGame Admin
+    - generic [ref=e9]:
+      - generic [ref=e11]:
+        - generic [ref=e12]: Имя пользователя*
+        - textbox "Имя пользователя*" [ref=e13]
+      - generic [ref=e15]:
+        - generic [ref=e16]: Пароль*
+        - textbox "Пароль*" [ref=e17]
+      - button "Войти arrow_forward" [ref=e19] [cursor=pointer]:
+        - text: Войти
+        - generic [ref=e20]: arrow_forward
+  - generic [ref=e21]:
+    - link "arrow_back Return to site" [ref=e22] [cursor=pointer]:
+      - /url: /
+      - generic [ref=e23]: arrow_back
+      - text: Return to site
+    - generic [ref=e27] [cursor=pointer]: computer

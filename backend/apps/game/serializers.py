@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from .models import Achievement, EcoAction, GameProgress, GameSession, Level, PlayerAchievement
+from .models import Achievement, GameProgress, GameSession, Level, PlayerAchievement
 
 Player = get_user_model()
 
@@ -27,28 +27,6 @@ class LevelSerializer(serializers.ModelSerializer):
         if request is None or not request.user.is_authenticated:
             return obj.required_score == 0
         return request.user.total_score >= obj.required_score
-
-
-class EcoActionSerializer(serializers.ModelSerializer):
-    unlock_level = serializers.IntegerField(source="unlock_level.number", read_only=True)
-
-    class Meta:
-        model = EcoAction
-        fields = [
-            "id",
-            "key",
-            "name_uz",
-            "description_uz",
-            "category",
-            "score_value",
-            "air_impact",
-            "water_impact",
-            "soil_impact",
-            "biodiversity_impact",
-            "cooldown_seconds",
-            "unlock_level",
-            "sprite_key",
-        ]
 
 
 class GameProgressSerializer(serializers.ModelSerializer):
@@ -80,21 +58,6 @@ class GameSessionSerializer(serializers.ModelSerializer):
         model = GameSession
         fields = ["id", "level_id", "level", "started_at", "ended_at", "is_active"]
         read_only_fields = ["id", "started_at", "ended_at", "is_active", "level"]
-
-
-class ActionItemSerializer(serializers.Serializer):
-    action_key = serializers.CharField()
-    position_x = serializers.FloatField(default=0.0)
-    position_y = serializers.FloatField(default=0.0)
-
-
-class ActionBatchSerializer(serializers.Serializer):
-    actions = ActionItemSerializer(many=True)
-
-    def validate_actions(self, value: list) -> list:
-        if not value:
-            raise serializers.ValidationError("Kamida bitta harakat talab qilinadi.")
-        return value
 
 
 class AchievementSerializer(serializers.ModelSerializer):

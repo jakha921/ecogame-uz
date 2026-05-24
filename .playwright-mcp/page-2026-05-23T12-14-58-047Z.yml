@@ -1,0 +1,35 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "🌿 EcoGame" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e7]:
+        - link "Bosh sahifa" [ref=e8] [cursor=pointer]:
+          - /url: /
+        - link "Yetakchilar" [ref=e9] [cursor=pointer]:
+          - /url: /leaderboard
+        - link "Ta'lim" [ref=e10] [cursor=pointer]:
+          - /url: /education
+        - link "Jahon" [ref=e11] [cursor=pointer]:
+          - /url: /profile
+        - button "Chiqish" [ref=e12]
+      - button "Menu" [ref=e13]: ☰
+  - main [ref=e14]:
+    - generic [ref=e15]:
+      - generic [ref=e16]:
+        - heading "Kichik hovli" [level=1] [ref=e17]
+        - button "← Chiqish" [ref=e18]
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - paragraph [ref=e21]: Havo sifati
+          - paragraph [ref=e22]: 29.8%
+        - generic [ref=e23]:
+          - paragraph [ref=e24]: Suv tozaligi
+          - paragraph [ref=e25]: 24.9%
+        - generic [ref=e26]:
+          - paragraph [ref=e27]: Tuproq holati
+          - paragraph [ref=e28]: 19.9%
+        - generic [ref=e29]:
+          - paragraph [ref=e30]: Biologik xilma-xillik
+          - paragraph [ref=e31]: 14.8%
+      - generic [ref=e32]: "Ball: 0"

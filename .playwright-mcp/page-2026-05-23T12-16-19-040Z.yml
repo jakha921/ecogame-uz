@@ -1,0 +1,57 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "🌿 EcoGame" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e7]:
+        - link "Bosh sahifa" [ref=e8] [cursor=pointer]:
+          - /url: /
+        - link "Yetakchilar" [ref=e9] [cursor=pointer]:
+          - /url: /leaderboard
+        - link "Ta'lim" [ref=e10] [cursor=pointer]:
+          - /url: /education
+        - link "Jahon" [ref=e11] [cursor=pointer]:
+          - /url: /profile
+        - button "Chiqish" [ref=e12]
+      - button "Menu" [ref=e13]: ☰
+  - main [ref=e14]:
+    - generic [ref=e15]:
+      - heading "Ekologik ta'lim" [level=1] [ref=e16]
+      - generic [ref=e17]:
+        - button "Hammasi" [ref=e18]
+        - button "🌳 O'simliklar" [ref=e19]
+        - button "💧 Suv" [ref=e20]
+        - button "♻️ Chiqindilar" [ref=e21]
+        - button "☀️ Energiya" [ref=e22]
+        - button "🦁 Hayvonlar" [ref=e23]
+      - generic [ref=e24]:
+        - link "💧 Orol dengizi fojiasi Orol dengizi — bir vaqtlar dunyoning to'rtinchi yirik ko'li bo'lgan. Ammo suv tanqisligi va noto'g'ri suv boshqaruvi tuf... Ko'proq o'qish →" [ref=e25] [cursor=pointer]:
+          - /url: /education/1
+          - generic [ref=e26]: 💧
+          - heading "Orol dengizi fojiasi" [level=2] [ref=e27]
+          - paragraph [ref=e28]: Orol dengizi — bir vaqtlar dunyoning to'rtinchi yirik ko'li bo'lgan. Ammo suv tanqisligi va noto'g'ri suv boshqaruvi tuf...
+          - generic [ref=e29]: Ko'proq o'qish →
+        - link "🌳 O'zbekistonda havo ifloslanishi O'zbekiston shaharlari, ayniqsa Toshkent, havo ifloslanishi bilan kurashmoqda. Avtomobillar, zavodlar va issiqlik elektr... Ko'proq o'qish →" [ref=e30] [cursor=pointer]:
+          - /url: /education/2
+          - generic [ref=e31]: 🌳
+          - heading "O'zbekistonda havo ifloslanishi" [level=2] [ref=e32]
+          - paragraph [ref=e33]: O'zbekiston shaharlari, ayniqsa Toshkent, havo ifloslanishi bilan kurashmoqda. Avtomobillar, zavodlar va issiqlik elektr...
+          - generic [ref=e34]: Ko'proq o'qish →
+        - link "♻️ Chiqindilarni qayta ishlash O'zbekistonda har yili millionlab tonna chiqindi hosil bo'ladi. Ularning katta qismi poligonlarga tashlanib, tuproq va s... Ko'proq o'qish →" [ref=e35] [cursor=pointer]:
+          - /url: /education/3
+          - generic [ref=e36]: ♻️
+          - heading "Chiqindilarni qayta ishlash" [level=2] [ref=e37]
+          - paragraph [ref=e38]: O'zbekistonda har yili millionlab tonna chiqindi hosil bo'ladi. Ularning katta qismi poligonlarga tashlanib, tuproq va s...
+          - generic [ref=e39]: Ko'proq o'qish →
+        - link "☀️ Quyosh energiyasi — kelajak manbai O'zbekiston Markaziy Osiyoning eng ko'p quyosh nuriga ega davlatlaridan biridir. Yiliga 300 kundan ortiq quyoshli kun bo... Ko'proq o'qish →" [ref=e40] [cursor=pointer]:
+          - /url: /education/4
+          - generic [ref=e41]: ☀️
+          - heading "Quyosh energiyasi — kelajak manbai" [level=2] [ref=e42]
+          - paragraph [ref=e43]: O'zbekiston Markaziy Osiyoning eng ko'p quyosh nuriga ega davlatlaridan biridir. Yiliga 300 kundan ortiq quyoshli kun bo...
+          - generic [ref=e44]: Ko'proq o'qish →
+        - link "🦁 O'zbekiston Qizil kitobi hayvonlari O'zbekistonning Qizil kitobiga 184 ta hayvon turi kiritilgan. Ularning orasida Amur yo'lbarsi, qo'ng'ir ayiq, qoraquyruq... Ko'proq o'qish →" [ref=e45] [cursor=pointer]:
+          - /url: /education/5
+          - generic [ref=e46]: 🦁
+          - heading "O'zbekiston Qizil kitobi hayvonlari" [level=2] [ref=e47]
+          - paragraph [ref=e48]: O'zbekistonning Qizil kitobiga 184 ta hayvon turi kiritilgan. Ularning orasida Amur yo'lbarsi, qo'ng'ir ayiq, qoraquyruq...
+          - generic [ref=e49]: Ko'proq o'qish →
