@@ -1,10 +1,11 @@
 import pytest
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from apps.game.models import GameProgress, Level
+from apps.game.models import Level, QuizMode, QuizSession
 from apps.leaderboard.models import LeaderboardEntry
 
 Player = get_user_model()
@@ -73,16 +74,14 @@ class TestPlayerRankAPI:
         response = auth_client.get(reverse("leaderboard-me"))
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
-    def test_my_rank_after_progress(self, auth_client, player, level):
-        # Signal creates LeaderboardEntry when GameProgress is saved
-        GameProgress.objects.create(
+    def test_my_rank_after_quiz(self, auth_client, player):
+        # Signal creates LeaderboardEntry when QuizSession is finished
+        QuizSession.objects.create(
             player=player,
-            level=level,
+            mode=QuizMode.QUICK,
             score=200,
-            air_quality=30,
-            water_purity=25,
-            soil_health=20,
-            biodiversity=15,
+            total_questions=10,
+            finished_at=timezone.now(),
         )
         response = auth_client.get(reverse("leaderboard-me"))
         assert response.status_code == status.HTTP_200_OK
@@ -95,22 +94,40 @@ class TestPlayerRankAPI:
 
 @pytest.mark.django_db
 class TestLeaderboardSignal:
-    def test_signal_creates_entry_on_progress(self, player, level):
+    def test_signal_creates_entry_on_quiz(self, player):
         assert not LeaderboardEntry.objects.filter(player=player).exists()
-        GameProgress.objects.create(player=player, level=level, score=100)
+        QuizSession.objects.create(
+            player=player,
+            mode=QuizMode.QUICK,
+            score=100,
+            total_questions=10,
+            finished_at=timezone.now(),
+        )
         assert LeaderboardEntry.objects.filter(player=player).exists()
 
-    def test_signal_updates_total_score(self, player, level):
-        level2 = Level.objects.create(
-            number=44,
-            name_uz="Level 44",
-            description_uz="desc",
-            required_score=0,
-            map_config={},
-            ecosystem_initial={"air": 30, "water": 25, "soil": 20, "biodiversity": 15},
+    def test_signal_updates_total_score(self, player):
+        QuizSession.objects.create(
+            player=player,
+            mode=QuizMode.QUICK,
+            score=100,
+            total_questions=10,
+            finished_at=timezone.now(),
         )
-        GameProgress.objects.create(player=player, level=level, score=100)
-        GameProgress.objects.create(player=player, level=level2, score=150)
-
+        QuizSession.objects.create(
+            player=player,
+            mode=QuizMode.CATEGORY,
+            score=150,
+            total_questions=10,
+            finished_at=timezone.now(),
+        )
         entry = LeaderboardEntry.objects.get(player=player)
         assert entry.total_score == 250
+
+    def test_unfinished_session_does_not_create_entry(self, player):
+        QuizSession.objects.create(
+            player=player,
+            mode=QuizMode.QUICK,
+            score=0,
+            total_questions=10,
+        )
+        assert not LeaderboardEntry.objects.filter(player=player).exists()

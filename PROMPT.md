@@ -688,7 +688,7 @@ urlpatterns = [
 
 ## Phase 4: Backend — Signals и Leaderboard
 
-### [ ] 4.1 Обновить leaderboard signals для QuizSession
+### [x] 4.1 Обновить leaderboard signals для QuizSession
 
 **Что сделать:**
 - Открыть `backend/apps/leaderboard/signals.py`
