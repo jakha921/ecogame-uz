@@ -8,6 +8,10 @@ class Player(AbstractUser):
     nickname = models.CharField(max_length=50, unique=True, verbose_name="Ник")
     avatar = models.CharField(max_length=50, default="default", verbose_name="Аватар")
     total_score = models.PositiveIntegerField(default=0, verbose_name="Общий счёт")
+    is_anonymous_player = models.BooleanField(default=False, verbose_name="Анонимный игрок")
+    session_key = models.CharField(
+        max_length=64, unique=True, null=True, blank=True, verbose_name="Ключ сессии"
+    )
 
     class Meta:
         verbose_name = "Игрок"

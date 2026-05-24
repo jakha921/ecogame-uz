@@ -43,6 +43,7 @@ class EcoAction(models.Model):
         max_length=10, choices=ActionCategory.choices, verbose_name="Категория"
     )
     score_value = models.PositiveIntegerField(default=10, verbose_name="Очки за действие")
+    cost = models.PositiveIntegerField(default=10, verbose_name="Стоимость (эко-монеты)")
     air_impact = models.FloatField(default=0.0, verbose_name="Влияние на воздух")
     water_impact = models.FloatField(default=0.0, verbose_name="Влияние на воду")
     soil_impact = models.FloatField(default=0.0, verbose_name="Влияние на почву")
@@ -107,6 +108,11 @@ class GameProgress(models.Model):
         default=dict,
         verbose_name="Выполненные действия",
         help_text='Пример: {"plant_tree": 5, "clean_water": 3}',
+    )
+    world_state = models.JSONField(
+        default=dict,
+        verbose_name="Состояние мира",
+        help_text='{"placed_objects": [...], "resources": 75}',
     )
     completed = models.BooleanField(default=False, verbose_name="Завершён")
     completed_at = models.DateTimeField(null=True, blank=True, verbose_name="Дата завершения")

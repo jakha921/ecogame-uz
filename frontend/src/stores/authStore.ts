@@ -7,8 +7,10 @@ interface AuthState {
   accessToken: string | null;
   refreshToken: string | null;
   isAuthenticated: boolean;
+  isAnonymous: boolean;
   isLoading: boolean;
   login: (data: LoginData) => Promise<void>;
+  loginAnonymous: () => Promise<void>;
   register: (data: RegisterData) => Promise<void>;
   logout: () => void;
   fetchProfile: () => Promise<void>;
@@ -21,7 +23,29 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   accessToken: localStorage.getItem("access_token"),
   refreshToken: localStorage.getItem("refresh_token"),
   isAuthenticated: !!localStorage.getItem("access_token"),
+  isAnonymous: localStorage.getItem("is_anonymous") === "true",
   isLoading: false,
+
+  loginAnonymous: async () => {
+    set({ isLoading: true });
+    try {
+      const existingKey = localStorage.getItem("anon_session_key") ?? undefined;
+      const { data: tokens } = await authApi.loginAnonymous(existingKey);
+      localStorage.setItem("access_token", tokens.access);
+      localStorage.setItem("refresh_token", tokens.refresh);
+      localStorage.setItem("anon_session_key", tokens.session_key);
+      localStorage.setItem("is_anonymous", "true");
+      set({
+        accessToken: tokens.access,
+        refreshToken: tokens.refresh,
+        isAuthenticated: true,
+        isAnonymous: true,
+      });
+      await get().fetchProfile();
+    } finally {
+      set({ isLoading: false });
+    }
+  },
 
   login: async (data) => {
     set({ isLoading: true });
@@ -49,7 +73,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   logout: () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
-    set({ player: null, accessToken: null, refreshToken: null, isAuthenticated: false });
+    localStorage.removeItem("is_anonymous");
+    set({ player: null, accessToken: null, refreshToken: null, isAuthenticated: false, isAnonymous: false });
   },
 
   fetchProfile: async () => {

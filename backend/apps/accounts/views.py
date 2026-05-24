@@ -1,7 +1,16 @@
-from rest_framework import generics
+import secrets
+import uuid
+
+from django.contrib.auth import get_user_model
+from rest_framework import generics, status
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .serializers import PlayerSerializer, RegisterSerializer
+
+Player = get_user_model()
 
 
 class RegisterView(generics.CreateAPIView):
@@ -16,3 +25,92 @@ class PlayerProfileView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class AnonymousLoginView(APIView):
+    """Создать анонимного игрока и вернуть JWT токены.
+
+    Принимает опциональный session_key для восстановления существующей
+    анонимной сессии (например, после перезагрузки страницы).
+    """
+
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        session_key = request.data.get("session_key") or ""
+
+        if session_key:
+            player = Player.objects.filter(
+                session_key=session_key, is_anonymous_player=True
+            ).first()
+            if player:
+                refresh = RefreshToken.for_user(player)
+                return Response(
+                    {
+                        "access": str(refresh.access_token),
+                        "refresh": str(refresh),
+                        "session_key": session_key,
+                        "is_anonymous": True,
+                    }
+                )
+
+        # Create new anonymous player
+        uid = uuid.uuid4().hex[:12]
+        new_session_key = secrets.token_urlsafe(32)
+        player = Player.objects.create_user(
+            username=f"anon_{uid}",
+            nickname=f"O'yinchi_{uid[:6]}",
+            password=secrets.token_hex(16),
+            is_anonymous_player=True,
+            session_key=new_session_key,
+        )
+
+        refresh = RefreshToken.for_user(player)
+        return Response(
+            {
+                "access": str(refresh.access_token),
+                "refresh": str(refresh),
+                "session_key": new_session_key,
+                "is_anonymous": True,
+            },
+            status=status.HTTP_201_CREATED,
+        )
+
+
+class ClaimAccountView(APIView):
+    """Привязать имя пользователя/пароль к анонимному аккаунту."""
+
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        player = request.user
+        if not player.is_anonymous_player:
+            return Response(
+                {"detail": "Akkaunt allaqachon ro'yxatdan o'tgan."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        username = request.data.get("username", "").strip()
+        nickname = request.data.get("nickname", "").strip()
+        password = request.data.get("password", "")
+
+        if not username or not password or not nickname:
+            return Response(
+                {"detail": "username, nickname va password talab qilinadi."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if Player.objects.filter(username=username).exclude(pk=player.pk).exists():
+            return Response({"detail": "Bu username band."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if Player.objects.filter(nickname=nickname).exclude(pk=player.pk).exists():
+            return Response({"detail": "Bu nik band."}, status=status.HTTP_400_BAD_REQUEST)
+
+        player.username = username
+        player.nickname = nickname
+        player.set_password(password)
+        player.is_anonymous_player = False
+        player.session_key = None
+        player.save()
+
+        return Response(PlayerSerializer(player).data)
