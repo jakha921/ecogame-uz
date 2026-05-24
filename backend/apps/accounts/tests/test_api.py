@@ -171,3 +171,80 @@ class TestProfileAPI:
         assert response.status_code == status.HTTP_200_OK
         player.refresh_from_db()
         assert player.total_score == 0
+
+
+@pytest.mark.django_db
+class TestAnonymousLogin:
+    def test_creates_anonymous_player(self, api_client):
+        response = api_client.post(reverse("auth-anonymous"), {}, format="json")
+        assert response.status_code == status.HTTP_201_CREATED
+        data = response.json()
+        assert "access" in data
+        assert "refresh" in data
+        assert "session_key" in data
+        assert data["is_anonymous"] is True
+
+    def test_restores_existing_session(self, api_client):
+        # First call creates a new anonymous player
+        r1 = api_client.post(reverse("auth-anonymous"), {}, format="json")
+        session_key = r1.json()["session_key"]
+
+        # Second call with same session_key returns same account
+        r2 = api_client.post(reverse("auth-anonymous"), {"session_key": session_key}, format="json")
+        assert r2.status_code == status.HTTP_200_OK
+        assert r2.json()["session_key"] == session_key
+        # Only one anonymous player should exist for this session
+        assert Player.objects.filter(session_key=session_key).count() == 1
+
+    def test_unknown_session_key_creates_new_player(self, api_client):
+        r = api_client.post(
+            reverse("auth-anonymous"), {"session_key": "nonexistent_key"}, format="json"
+        )
+        assert r.status_code == status.HTTP_201_CREATED
+
+    def test_anonymous_player_can_access_profile(self, api_client):
+        r = api_client.post(reverse("auth-anonymous"), {}, format="json")
+        token = r.json()["access"]
+        api_client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
+        profile = api_client.get(reverse("auth-me"))
+        assert profile.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.django_db
+class TestClaimAccount:
+    def test_claim_converts_anonymous_to_real(self, api_client):
+        # Create anonymous player
+        r = api_client.post(reverse("auth-anonymous"), {}, format="json")
+        token = r.json()["access"]
+        api_client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
+
+        # Claim the account
+        claim = api_client.post(
+            reverse("auth-claim"),
+            {"username": "newuser", "nickname": "NewNick", "password": "pass12345"},
+            format="json",
+        )
+        assert claim.status_code == status.HTTP_200_OK
+        data = claim.json()
+        assert data["username"] == "newuser"
+
+        # Player is no longer anonymous
+        p = Player.objects.get(username="newuser")
+        assert p.is_anonymous_player is False
+        assert p.session_key is None
+
+    def test_claim_fails_for_registered_user(self, api_client, player):
+        # Authenticate as a real (non-anonymous) player
+        r = api_client.post(
+            reverse("auth-login"),
+            {"username": "existinguser", "password": "securepass123"},
+            format="json",
+        )
+        api_client.credentials(HTTP_AUTHORIZATION=f"Bearer {r.json()['access']}")
+
+        claim = api_client.post(
+            reverse("auth-claim"),
+            {"username": "newuser", "nickname": "NewNick", "password": "pass12345"},
+            format="json",
+        )
+        assert claim.status_code == status.HTTP_400_BAD_REQUEST
