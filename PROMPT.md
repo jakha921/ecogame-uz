@@ -1459,7 +1459,7 @@ Django REST Framework, React, web application
 
 ---
 
-### [ ] 11.5 Написать Главу 4 — Тестирование
+### [x] 11.5 Написать Главу 4 — Тестирование
 
 **Что сделать:**
 - Полностью переписать `docs/vkr/chapter4_testing.md`
