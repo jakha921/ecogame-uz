@@ -1206,7 +1206,7 @@ export const SORTING_ITEMS: SortingItem[] = [
 
 ---
 
-### [ ] 11.0 Создать Аннотацию на 3 языках
+### [x] 11.0 Создать Аннотацию на 3 языках
 
 **Что сделать:**
 - Создать файл `docs/vkr/annotation.md`
@@ -1232,7 +1232,7 @@ Django REST Framework, React, web application
 
 ---
 
-### [ ] 11.1 Написать Введение
+### [x] 11.1 Написать Введение
 
 **Что сделать:**
 - Полностью переписать `docs/vkr/introduction.md`
@@ -1283,7 +1283,7 @@ Django REST Framework, React, web application
 
 ---
 
-### [ ] 11.2 Написать Главу 1 — Аналитическая часть
+### [x] 11.2 Написать Главу 1 — Аналитическая часть
 
 **Что сделать:**
 - Полностью переписать `docs/vkr/chapter1_analysis.md`
