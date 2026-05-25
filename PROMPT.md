@@ -1621,3 +1621,777 @@ Django REST Framework, React, web application
 
 **Проверка:** Презентация существует, ссылка сохранена, 12-15 слайдов
 **Коммит:** `docs: создать ссылку на презентацию к защите`
+
+---
+
+## Phase 13: Backend — Google Auth
+
+> Google OAuth credentials: Client ID = `<your-google-client-id>.apps.googleusercontent.com`
+> Client Secret = `GOCSPX-REDACTED`
+> Источник: `/Users/jakha/Programming/config/Google-Auth-FullFocus/`
+> Подход: SPA flow — фронтенд → Google ID token → POST /auth/google/ → бэкенд верифицирует → JWT
+
+### [ ] 13.1 Добавить google-auth зависимость и GOOGLE_CLIENT_ID настройку
+
+**Что сделать:**
+1. В `backend/pyproject.toml` в секцию `dependencies` добавить `"google-auth>=2.29"` (после `"Pillow>=10.4"`)
+2. Выполнить `cd backend && uv sync` для установки пакета
+3. В `backend/config/settings/base.py` в конце файла добавить:
+   ```python
+   GOOGLE_CLIENT_ID = ""
+   ```
+4. В `backend/config/settings/prod.py` после `CORS_ALLOWED_ORIGINS` добавить:
+   ```python
+   GOOGLE_CLIENT_ID = env("GOOGLE_CLIENT_ID", default="")
+   ```
+5. В `backend/config/settings/dev.py` добавить:
+   ```python
+   GOOGLE_CLIENT_ID = ""
+   ```
+6. В `.env` добавить строку:
+   ```
+   GOOGLE_CLIENT_ID=<your-google-client-id>.apps.googleusercontent.com
+   ```
+7. В `.env.example` добавить строку:
+   ```
+   GOOGLE_CLIENT_ID=your-google-client-id
+   ```
+
+**Проверка:**
+```bash
+cd backend && uv run python -c "from google.oauth2 import id_token; print('google-auth OK')"
+cd backend && uv run python manage.py check
+```
+**Коммит:** `feat: Phase 13.1 — добавить google-auth зависимость и GOOGLE_CLIENT_ID`
+
+---
+
+### [ ] 13.2 Добавить поле google_id в модель Player
+
+**Что сделать:**
+1. В `backend/apps/accounts/models.py` в класс `Player` добавить после поля `session_key`:
+   ```python
+   google_id = models.CharField(
+       max_length=255, unique=True, null=True, blank=True,
+       verbose_name="Google ID"
+   )
+   ```
+2. Создать миграцию:
+   ```bash
+   cd backend && uv run python manage.py makemigrations accounts --name add_google_id
+   ```
+3. Применить миграцию:
+   ```bash
+   uv run python manage.py migrate
+   ```
+
+**Проверка:**
+```bash
+cd backend && uv run python manage.py check
+```
+**Коммит:** `feat: Phase 13.2 — добавить поле google_id в модель Player`
+
+---
+
+### [ ] 13.3 Создать GoogleAuthView и добавить URL
+
+**Что сделать:**
+
+1. В `backend/apps/accounts/serializers.py` добавить класс `GoogleAuthSerializer` (перед `RegisterSerializer`):
+   ```python
+   class GoogleAuthSerializer(serializers.Serializer):
+       credential = serializers.CharField(help_text="Google ID token from frontend")
+   ```
+
+2. В `backend/apps/accounts/views.py` добавить импорты:
+   ```python
+   import secrets
+   import uuid
+   from google.oauth2 import id_token as google_id_token
+   from google.auth.transport import requests as google_requests
+   ```
+   Добавить класс `GoogleAuthView` (после `ClaimAccountView`):
+   ```python
+   class GoogleAuthView(APIView):
+       """Authenticate via Google ID token. Returns JWT tokens."""
+       permission_classes = [AllowAny]
+
+       def post(self, request):
+           credential = request.data.get("credential", "")
+           if not credential:
+               return Response(
+                   {"detail": "credential talab qilinadi."},
+                   status=status.HTTP_400_BAD_REQUEST,
+               )
+           try:
+               payload = google_id_token.verify_oauth2_token(
+                   credential,
+                   google_requests.Request(),
+                   settings.GOOGLE_CLIENT_ID,
+               )
+           except ValueError:
+               return Response(
+                   {"detail": "Google token yaroqsiz."},
+                   status=status.HTTP_400_BAD_REQUEST,
+               )
+
+           google_id = payload["sub"]
+           email = payload.get("email", "")
+           name = payload.get("name", "")
+
+           player = Player.objects.filter(google_id=google_id).first()
+           if not player:
+               player = Player.objects.filter(email=email).first()
+               if player:
+                   player.google_id = google_id
+                   player.save(update_fields=["google_id"])
+               else:
+                   uid = uuid.uuid4().hex[:8]
+                   nickname = (name[:48] if name else f"Player_{uid}")
+                   base = nickname
+                   i = 1
+                   while Player.objects.filter(nickname=nickname).exists():
+                       nickname = f"{base}_{i}"
+                       i += 1
+                   player = Player.objects.create_user(
+                       username=f"g_{google_id[:20]}",
+                       email=email,
+                       nickname=nickname,
+                       password=secrets.token_hex(16),
+                       google_id=google_id,
+                   )
+
+           refresh = RefreshToken.for_user(player)
+           return Response({
+               "access": str(refresh.access_token),
+               "refresh": str(refresh),
+               "is_new": player.last_login is None,
+           })
+   ```
+
+3. В `backend/apps/accounts/urls.py` добавить импорт `GoogleAuthView` и URL:
+   ```python
+   path("google/", GoogleAuthView.as_view(), name="auth-google"),
+   ```
+
+**Проверка:**
+```bash
+cd backend && uv run python manage.py check
+# Запустить dev сервер и проверить:
+# curl -s -o /dev/null -w "%{http_code}" -X POST http://localhost:8000/api/v1/auth/google/
+# Должен вернуть 400 (не 404)
+```
+**Коммит:** `feat: Phase 13.3 — GoogleAuthView (верификация токена, поиск/создание Player, JWT)`
+
+---
+
+### [ ] 13.4 Добавить has_google в PlayerSerializer
+
+**Что сделать:**
+В `backend/apps/accounts/serializers.py` обновить `PlayerSerializer`:
+1. Добавить поле `has_google = serializers.SerializerMethodField()`
+2. Добавить `"has_google"` в `fields` списка Meta
+3. Добавить `"has_google"` в `read_only_fields` списка Meta
+4. Добавить метод:
+   ```python
+   def get_has_google(self, obj: "Player") -> bool:
+       return bool(obj.google_id)
+   ```
+
+**Проверка:**
+```bash
+cd backend && uv run python manage.py check
+```
+**Коммит:** `feat: Phase 13.4 — добавить has_google в PlayerSerializer`
+
+---
+
+### [ ] 13.5 Написать тесты для Google Auth (6 тестов)
+
+**Что сделать:**
+В `backend/apps/accounts/tests/test_api.py` добавить класс `TestGoogleAuth` с 6 тестами.
+Используй `unittest.mock.patch("apps.accounts.views.google_id_token.verify_oauth2_token")` для мока.
+
+Шаблон payload для мока:
+```python
+GOOGLE_PAYLOAD = {
+    "sub": "google_uid_123456",
+    "email": "test@gmail.com",
+    "name": "Test User",
+    "picture": "https://example.com/photo.jpg",
+}
+```
+
+Тесты:
+1. `test_google_auth_new_user` — валидный payload, нет существующего Player → 200, создаётся новый Player, `is_new=True`, возвращаются `access` и `refresh`
+2. `test_google_auth_existing_google_id` — Player с matching `google_id` существует → 200, `is_new=False` (т.к. `last_login` не None после первого входа — создай Player с `google_id` заранее)
+3. `test_google_auth_email_match` — Player с matching `email` но без `google_id` → 200, `google_id` привязывается к Player
+4. `test_google_auth_invalid_token` — мок выбрасывает `ValueError` → 400
+5. `test_google_auth_missing_credential` — пустой POST body → 400
+6. `test_google_auth_profile_has_google` — после Google auth, GET `/auth/me/` возвращает `has_google=true`
+
+**Проверка:**
+```bash
+cd backend && uv run pytest apps/accounts/tests/test_api.py -v
+```
+**Коммит:** `test: Phase 13.5 — 6 тестов для Google Auth (new user, email match, google_id match, invalid, missing, profile)`
+
+---
+
+## Phase 14: Frontend — Google Auth
+
+### [ ] 14.1 Установить @react-oauth/google и добавить env переменные
+
+**Что сделать:**
+1. `cd frontend && npm install @react-oauth/google`
+2. В `.env` добавить:
+   ```
+   VITE_GOOGLE_CLIENT_ID=<your-google-client-id>.apps.googleusercontent.com
+   ```
+3. В `.env.example` добавить:
+   ```
+   VITE_GOOGLE_CLIENT_ID=your-google-client-id
+   ```
+
+**Проверка:**
+```bash
+cd frontend && npm run build
+```
+**Коммит:** `feat: Phase 14.1 — установить @react-oauth/google, добавить VITE_GOOGLE_CLIENT_ID`
+
+---
+
+### [ ] 14.2 GoogleOAuthProvider + GoogleLoginButton + authStore.googleLogin
+
+**Что сделать:**
+
+1. **`frontend/src/api/types.ts`** — добавить:
+   ```typescript
+   export interface GoogleAuthResponse extends AuthTokens {
+     is_new: boolean;
+   }
+   ```
+   Также добавить `has_google?: boolean` в интерфейс `Player`.
+
+2. **`frontend/src/api/auth.ts`** — добавить метод в `authApi`:
+   ```typescript
+   googleAuth: (credential: string) =>
+     apiClient.post<GoogleAuthResponse>("/auth/google/", { credential }),
+   ```
+
+3. **`frontend/src/stores/authStore.ts`** — добавить `googleLogin` в интерфейс и реализацию:
+   ```typescript
+   googleLogin: async (credential: string) => {
+     set({ isLoading: true });
+     try {
+       const { data } = await authApi.googleAuth(credential);
+       localStorage.setItem("access_token", data.access);
+       localStorage.setItem("refresh_token", data.refresh);
+       localStorage.removeItem("is_anonymous");
+       localStorage.removeItem("anon_session_key");
+       set({
+         accessToken: data.access,
+         refreshToken: data.refresh,
+         isAuthenticated: true,
+         isAnonymous: false,
+       });
+       await get().fetchProfile();
+     } finally {
+       set({ isLoading: false });
+     }
+   },
+   ```
+
+4. **`frontend/src/components/GoogleLoginButton.tsx`** — создать новый файл:
+   ```tsx
+   import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
+   import { useNavigate } from "react-router-dom";
+   import { useAuthStore } from "@/stores/authStore";
+
+   interface GoogleLoginButtonProps {
+     onSuccess?: () => void;
+   }
+
+   export function GoogleLoginButton({ onSuccess }: GoogleLoginButtonProps) {
+     const { googleLogin, isLoading } = useAuthStore();
+     const navigate = useNavigate();
+
+     const handleSuccess = async (response: CredentialResponse) => {
+       if (!response.credential) return;
+       await googleLogin(response.credential);
+       onSuccess?.();
+       navigate("/");
+     };
+
+     return (
+       <GoogleLogin
+         onSuccess={handleSuccess}
+         onError={() => console.error("Google login failed")}
+         size="large"
+         width="100%"
+         text="signin_with"
+         shape="rectangular"
+         disabled={isLoading}
+       />
+     );
+   }
+   ```
+
+5. **`frontend/src/App.tsx`** — обернуть `<BrowserRouter>` в `<GoogleOAuthProvider>`:
+   ```tsx
+   import { GoogleOAuthProvider } from "@react-oauth/google";
+   const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID ?? "";
+   // В return:
+   return (
+     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+       <BrowserRouter>
+         {/* Routes */}
+       </BrowserRouter>
+     </GoogleOAuthProvider>
+   );
+   ```
+
+**Проверка:**
+```bash
+cd frontend && npm run build
+```
+**Коммит:** `feat: Phase 14.2 — GoogleLoginButton компонент, googleLogin в authStore, GoogleOAuthProvider в App`
+
+---
+
+### [ ] 14.3 Добавить Google кнопку на LoginPage и RegisterPage
+
+**Что сделать:**
+
+1. **`frontend/src/i18n/uz.json`** — добавить в секцию `"auth"`:
+   ```json
+   "or": "yoki"
+   ```
+
+2. **`frontend/src/pages/LoginPage.tsx`** — после закрывающего тега `</form>` и перед `<p className="text-center...">` добавить:
+   ```tsx
+   <div className="flex items-center gap-3 my-2">
+     <div className="flex-1 h-px bg-gray-200" />
+     <span className="text-xs text-gray-400 uppercase">{t("auth.or")}</span>
+     <div className="flex-1 h-px bg-gray-200" />
+   </div>
+   <GoogleLoginButton />
+   ```
+   Добавить импорт `import { GoogleLoginButton } from "@/components/GoogleLoginButton";`
+
+3. **`frontend/src/pages/RegisterPage.tsx`** — аналогично: после `</form>` и перед `<p className="text-center...">` добавить divider + `<GoogleLoginButton />`
+   Добавить импорт.
+
+**Проверка:**
+```bash
+cd frontend && npm run build
+```
+**Коммит:** `feat: Phase 14.3 — добавить Google Sign-In на страницы Login и Register`
+
+---
+
+### [ ] 14.4 Google промпт на MainMenu для неавторизованных пользователей
+
+**Что сделать:**
+
+1. **`frontend/src/pages/MainMenu.tsx`** — найти место после Hero-секции (заголовок + описание) и ДО карточек режимов игры. Добавить блок, который отображается только когда `!isAuthenticated && !isAnonymous`:
+   ```tsx
+   {!isAuthenticated && !isAnonymous && (
+     <div className="bg-white rounded-2xl p-6 shadow-sm border border-green-100 flex flex-col items-center gap-4">
+       <div className="text-center">
+         <p className="font-semibold text-gray-700">
+           Natijalaringizni saqlash uchun kiring
+         </p>
+         <p className="text-sm text-gray-500 mt-1">
+           Google orqali tizimga kiring — tez va oson
+         </p>
+       </div>
+       <div className="w-full max-w-xs">
+         <GoogleLoginButton />
+       </div>
+       <p className="text-xs text-gray-400">
+         yoki{" "}
+         <Link to="/login" className="text-green-600 hover:underline">
+           kirish
+         </Link>
+         {" / "}
+         <Link to="/register" className="text-green-600 hover:underline">
+           ro'yxatdan o'tish
+         </Link>
+       </p>
+     </div>
+   )}
+   ```
+   Добавить импорты `GoogleLoginButton` и `Link`.
+
+**Проверка:**
+```bash
+cd frontend && npm run build
+```
+**Коммит:** `feat: Phase 14.4 — Google Sign-In промпт на MainMenu для неавторизованных пользователей`
+
+---
+
+## Phase 15: Аудит и исправления
+
+### [ ] 15.1 Удалить дублирующий achievements.json
+
+**Что сделать:**
+- Удалить файл `backend/fixtures/achievements.json` (идентичен `quiz_achievements.json`)
+- Убедиться, что `deploy.sh` НЕ ссылается на `achievements.json` (только на `quiz_achievements.json`)
+
+**Проверка:**
+```bash
+ls backend/fixtures/achievements.json 2>&1  # должен дать ошибку "not found"
+grep "achievements.json" deploy.sh           # должен показать только quiz_achievements.json
+```
+**Коммит:** `fix: Phase 15.1 — удалить дублирующий achievements.json`
+
+---
+
+### [ ] 15.2 Удалить мёртвый App.css
+
+**Что сделать:**
+- Удалить файл `frontend/src/App.css` (содержит Vite шаблонный CSS, не импортируется нигде)
+
+**Проверка:**
+```bash
+grep -r "App.css" frontend/src/  # должен вернуть пустой результат
+cd frontend && npm run build     # должен пройти
+```
+**Коммит:** `fix: Phase 15.2 — удалить неиспользуемый App.css (Vite шаблон)`
+
+---
+
+### [ ] 15.3 Исправить количество тестов (81 → 136+)
+
+**Что сделать:**
+1. В `README.md` найти строку с "81 тест" и заменить на "136+ тестов"
+2. В `docs/vkr/annotation.md` заменить "81 тест" → "136+ тестов", "81 ta testdan iborat" → "136+ ta testdan iborat", "81 tests" → "136+ tests"
+
+**Проверка:**
+```bash
+grep -rn "81 тест\|81 test\|81 ta test" README.md docs/vkr/annotation.md
+# должен вернуть пустой результат
+```
+**Коммит:** `fix: Phase 15.3 — обновить количество тестов 81 → 136+ в README и аннотации`
+
+---
+
+### [ ] 15.4 Исправить CORS_ALLOWED_ORIGINS в .env
+
+**Что сделать:**
+- В `.env` изменить строку:
+  ```
+  CORS_ALLOWED_ORIGINS=http://localhost
+  ```
+  на:
+  ```
+  CORS_ALLOWED_ORIGINS=https://ecogame.fullfocus.dev
+  ```
+
+**Проверка:**
+```bash
+grep "CORS_ALLOWED_ORIGINS" .env
+# должен показать: CORS_ALLOWED_ORIGINS=https://ecogame.fullfocus.dev
+```
+**Коммит:** `fix: Phase 15.4 — исправить CORS_ALLOWED_ORIGINS на production URL`
+
+---
+
+### [ ] 15.5 Задокументировать legacy модели в game/models.py
+
+**Что сделать:**
+В `backend/apps/game/models.py` добавить комментарий-блок непосредственно перед классом `Level`:
+```python
+# ─── Legacy models (sandbox game v1) ──────────────────────────────────────────
+# Level, GameSession, GameProgress — от оригинальной sandbox-версии игры.
+# Не используются quiz engine. Сохранены для обратной совместимости миграций.
+# НЕ удалять до разработки стратегии миграции данных.
+# ──────────────────────────────────────────────────────────────────────────────
+```
+
+**Проверка:**
+```bash
+cd backend && uv run python manage.py check
+```
+**Коммит:** `docs: Phase 15.5 — задокументировать legacy модели в game/models.py`
+
+---
+
+### [ ] 15.6 Полный прогон тестов и линтера
+
+**Что сделать:**
+1. `cd backend && uv run ruff check --fix .`
+2. `cd backend && uv run pytest -v` — все тесты должны пройти (136+)
+3. `cd frontend && npm run lint`
+4. `cd frontend && npm run build` — без TypeScript ошибок
+
+Исправить любые найденные ошибки.
+
+**Проверка:** Все 4 команды завершаются с кодом 0.
+**Коммит:** `fix: Phase 15.6 — исправить все тесты и lint ошибки после аудита`
+
+---
+
+## Phase 16: Рекомендации и документация
+
+### [ ] 16.1 Создать docs/RECOMMENDATIONS.md
+
+**Что сделать:**
+Создать файл `docs/RECOMMENDATIONS.md` (~100 строк) на русском языке, структура:
+
+```markdown
+# Рекомендации по развитию EcoGame
+
+## 1. Функциональные улучшения
+- Telegram Bot (уведомления о Daily Challenge через Telegram)
+- Мультиплеерный режим (WebSocket + Django Channels, duels)
+- Расширение базы вопросов (300+ вопросов, пользовательские вопросы через admin)
+- PWA — Progressive Web App (офлайн-режим, установка на рабочий стол)
+- Мобильное приложение (React Native или Capacitor.js)
+- AR мини-игра (определение мусора через камеру)
+
+## 2. Технические улучшения
+- Redis для кеширования (лидерборд, daily challenge, частые запросы)
+- CI/CD pipeline (GitHub Actions: lint → test → build → deploy)
+- E2E тесты (Playwright: полный user journey)
+- Мониторинг (Sentry для ошибок, Prometheus + Grafana для метрик)
+- Удаление legacy моделей (Level, GameSession, GameProgress) с data migration
+- CDN для статики (Cloudflare Images для медиафайлов)
+
+## 3. Безопасность
+- Rate limiting на API (django-ratelimit: 10 req/min на auth endpoints)
+- CAPTCHA для регистрации (hCaptcha или Cloudflare Turnstile)
+- Content Security Policy (CSP) headers
+- Регулярный аудит зависимостей (pip-audit, npm audit)
+- Email верификация при регистрации
+
+## 4. Контент и аудитория
+- Партнёрство с экологическими НКО Узбекистана (WWF Uzbekistan, ACCA21)
+- Перевод на русский и каракалпакский языки (i18n infrastructure уже есть)
+- Видео-объяснения для сложных вопросов (YouTube embed)
+- Сезонные события (World Environment Day, Earth Day)
+- Gamification: ежемесячные турниры, командные соревнования
+
+## 5. Известные ограничения текущей версии
+- Legacy модели (Level, GameSession, GameProgress) остаются в коде — требуют удаления
+- Daily streak не реализован полностью (счётчик consecutive days = 0)
+- Нет email верификации при регистрации
+- Avatar — только текстовый ключ (нет загрузки изображений)
+- Тесты только backend (нет frontend unit tests)
+- Нет мониторинга и alerting в production
+```
+
+**Проверка:** Файл существует, содержит 5 секций.
+**Коммит:** `docs: Phase 16.1 — создать RECOMMENDATIONS.md с рекомендациями развития`
+
+---
+
+### [ ] 16.2 Обновить CLAUDE.md с Google Auth
+
+**Что сделать:**
+В `CLAUDE.md`:
+1. В секцию "Quiz API endpoints" добавить:
+   ```
+   POST /api/v1/auth/google/                 — Google OAuth вход/регистрация
+   ```
+2. В секцию "Структура" под `accounts/` добавить упоминание Google Auth
+3. Добавить новую секцию в конце:
+   ```markdown
+   ## Google Auth
+   - GOOGLE_CLIENT_ID и VITE_GOOGLE_CLIENT_ID в .env (не хардкодить)
+   - Фронтенд: @react-oauth/google → credential → POST /auth/google/
+   - Бэкенд: google.oauth2.id_token.verify_oauth2_token()
+   - Flow: google_id match → email match (link) → create new Player
+   ```
+
+**Проверка:** `CLAUDE.md` содержит "Google Auth" секцию.
+**Коммит:** `docs: Phase 16.2 — обновить CLAUDE.md с Google Auth документацией`
+
+---
+
+### [ ] 16.3 Обновить README.md с Google Auth и исправлениями
+
+**Что сделать:**
+1. В таблицу технологий добавить строку:
+   ```
+   | OAuth 2.0 | Google Sign-In (@react-oauth/google + google-auth) |
+   ```
+2. В секцию setup (ручной запуск или .env конфиг) добавить упоминание `VITE_GOOGLE_CLIENT_ID`
+3. Убедиться, что количество тестов уже обновлено (из Phase 15.3)
+
+**Проверка:** `grep "Google" README.md` — показывает упоминание Google Auth.
+**Коммит:** `docs: Phase 16.3 — обновить README с Google Auth в tech stack`
+
+---
+
+## Phase 17: Production Deploy
+
+### [ ] 17.1 Обновить Docker конфигурации для Google Auth env vars
+
+**Что сделать:**
+
+1. **`docker-compose.yml`** — в секцию `backend.environment` добавить:
+   ```yaml
+   GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+   ```
+   В секцию `frontend.build.args` добавить:
+   ```yaml
+   VITE_GOOGLE_CLIENT_ID: ${VITE_GOOGLE_CLIENT_ID:-}
+   ```
+
+2. **`docker-compose.coolify.yml`** — аналогичные изменения (backend environment + frontend build args)
+
+3. **`frontend/Dockerfile`** — после строки `ARG VITE_API_URL=/api/v1` добавить:
+   ```dockerfile
+   ARG VITE_GOOGLE_CLIENT_ID=
+   ENV VITE_GOOGLE_CLIENT_ID=${VITE_GOOGLE_CLIENT_ID}
+   ```
+
+**Проверка:**
+```bash
+docker compose -f docker-compose.yml config 2>&1 | head -20
+docker compose -f docker-compose.coolify.yml config 2>&1 | head -20
+cd frontend && npm run build
+```
+**Коммит:** `chore: Phase 17.1 — обновить Docker конфиги для передачи Google Auth env vars`
+
+---
+
+### [ ] 17.2 Финальная верификация перед деплоем
+
+**Что сделать:**
+1. `cd backend && uv run python manage.py check`
+2. `cd backend && uv run pytest -v` (136+ тестов)
+3. `cd backend && uv run ruff check .`
+4. `cd frontend && npm run build`
+5. `cd frontend && npm run lint`
+6. Проверить `.env.example` — должен содержать: DJANGO_SECRET_KEY, DJANGO_ALLOWED_HOSTS, DATABASE_URL, POSTGRES_*, CORS_ALLOWED_ORIGINS, VITE_API_URL, GOOGLE_CLIENT_ID, VITE_GOOGLE_CLIENT_ID
+
+**Проверка:** Все 5 команд выходят с кодом 0.
+**Коммит:** `chore: Phase 17.2 — финальная верификация (все тесты, lint, build)`
+
+---
+
+### [ ] 17.3 Деплой на production ecogame.fullfocus.dev
+
+**Что сделать:**
+1. `git push origin main`
+2. Подключиться по SSH: `ssh -p 2222 deploy@89.167.60.96`
+3. На сервере:
+   ```bash
+   cd /home/deploy/ecogame
+   git pull origin main
+   docker compose up --build -d
+   docker compose exec -T backend uv run python manage.py migrate
+   ```
+4. Проверить что GOOGLE_CLIENT_ID установлен в Coolify environment variables (через https://coolify.fullfocus.dev)
+   Если нет — добавить вручную: `GOOGLE_CLIENT_ID=<your-google-client-id>.apps.googleusercontent.com`
+   И VITE_GOOGLE_CLIENT_ID с тем же значением.
+
+**Верификация:**
+```bash
+# Endpoint существует (400, не 404):
+curl -s -o /dev/null -w "%{http_code}" -X POST https://ecogame.fullfocus.dev/api/v1/auth/google/
+# Google кнопка видна на главной:
+curl -s https://ecogame.fullfocus.dev/ | grep -c "Google"
+```
+- Открыть https://ecogame.fullfocus.dev → нажать Google Sign-In → авторизоваться
+- Квиз Quick Play → 10 вопросов → результаты → лидерборд
+- Профиль показывает `has_google: true`
+
+**Коммит:** `chore: Phase 17.3 — production deploy с Google Auth`
+
+---
+
+## Phase 18: Обновление ВКР
+
+### [ ] 18.1 Обновить Главу 3 — добавить раздел Google OAuth
+
+**Что сделать:**
+В `docs/vkr/chapter3_implementation.md` добавить новый раздел в конце (после последнего раздела):
+
+```markdown
+### 3.20 Интеграция Google OAuth 2.0
+
+Для повышения удобства регистрации и входа реализована аутентификация через Google OAuth 2.0.
+Был выбран подход на основе ID Token, оптимальный для архитектуры SPA + REST API:
+никаких серверных редиректов, вся верификация происходит на бэкенде.
+
+**Flow аутентификации:**
+1. Пользователь нажимает кнопку "Sign in with Google" (компонент `GoogleLoginButton`)
+2. Открывается Google OAuth popup
+3. После подтверждения Google возвращает ID token (JWT, подписанный Google)
+4. Фронтенд отправляет token на `POST /api/v1/auth/google/`
+5. Бэкенд верифицирует token через `google.oauth2.id_token.verify_oauth2_token()`
+6. Бэкенд возвращает JWT tokens приложения
+
+**Backend реализация (GoogleAuthView):**
+```python
+# Листинг 3.X — GoogleAuthView (apps/accounts/views.py)
+class GoogleAuthView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        credential = request.data.get("credential", "")
+        try:
+            payload = google_id_token.verify_oauth2_token(
+                credential, google_requests.Request(), settings.GOOGLE_CLIENT_ID
+            )
+        except ValueError:
+            return Response({"detail": "Google token yaroqsiz."}, status=400)
+
+        google_id = payload["sub"]
+        # Трёхшаговый поиск: google_id → email → создать нового
+        player = Player.objects.filter(google_id=google_id).first()
+        if not player:
+            player = Player.objects.filter(email=payload.get("email")).first()
+            if player:
+                player.google_id = google_id
+                player.save(update_fields=["google_id"])
+            else:
+                player = Player.objects.create_user(...)
+        refresh = RefreshToken.for_user(player)
+        return Response({"access": str(refresh.access_token), "refresh": str(refresh)})
+```
+
+**Frontend реализация (GoogleLoginButton):**
+```tsx
+// Листинг 3.X — GoogleLoginButton (components/GoogleLoginButton.tsx)
+export function GoogleLoginButton() {
+  const { googleLogin } = useAuthStore();
+  const navigate = useNavigate();
+  return (
+    <GoogleLogin
+      onSuccess={async (response) => {
+        if (response.credential) {
+          await googleLogin(response.credential);
+          navigate("/");
+        }
+      }}
+      size="large" width="100%" text="signin_with"
+    />
+  );
+}
+```
+```
+
+**Проверка:** Раздел 3.20 существует в chapter3_implementation.md, содержит два листинга кода.
+**Коммит:** `docs: Phase 18.1 — добавить раздел Google OAuth в Главу 3 ВКР`
+
+---
+
+### [ ] 18.2 Обновить Главу 4 — тесты Google Auth
+
+**Что сделать:**
+В `docs/vkr/chapter4_testing.md`:
+1. Найти таблицу с тестами и добавить строку:
+   ```
+   | TestGoogleAuth | 6 | new_user, email_match, google_id_match, invalid_token, missing_cred, profile |
+   ```
+2. Обновить итоговое количество тестов: 130 → 136
+3. Добавить абзац об использовании `unittest.mock.patch` для тестирования внешних OAuth провайдеров
+
+**Проверка:** Глава 4 содержит "TestGoogleAuth" и число "136".
+**Коммит:** `docs: Phase 18.2 — обновить Главу 4 ВКР с результатами тестов Google Auth`
