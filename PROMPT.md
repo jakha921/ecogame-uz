@@ -1571,7 +1571,7 @@ Django REST Framework, React, web application
 
 ---
 
-### [ ] 12.1 Задеплоить на production и протестировать
+### [x] 12.1 Задеплоить на production и протестировать
 
 **Что сделать:**
 - Проверить `docker-compose.yml` — убедиться что конфигурация актуальна
