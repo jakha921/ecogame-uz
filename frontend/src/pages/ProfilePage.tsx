@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Bird,
   Crown,
@@ -8,13 +9,14 @@ import {
   Recycle,
   Star,
   SunMedium,
+  Target,
   TreeDeciduous,
   Trophy,
   UserCircle,
   Wind,
 } from "lucide-react";
 import { quizApi } from "@/api/quiz";
-import type { PlayerAchievement } from "@/api/types";
+import type { PlayerAchievement, PlayerStats } from "@/api/types";
 import { useAuthStore } from "@/stores/authStore";
 import { t } from "@/i18n";
 
@@ -34,16 +36,21 @@ const ICON_MAP: Record<string, React.ReactNode> = {
 };
 
 export function ProfilePage() {
-  const { player, updateProfile } = useAuthStore();
+  const navigate = useNavigate();
+  const { player, updateProfile, isAnonymous } = useAuthStore();
   const [achievements, setAchievements] = useState<PlayerAchievement[]>([]);
   const [totalAchievements, setTotalAchievements] = useState(0);
+  const [stats, setStats] = useState<PlayerStats | null>(null);
   const [editing, setEditing] = useState(false);
   const [nickname, setNickname] = useState(player?.nickname ?? "");
 
   useEffect(() => {
     quizApi.getMyAchievements().then(({ data }) => setAchievements(data));
     quizApi.getAchievements().then(({ data }) => setTotalAchievements(data.count));
-  }, []);
+    if (!isAnonymous) {
+      quizApi.getStats().then(({ data }) => setStats(data));
+    }
+  }, [isAnonymous]);
 
   const handleSave = async () => {
     await updateProfile({ nickname });
@@ -55,6 +62,21 @@ export function ProfilePage() {
   return (
     <div className="max-w-2xl mx-auto flex flex-col gap-6">
       <h1 className="text-2xl font-bold text-green-700">{t("profile.title")}</h1>
+
+      {/* Anonymous banner */}
+      {isAnonymous && (
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-center justify-between gap-4">
+          <p className="text-sm text-amber-800">
+            Akkaunt yarating — natijalaringizni saqlaydigan bo'ling
+          </p>
+          <button
+            onClick={() => navigate("/register")}
+            className="bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-xl flex-shrink-0"
+          >
+            Ro'yxatdan o'tish
+          </button>
+        </div>
+      )}
 
       {/* Player card */}
       <div className="bg-white rounded-2xl shadow-sm p-6 flex flex-col gap-4">
@@ -106,9 +128,50 @@ export function ProfilePage() {
         </div>
       </div>
 
+      {/* Quiz stats */}
+      {stats && (
+        <div className="bg-white rounded-2xl shadow-sm p-6 flex flex-col gap-4 border border-gray-100">
+          <div className="flex items-center gap-2">
+            <Star size={18} className="text-yellow-500" />
+            <h2 className="text-base font-bold text-gray-700">Quiz statistikasi</h2>
+          </div>
+
+          <div className="bg-green-50 rounded-xl p-4 text-center">
+            <p className="text-xs text-green-600 uppercase tracking-wide">Daraja</p>
+            <p className="text-xl font-bold text-green-800 mt-1">{stats.rank_title}</p>
+          </div>
+
+          <div className="grid grid-cols-3 gap-3">
+            <div className="text-center">
+              <div className="flex justify-center mb-1">
+                <Trophy size={18} className="text-yellow-500" />
+              </div>
+              <p className="text-xl font-bold text-gray-800">{stats.total_quizzes}</p>
+              <p className="text-xs text-gray-400">O'yinlar</p>
+            </div>
+            <div className="text-center">
+              <div className="flex justify-center mb-1">
+                <Target size={18} className="text-green-600" />
+              </div>
+              <p className="text-xl font-bold text-gray-800">
+                {Math.round(stats.accuracy_pct)}%
+              </p>
+              <p className="text-xs text-gray-400">Aniqlik</p>
+            </div>
+            <div className="text-center">
+              <div className="flex justify-center mb-1">
+                <Flame size={18} className="text-orange-500" />
+              </div>
+              <p className="text-xl font-bold text-gray-800">{stats.best_streak}</p>
+              <p className="text-xs text-gray-400">Eng uzun</p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Achievements */}
       <div>
-        <h2 className="text-lg font-bold text-gray-700 mb-3">{t("profile.achievements")}</h2>
+        <h2 className="text-lg font-bold text-gray-700 mb-3">Mening yutuqlarim</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {achievements.map((pa) => (
             <div

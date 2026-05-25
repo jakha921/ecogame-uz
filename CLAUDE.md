@@ -1,9 +1,9 @@
 # EcoGame — Project-specific Claude Instructions
 
 ## Описание проекта
-Экологическая игра-симулятор на узбекском языке. Дипломный проект.
+Экологическая викторина на узбекском языке. Дипломный проект.
 - Backend: Django REST API (port 8000)
-- Frontend: React 19 + Phaser.js (port 3000)
+- Frontend: React 19 + TypeScript + Vite (port 3000)
 - Deploy: ecogame.fullfocus.dev via Coolify
 
 ## Команды проверки
@@ -31,16 +31,27 @@ docker compose -f docker-compose.dev.yml up --build
 ## Структура
 ```
 backend/apps/
-  accounts/   — Аутентификация, модель Player
-  game/       — Игровая логика, уровни, действия
-  education/  — Образовательный контент
-  leaderboard/ — Таблица лидеров
+  accounts/    — Аутентификация, модель Player
+  game/        — Quiz модели, QuizService, scoring, достижения
+  education/   — Образовательный контент, EcoFact
+  leaderboard/ — Таблица лидеров (сигналы QuizSession)
 
 frontend/src/
-  game/       — Phaser сцены и объекты
-  pages/      — React страницы
-  stores/     — Zustand хранилища
-  api/        — HTTP клиент и типы
+  components/quiz/ — Timer, QuestionCard, ExplanationPanel, StreakCounter, ...
+  pages/           — MainMenu, QuizPlayPage, QuizResultsPage, ProfilePage, ...
+  stores/          — authStore, quizStore (Zustand)
+  api/             — quiz.ts, education.ts, types.ts, client.ts
+```
+
+## Quiz API endpoints (основные)
+```
+POST /api/v1/game/quiz/sessions/              — start session
+POST /api/v1/game/quiz/sessions/{id}/answer/  — submit answer
+POST /api/v1/game/quiz/sessions/{id}/end/     — end session
+GET  /api/v1/game/quiz/stats/                 — player stats
+GET  /api/v1/game/quiz/daily/                 — daily challenge
+GET  /api/v1/game/quiz/questions/             — question list
+GET  /api/v1/game/achievements/my/            — my achievements
 ```
 
 ## Правила кода

@@ -1096,7 +1096,7 @@ interface ModeCardProps {
 
 ---
 
-### [ ] 9.2 Обновить ProfilePage и документацию
+### [x] 9.2 Обновить ProfilePage и документацию
 
 **Что сделать:**
 
