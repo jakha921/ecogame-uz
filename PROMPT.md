@@ -817,7 +817,7 @@ def update_leaderboard_on_achievement(sender, instance: PlayerAchievement, **kwa
 
 ---
 
-### [ ] 5.2 Создать fixtures/quiz_achievements.json
+### [x] 5.2 Создать fixtures/quiz_achievements.json
 
 **Что сделать:**
 - Создать `backend/fixtures/quiz_achievements.json` с 10 достижениями:
@@ -841,7 +841,7 @@ def update_leaderboard_on_achievement(sender, instance: PlayerAchievement, **kwa
 
 ---
 
-### [ ] 5.3 Удалить сломанный eco_actions.json и обновить deploy.sh
+### [x] 5.3 Удалить сломанный eco_actions.json и обновить deploy.sh
 
 **Проблема:** `fixtures/eco_actions.json` ссылается на удалённую модель `game.EcoAction` (удалена в миграции 0003). `deploy.sh` пытается загрузить этот fixture → краш при деплое.
 

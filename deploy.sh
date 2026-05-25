@@ -14,10 +14,10 @@ docker compose exec backend uv run python manage.py migrate --settings=config.se
 echo "Loading fixtures..."
 docker compose exec backend uv run python manage.py loaddata \
   fixtures/levels.json \
-  fixtures/eco_actions.json \
-  fixtures/achievements.json \
+  fixtures/quiz_achievements.json \
   fixtures/educational_content.json \
   fixtures/eco_facts.json \
+  fixtures/questions.json \
   --settings=config.settings.prod
 
 echo "=== Deploy complete! ==="
