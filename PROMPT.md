@@ -863,7 +863,7 @@ def update_leaderboard_on_achievement(sender, instance: PlayerAchievement, **kwa
 
 ## Phase 6: Backend — Тесты
 
-### [ ] 6.1 Написать тесты для Quiz моделей и сервиса
+### [x] 6.1 Написать тесты для Quiz моделей и сервиса
 
 **Что сделать:**
 - Обновить `backend/apps/game/tests/test_models.py` — убрать тесты для EcoAction/ActionLog, добавить:
