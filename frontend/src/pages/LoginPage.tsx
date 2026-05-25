@@ -62,7 +62,7 @@ export function LoginPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="bg-green-600 hover:bg-green-500 disabled:bg-gray-400 text-white font-semibold py-2 rounded-lg transition-colors"
+            className="bg-green-600 hover:bg-green-500 disabled:bg-gray-400 text-white font-semibold py-3 rounded-lg transition-colors"
           >
             {isLoading ? "Kirilmoqda..." : t("menu.login")}
           </button>

@@ -1549,7 +1549,7 @@ Django REST Framework, React, web application
 
 ## Phase 12: Deploy + Презентация
 
-### [ ] 12.0 Mobile testing и UI polish
+### [x] 12.0 Mobile testing и UI polish
 
 **Что сделать:**
 - Открыть http://localhost:5173 в Chrome → DevTools → Toggle Device Toolbar
