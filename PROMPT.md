@@ -1596,7 +1596,7 @@ Django REST Framework, React, web application
 
 ---
 
-### [ ] 12.2 Создать презентацию (Gamma)
+### [x] 12.2 Создать презентацию (Gamma)
 
 **Что сделать:**
 - Создать презентацию через Gamma (https://gamma.app) или в Google Slides
