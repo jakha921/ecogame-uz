@@ -943,7 +943,7 @@ def update_leaderboard_on_achievement(sender, instance: PlayerAchievement, **kwa
 
 ## Phase 8: Frontend — Quiz UI компоненты
 
-### [ ] 8.1 Создать компоненты для квиза
+### [x] 8.1 Создать компоненты для квиза
 
 **Что сделать:**
 - Создать директорию `frontend/src/components/quiz/`
