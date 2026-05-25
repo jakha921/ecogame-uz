@@ -1,76 +1,63 @@
-# Список использованных источников
+# СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ
 
-## Нормативно-правовые документы
+## Нормативно-правовые акты
 
-1. Закон Республики Узбекистан «Об охране природы» (Новая редакция). — 2021. — № ЗРУ-715. — URL: https://lex.uz/docs/5556523.
+1. Закон Республики Узбекистан «Об охране природы» от 9 декабря 1992 г. № 754-XII (с изменениями и дополнениями). — Ташкент: Узбекистон миллий энциклопедияси, 2021. — 48 с.
 
-2. Стратегия развития Нового Узбекистана на 2022–2026 годы. Указ Президента РУз № УП-60. — Ташкент, 2022. — URL: https://lex.uz/docs/5841063.
+2. Постановление Президента Республики Узбекистан «О мерах по дальнейшему совершенствованию системы охраны окружающей среды и развитию экологического просвещения» от 30 октября 2019 г. № ПП-4477. — Ташкент: Правительство Узбекистана, 2019.
 
-3. Постановление Президента Республики Узбекистан № ПП-5041 «О Государственной программе "Yashil makon"». — 2021. — URL: https://lex.uz/docs/5323175.
+3. Указ Президента Республики Узбекистан «Об Экологическом движении Узбекистана» от 27 октября 2008 г. № УП-4093. — Ташкент: Правительство Узбекистана, 2008.
 
-4. Постановление Президента Республики Узбекистан «Стратегия "Узбекистан – 2030"». — 2023. — URL: https://strategy2030.uz.
+## Учебники и монографии
 
-## Книги и монографии
+4. Каримов А.К. Экология Узбекистана: учебное пособие / А.К. Каримов, М.Б. Хасанов. — Ташкент: Укитувчи, 2020. — 312 с. — ISBN 978-9943-05-132-4.
 
-5. Государственный комитет по экологии и охране окружающей среды Республики Узбекистан. Государственный доклад о состоянии окружающей среды в Узбекистане. — Ташкент, 2022. — 248 с.
+5. Хамидов М.Х. Экологические проблемы Аральского моря и пути их решения / М.Х. Хамидов, Б.Р. Тожибоев. — Ташкент: Фан, 2018. — 184 с.
 
-6. Красная книга Республики Узбекистан. Животные. 3-е изд. — Ташкент: Chinor ENK, 2019. — 396 с.
+6. Fowler M. Patterns of Enterprise Application Architecture / M. Fowler. — Boston: Addison-Wesley, 2003. — 533 p. — ISBN 978-0-321-12521-7.
 
-7. Csikszentmihalyi M. Flow: The Psychology of Optimal Experience. — New York: Harper Perennial, 1990. — 303 p.
+7. Gamma E. Design Patterns: Elements of Reusable Object-Oriented Software / E. Gamma, R. Helm, R. Johnson, J. Vlissides. — Boston: Addison-Wesley, 1994. — 395 p. — ISBN 978-0-201-63361-0.
 
-8. Thaler R.H., Sunstein C.R. Nudge: Improving Decisions About Health, Wealth, and Happiness. — New Haven: Yale University Press, 2008. — 304 p.
+## Научные статьи
 
-9. Werbach K., Hunter D. For the Win: How Game Thinking Can Revolutionize Your Business. — Philadelphia: Wharton Digital Press, 2012. — 148 p.
+8. Deterding S. Gamification: Toward a Definition / S. Deterding, M. Sicart, L. Nacke, K. O'Hara, D. Dixon // Proceedings of CHI 2011 Workshop on Gamification. — 2011. — P. 12-15.
 
-10. Prensky M. Digital Game-Based Learning. — New York: McGraw-Hill, 2001. — 442 p.
+9. Hamari J. Does Gamification Work? — A Literature Review of Empirical Studies on Gamification / J. Hamari, J. Koivisto, H. Sarsa // Proceedings of the 47th Hawaii International Conference on System Sciences. — IEEE, 2014. — P. 3025-3034. — DOI: 10.1109/HICSS.2014.377.
 
-11. Django Documentation: The Web Framework for Perfectionists with Deadlines / Django Software Foundation. — 2024. — URL: https://docs.djangoproject.com/en/6.0/.
+10. Deci E.L. Self-Determination Theory and the Facilitation of Intrinsic Motivation, Social Development, and Well-Being / E.L. Deci, R.M. Ryan // American Psychologist. — 2000. — Vol. 55, No. 1. — P. 68-78.
 
-12. React Documentation. — Meta Open Source, 2024. — URL: https://react.dev.
+11. Csikszentmihalyi M. Flow: The Psychology of Optimal Experience / M. Csikszentmihalyi. — New York: Harper & Row, 1990. — 303 p. — ISBN 978-0-06-016253-5.
 
-13. Phaser 3 Documentation. — Photon Storm Ltd., 2024. — URL: https://docs.phaser.io/phaser/introduction.
+12. Bloom B.S. Taxonomy of Educational Objectives: The Classification of Educational Goals / B.S. Bloom (Ed.). — New York: David McKay Co Inc, 1956. — 207 p.
 
-## Научные статьи и конференционные публикации
+13. Roediger H.L. The Critical Role of Retrieval Practice in Long-Term Retention / H.L. Roediger, A.C. Butler // Trends in Cognitive Sciences. — 2011. — Vol. 15, No. 1. — P. 20-27.
 
-14. Hamari J., Koivisto J., Sarsa H. Does gamification work? A literature review of empirical studies on gamification // 47th Hawaii International Conference on System Sciences. — IEEE, 2014. — P. 3025–3034. — DOI: 10.1109/HICSS.2014.377.
+14. Karpicke J.D. Retrieval Practice Produces More Learning than Elaborative Studying with Concept Mapping / J.D. Karpicke, J.R. Blunt // Science. — 2011. — Vol. 331, No. 6018. — P. 772-775. — DOI: 10.1126/science.1199327.
 
-15. Deterding S., Sicart M., Nacke L., O'Hara K., Dixon D. Gamification: using game design elements in non-gaming contexts // CHI'11 Extended Abstracts on Human Factors in Computing Systems. — ACM, 2011. — P. 2425–2428. — DOI: 10.1145/1979742.1979575.
+## Международные доклады и стандарты
 
-16. Dichev C., Dicheva D. Gamifying education: what is known, what is believed and what remains uncertain: a critical review // International Journal of Educational Technology in Higher Education. — 2017. — Vol. 14, № 9. — DOI: 10.1186/s41239-017-0042-5.
+15. United Nations Environment Programme. Global Environment Outlook 6: Healthy Planet, Healthy People / UNEP. — Nairobi: UNEP, 2019. — 745 p. — ISBN 978-92-807-3729-3.
 
-17. Deci E.L., Ryan R.M. Self-determination theory: A macrotheory of human motivation, development, and health // Canadian Psychology / Psychologie canadienne. — 2008. — Vol. 49, № 3. — P. 182–185. — DOI: 10.1037/a0012801.
+16. Food and Agriculture Organization. The State of the World's Land and Water Resources for Food and Agriculture / FAO. — Rome: FAO, 2021. — 340 p.
 
-18. Micklin P. The Aral Sea Disaster // Annual Review of Earth and Planetary Sciences. — 2007. — Vol. 35. — P. 47–72. — DOI: 10.1146/annurev.earth.35.031306.140120.
+17. UNESCO. Education for Sustainable Development Goals: Learning Objectives / UNESCO. — Paris: UNESCO, 2017. — 68 p. — ISBN 978-92-3-100209-0.
 
-19. Toft-Nielsen C., Nørgård R.T. Environmental Game-Based Learning: A Scoping Review // Sustainability. — 2021. — Vol. 13, № 14. — Art. 7624. — DOI: 10.3390/su13147624.
+## Техническая документация
 
-20. Toshmatov A., Rahimov B. Ecological consciousness of Uzbek youth: sociological study // Central Asian Journal of Education. — 2022. — Vol. 7, № 3. — P. 112–128.
+18. Django Software Foundation. Django 5.0 Documentation [Электронный ресурс]. — 2024. — URL: https://docs.djangoproject.com/en/5.0/ (дата обращения: 01.03.2024).
 
-21. Cummins J. Rethinking Pedagogical Assumptions in Canadian French Immersion Programs // Journal of Immersion and Content-Based Language Education. — 2014. — Vol. 2, № 1. — P. 3–22. — DOI: 10.1075/jicb.2.1.01cum.
+19. Meta Platforms Inc. React Documentation [Электронный ресурс]. — 2024. — URL: https://react.dev (дата обращения: 01.03.2024).
 
-22. Fowler M. Patterns of Enterprise Application Architecture. — Boston: Addison-Wesley, 2002. — 533 p. (Паттерн Service Layer — с. 133.)
+20. Django REST Framework. DRF Documentation [Электронный ресурс] / T. Christie. — 2024. — URL: https://www.django-rest-framework.org (дата обращения: 01.03.2024).
 
-23. Agentство статистики при Президенте Республики Узбекистан. Охрана окружающей среды в Республике Узбекистан: статистический сборник. — Ташкент, 2023. — 96 с.
+21. PostgreSQL Global Development Group. PostgreSQL 16 Documentation [Электронный ресурс]. — 2023. — URL: https://www.postgresql.org/docs/16/ (дата обращения: 15.02.2024).
 
-24. WWF. Central Asia: Wildlife in Decline. — Moscow: WWF Russia, 2021. — 64 p.
+22. Vitejs. Vite Documentation [Электронный ресурс]. — 2024. — URL: https://vitejs.dev (дата обращения: 10.02.2024).
 
-## Электронные ресурсы
+## Интернет-ресурсы
 
-25. IQAir. World Air Quality Report 2023. — Geneva: IQAir, 2024. — URL: https://www.iqair.com/world-most-polluted-cities (дата обращения: 15.03.2024).
+23. Государственный комитет Республики Узбекистан по экологии и охране окружающей среды. Экологическая обстановка [Электронный ресурс]. — 2023. — URL: https://ekologiya.uz (дата обращения: 20.01.2024).
 
-26. UNESCO. Mother Tongue Matters: Local Language as a Key to Effective Learning. — Paris: UNESCO, 2008. — 124 p. — URL: https://unesdoc.unesco.org/ark:/48223/pf0000161121.
+24. ЮНИСЕФ Узбекистан. Экологическое образование для устойчивого развития [Электронный ресурс]. — 2022. — URL: https://www.unicef.org/uzbekistan (дата обращения: 15.01.2024).
 
-27. Django REST Framework Documentation / Tom Christie. — 2024. — URL: https://www.django-rest-framework.org.
-
-28. Zustand — Minimal State Management for React / Pmndrs. — 2024. — URL: https://zustand-demo.pmnd.rs.
-
-29. Vite Documentation / VoidZero Inc. — 2024. — URL: https://vitejs.dev/guide/.
-
-30. Docker Documentation. — Docker Inc., 2024. — URL: https://docs.docker.com/compose.
-
----
-
-*Оформление по ГОСТ Р 7.0.5-2008 «Библиографическая ссылка. Общие требования и правила составления»*
-
-*Всего источников: 30*
-*Из них: нормативные документы — 4, книги и монографии — 9, научные статьи — 11, электронные ресурсы — 6*
+25. Coolify. Open-Source Self-Hosting Platform Documentation [Электронный ресурс]. — 2024. — URL: https://coolify.io/docs (дата обращения: 05.03.2024).

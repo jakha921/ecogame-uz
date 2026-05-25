@@ -1,174 +1,160 @@
-# Приложение В. ER-диаграмма базы данных EcoGame
+# ПРИЛОЖЕНИЕ В. ER-ДИАГРАММА БАЗЫ ДАННЫХ
 
-Диаграмма описывает полную схему реляционной базы данных приложения EcoGame
-(11 таблиц). Разработана с применением нотации Crow's Foot (ГОСТ не
-регламентирует нотацию ER-диаграмм).
+## В.1 ER-диаграмма в нотации Mermaid
 
 ```mermaid
 erDiagram
-    PLAYER {
+    Player {
         int id PK
-        varchar username UK
-        varchar nickname UK
-        varchar email
-        varchar avatar
+        string username
+        string email
+        string password_hash
         int total_score
-        datetime date_joined
+        bool is_anonymous_player
+        string avatar
+        datetime created_at
+    }
+
+    Question {
+        int id PK
+        string text_uz
+        string category
+        int difficulty
+        string question_type
+        int time_limit
+        string explanation_uz
+        string source
         bool is_active
     }
 
-    LEVEL {
+    Answer {
         int id PK
-        smallint number UK
-        varchar name_uz
-        text description_uz
-        int required_score
-        json map_config
-        json ecosystem_initial
+        int question_id FK
+        string text_uz
+        bool is_correct
+        int order
     }
 
-    ECO_ACTION {
-        int id PK
-        varchar key UK
-        varchar name_uz
-        text description_uz
-        varchar category
-        int score_value
-        float air_impact
-        float water_impact
-        float soil_impact
-        float biodiversity_impact
-        int cooldown_seconds
-        int unlock_level_id FK
-        varchar sprite_key
-    }
-
-    GAME_SESSION {
+    QuizSession {
         int id PK
         int player_id FK
-        int level_id FK
-        datetime started_at
-        datetime ended_at
-        bool is_active
-    }
-
-    GAME_PROGRESS {
-        int id PK
-        int player_id FK
-        int level_id FK
+        string mode
+        string category
         int score
-        float air_quality
-        float water_purity
-        float soil_health
-        float biodiversity
-        json actions_performed
-        bool completed
-        datetime completed_at
-        datetime updated_at
+        int correct_count
+        int total_questions
+        int current_streak
+        int max_streak
+        datetime started_at
+        datetime finished_at
     }
 
-    ACTION_LOG {
+    QuizAnswer {
         int id PK
         int session_id FK
-        int action_id FK
-        datetime performed_at
-        float position_x
-        float position_y
-        json result_delta
+        int question_id FK
+        int selected_answer_id FK
+        bool is_correct
+        int time_spent_ms
     }
 
-    ACHIEVEMENT {
+    DailyChallenge {
         int id PK
-        varchar key UK
-        varchar name_uz
-        text description_uz
-        varchar icon
-        varchar condition_type
-        json condition_value
+        date date
+        int bonus_score
+        int completed_count
+        datetime created_at
     }
 
-    PLAYER_ACHIEVEMENT {
+    Achievement {
+        int id PK
+        string key
+        string title_uz
+        string description_uz
+        string condition_type
+        json condition_value
+        string icon
+        int points_reward
+    }
+
+    PlayerAchievement {
         int id PK
         int player_id FK
         int achievement_id FK
         datetime unlocked_at
     }
 
-    EDUCATIONAL_CONTENT {
+    LeaderboardEntry {
         int id PK
-        varchar title_uz
-        text body_uz
-        varchar category
-        varchar image
-        smallint order
-        bool is_published
-        datetime created_at
-    }
-
-    ECO_FACT {
-        int id PK
-        varchar text_uz
-        varchar source
-        varchar category
-    }
-
-    LEADERBOARD_ENTRY {
-        int id PK
-        int player_id FK "1-1"
-        int total_score
-        smallint levels_completed
-        smallint achievements_count
-        int rank
+        int player_id FK
+        int score
+        string rank_title
+        int quizzes_completed
         datetime updated_at
     }
 
-    PLAYER ||--o{ GAME_SESSION : "plays"
-    PLAYER ||--o{ GAME_PROGRESS : "has"
-    PLAYER ||--o{ PLAYER_ACHIEVEMENT : "earns"
-    PLAYER ||--|| LEADERBOARD_ENTRY : "ranked in"
+    EducationalContent {
+        int id PK
+        string title_uz
+        text content_uz
+        string summary_uz
+        string category
+        int difficulty_level
+        int read_time_minutes
+        string slug
+        bool is_published
+    }
 
-    LEVEL ||--o{ GAME_SESSION : "hosted in"
-    LEVEL ||--o{ GAME_PROGRESS : "tracked by"
-    LEVEL ||--o{ ECO_ACTION : "unlocks"
+    EcoFact {
+        int id PK
+        string text_uz
+        string category
+        string source
+        bool is_active
+    }
 
-    GAME_SESSION ||--o{ ACTION_LOG : "records"
+    MiniGameScore {
+        int id PK
+        int player_id FK
+        int score
+        int correct_count
+        int total_items
+        datetime played_at
+    }
 
-    ECO_ACTION ||--o{ ACTION_LOG : "logged as"
+    %% Связи
+    Player ||--o{ QuizSession : "проводит"
+    Player ||--o| LeaderboardEntry : "имеет"
+    Player ||--o{ PlayerAchievement : "получает"
+    Player ||--o{ MiniGameScore : "набирает"
 
-    ACHIEVEMENT ||--o{ PLAYER_ACHIEVEMENT : "granted via"
+    Question ||--o{ Answer : "содержит"
+    Question }o--o{ DailyChallenge : "входит в"
+
+    QuizSession ||--o{ QuizAnswer : "содержит"
+    QuizAnswer }o--|| Question : "на"
+    QuizAnswer }o--o| Answer : "выбран"
+
+    Achievement ||--o{ PlayerAchievement : "выдаётся"
 ```
 
-## Пояснения к схеме
+## В.2 Описание связей
 
-| Таблица | Назначение |
-|---------|-----------|
-| `PLAYER` | Расширенная модель пользователя Django (AbstractUser) |
-| `LEVEL` | Описание уровня: карта, начальные параметры экосистемы |
-| `ECO_ACTION` | Каталог экологических действий с коэффициентами влияния |
-| `GAME_SESSION` | Факт начала и завершения одной игровой сессии |
-| `GAME_PROGRESS` | Накопительный прогресс игрока по уровню (unique: player+level) |
-| `ACTION_LOG` | Лог каждого отдельного действия с координатами на карте |
-| `ACHIEVEMENT` | Определение достижения и условий его разблокировки |
-| `PLAYER_ACHIEVEMENT` | M2M связь игрок ↔ достижение с датой разблокировки |
-| `EDUCATIONAL_CONTENT` | Образовательные статьи на узбекском языке |
-| `ECO_FACT` | Короткие экологические факты для экранов загрузки |
-| `LEADERBOARD_ENTRY` | Денормализованная таблица рейтинга (O(1) чтение) |
+| Связь | Кратность | Описание |
+|-------|-----------|---------|
+| Player → QuizSession | 1:N | Один игрок может иметь много сессий |
+| Player → LeaderboardEntry | 1:1 | У каждого игрока одна запись в лидерборде |
+| Player → PlayerAchievement | 1:N | Игрок может иметь много достижений |
+| Question → Answer | 1:N | Вопрос имеет 2 или 4 варианта ответа |
+| Question ↔ DailyChallenge | N:M | Вопросы могут входить в несколько ежедневных заданий |
+| QuizSession → QuizAnswer | 1:N | Сессия содержит ответы на все вопросы |
+| QuizAnswer → Answer | N:1 | Каждый ответ ссылается на выбранный вариант |
+| Achievement → PlayerAchievement | 1:N | Достижение может быть выдано многим игрокам |
 
-## Ключевые архитектурные решения
+## В.3 Ключевые ограничения целостности
 
-1. **Денормализованный `LEADERBOARD_ENTRY`**: вместо агрегатного запроса по
-   `GAME_PROGRESS` таблица лидеров обновляется Django-сигналами при каждом
-   сохранении прогресса. Это обеспечивает O(1) чтение рейтинга при любом
-   количестве игроков.
-
-2. **JSONField для `map_config` и `ecosystem_initial`**: позволяет хранить
-   гибкую конфигурацию каждого уровня без дополнительных таблиц. PostgreSQL
-   обеспечивает нативную поддержку JSONB с индексированием.
-
-3. **`unique_together("player", "level")` в `GAME_PROGRESS`**: гарантирует
-   атомарность прогресса — один игрок имеет ровно один экземпляр прогресса
-   на каждый уровень. Повторное прохождение обновляет существующую запись.
-
-4. **`result_delta` в `ACTION_LOG`**: снимок изменения индикаторов в момент
-   действия позволяет воспроизвести историю сессии и строить аналитику без
-   перерасчёта.
+- `LeaderboardEntry.player` — UNIQUE (OneToOneField)
+- `PlayerAchievement(player, achievement)` — UNIQUE TOGETHER
+- `DailyChallenge.date` — UNIQUE
+- `Answer.is_correct=True` — ровно один для MCQ вопросов (NOT ENFORCED на DB уровне, проверяется в QuizService)
+- `QuizAnswer(session, question)` — UNIQUE TOGETHER (защита от повторного ответа)

@@ -1,153 +1,299 @@
-# Приложение Г. Диаграмма развёртывания
+# ПРИЛОЖЕНИЕ Г. ДОКУМЕНТАЦИЯ REST API
 
-## Г.1. Общая схема развёртывания
+## Г.1 Общие сведения
 
+**Base URL:** `https://ecogame.fullfocus.dev/api/v1`
+
+**Аутентификация:** JWT Bearer Token
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        ПОЛЬЗОВАТЕЛЬ (браузер)                       │
-│                        https://ecogame.fullfocus.dev                │
-└────────────────────────────────┬────────────────────────────────────┘
-                                 │ HTTPS (443) + HTTP (80→303)
-                                 ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                    CLOUDFLARE CDN (DNS Proxy)                       │
-│            IP: 89.167.60.96  ←→  ecogame.fullfocus.dev             │
-└────────────────────────────────┬────────────────────────────────────┘
-                                 │ TCP 80 / 443
-                                 ▼
-┌──────────────────────── СЕРВЕР VPS (Debian) ────────────────────────┐
-│  IP: 89.167.60.96   SSH port: 2222   User: deploy                  │
-│                                                                     │
-│  ┌──────────────────────────────────────────────────────────────┐   │
-│  │                  Docker Engine                               │   │
-│  │                                                              │   │
-│  │  ┌──────────────────────────────────────────────────────┐   │   │
-│  │  │ Сеть: coolify (bridge, external)                     │   │   │
-│  │  │                                                      │   │   │
-│  │  │  ┌────────────────────────────────────────────────┐  │   │   │
-│  │  │  │ coolify-proxy (Traefik v3)                     │  │   │   │
-│  │  │  │   :80 → HTTP entryPoint                        │  │   │   │
-│  │  │  │   :443 → HTTPS entryPoint (Let's Encrypt)      │  │   │   │
-│  │  │  │   certresolver: letsencrypt (HTTP challenge)   │  │   │   │
-│  │  │  └───────────────────┬────────────────────────────┘  │   │   │
-│  │  │                      │ маршрутизация по Host-header   │   │   │
-│  │  └──────────────────────┼─────────────────────────────  │   │   │
-│  │                         │                               │   │   │
-│  │  ┌──────────────────────┼──────────────────────────┐    │   │   │
-│  │  │ Сеть: ecogame (bridge, internal)                │    │   │   │
-│  │  │                      │                          │    │   │   │
-│  │  │        ┌─────────────▼────────────────────┐     │    │   │   │
-│  │  │        │ ecogame-nginx-1 (nginx:alpine)   │     │    │   │   │
-│  │  │        │ :80  (только внутри сети)         │     │    │   │   │
-│  │  │        │ /api/*  → backend:8000            │     │    │   │   │
-│  │  │        │ /admin/* → backend:8000           │     │    │   │   │
-│  │  │        │ /static/* → volume static         │     │    │   │   │
-│  │  │        │ /*      → frontend:80             │     │    │   │   │
-│  │  │        └──────┬──────────────┬─────────────┘     │    │   │   │
-│  │  │               │              │                    │    │   │   │
-│  │  │   ┌───────────▼──┐  ┌────────▼──────────────┐    │    │   │   │
-│  │  │   │ ecogame-     │  │ ecogame-frontend-1    │    │    │   │   │
-│  │  │   │ backend-1    │  │ (nginx:alpine)         │    │    │   │   │
-│  │  │   │ Django 6.0   │  │ React 19 SPA (static) │    │    │   │   │
-│  │  │   │ + Gunicorn   │  │ /usr/share/nginx/html  │    │    │   │   │
-│  │  │   │ :8000        │  │ :80                    │    │    │   │   │
-│  │  │   └───────┬──────┘  └───────────────────────┘    │    │   │   │
-│  │  │           │                                        │    │   │   │
-│  │  │   ┌───────▼──────────────────────────────────┐   │    │   │   │
-│  │  │   │ ecogame-postgres-1 (postgres:16-alpine)   │   │    │   │   │
-│  │  │   │ :5432  (только внутри сети)               │   │    │   │   │
-│  │  │   │ Volume: postgres_data (persistent)        │   │    │   │   │
-│  │  │   └──────────────────────────────────────────┘   │    │   │   │
-│  │  │                                                    │    │   │   │
-│  │  │  Shared Volumes:                                   │    │   │   │
-│  │  │    static_volume  → /app/static (nginx + backend)  │    │   │   │
-│  │  │    media_volume   → /app/media  (nginx + backend)  │    │   │   │
-│  │  └────────────────────────────────────────────────────┘    │   │   │
-│  └──────────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────────┘
+Authorization: Bearer <access_token>
 ```
 
-## Г.2. Конфигурация Docker Compose (docker-compose.coolify.yml)
-
-Ключевые параметры сервисов:
-
-| Сервис | Образ | Порт (внутр.) | Зависит от |
-|--------|-------|---------------|-----------|
-| `postgres` | postgres:16-alpine | 5432 | — |
-| `backend` | Dockerfile (python:3.12-slim) | 8000 | postgres (healthy) |
-| `frontend` | Dockerfile (node:20 → nginx) | 80 | backend |
-| `nginx` | Dockerfile (nginx:alpine) | 80 | backend, frontend |
-
-Контейнер `nginx` подключён к двум сетям: внутренней `ecogame` (для
-проксирования к backend и frontend) и внешней `coolify` (для получения
-трафика от Traefik).
-
-## Г.3. Traefik Labels (SSL и маршрутизация)
-
-```yaml
-labels:
-  - "traefik.enable=true"
-  # Middleware: редирект HTTP → HTTPS
-  - "traefik.http.middlewares.ecogame-redirect-https.redirectscheme.scheme=https"
-  # Middleware: gzip-сжатие
-  - "traefik.http.middlewares.ecogame-gzip.compress=true"
-  # HTTP-роутер (→ redirect to HTTPS)
-  - "traefik.http.routers.http-0-ecogame-nginx.entryPoints=http"
-  - "traefik.http.routers.http-0-ecogame-nginx.middlewares=ecogame-redirect-https"
-  - "traefik.http.routers.http-0-ecogame-nginx.rule=Host(`ecogame.fullfocus.dev`) && PathPrefix(`/`)"
-  - "traefik.http.routers.http-0-ecogame-nginx.service=ecogame-nginx"
-  # HTTPS-роутер (с TLS)
-  - "traefik.http.routers.https-0-ecogame-nginx.entryPoints=https"
-  - "traefik.http.routers.https-0-ecogame-nginx.middlewares=ecogame-gzip"
-  - "traefik.http.routers.https-0-ecogame-nginx.rule=Host(`ecogame.fullfocus.dev`) && PathPrefix(`/`)"
-  - "traefik.http.routers.https-0-ecogame-nginx.tls=true"
-  - "traefik.http.routers.https-0-ecogame-nginx.tls.certresolver=letsencrypt"
-  - "traefik.http.routers.https-0-ecogame-nginx.service=ecogame-nginx"
-  # Backend-сервис Traefik
-  - "traefik.http.services.ecogame-nginx.loadbalancer.server.port=80"
+**Формат ответа при ошибке:**
+```json
+{
+  "detail": "Описание ошибки",
+  "code": "error_code"
+}
 ```
 
-## Г.4. Процесс развёртывания
+---
 
+## Г.2 Аутентификация
+
+### POST /accounts/token/
+Получить пару JWT токенов.
+
+**Request:**
+```json
+{ "username": "string", "password": "string" }
 ```
-1. git push origin main
-       │
-       ▼
-2. SSH на сервер: ssh -p 2222 deploy@89.167.60.96
-       │
-       ▼
-3. cd ~/ecogame && git pull
-       │
-       ▼
-4. docker compose -f docker-compose.coolify.yml up -d --build
-       │  (4 контейнера пересобираются)
-       │
-       ▼
-5. docker compose exec backend uv run python manage.py migrate
-       │
-       ▼
-6. docker compose exec backend uv run python manage.py loaddata \
-       /app/fixtures/levels.json \
-       /app/fixtures/eco_actions.json \
-       /app/fixtures/achievements.json \
-       /app/fixtures/educational_content.json \
-       /app/fixtures/eco_facts.json
-       │
-       ▼
-7. Traefik автоматически регистрирует новый сервис и
-   получает SSL-сертификат от Let's Encrypt
-       │
-       ▼
-8. https://ecogame.fullfocus.dev — сайт доступен
+**Response 200:**
+```json
+{ "access": "eyJ...", "refresh": "eyJ..." }
 ```
 
-## Г.5. Параметры SSL-сертификата
+### POST /accounts/token/refresh/
+Обновить access token.
 
-| Параметр | Значение |
-|----------|---------|
-| Домен | ecogame.fullfocus.dev |
-| Выдавший CA | Let's Encrypt (ISRG Root X1) |
-| Алгоритм | ECDSA P-256 |
-| Хранилище | `/traefik/acme.json` (на хосте) |
-| Автообновление | Traefik renews за 30 дней до истечения |
-| Challenge | HTTP-01 (через порт 80) |
+**Request:**
+```json
+{ "refresh": "eyJ..." }
+```
+**Response 200:**
+```json
+{ "access": "eyJ..." }
+```
+
+### POST /accounts/register/
+Регистрация нового пользователя.
+
+**Request:**
+```json
+{
+  "username": "jakha",
+  "email": "jakha@example.com",
+  "password": "securepass123"
+}
+```
+**Response 201:**
+```json
+{
+  "access": "eyJ...",
+  "refresh": "eyJ...",
+  "user": { "id": 1, "username": "jakha" }
+}
+```
+
+### POST /accounts/anonymous/
+Создать анонимного пользователя.
+
+**Request:**
+```json
+{ "session_key": "unique-device-session-id" }
+```
+**Response 201:**
+```json
+{ "access": "eyJ...", "refresh": "eyJ...", "username": "anon_abc123" }
+```
+
+### POST /accounts/claim/
+Конвертировать анонимного в полноценного пользователя. Auth required.
+
+**Request:**
+```json
+{ "username": "newname", "email": "user@example.com", "password": "pass123" }
+```
+**Response 200:**
+```json
+{ "detail": "Muvaffaqiyatli ro'yxatdan o'tdingiz!" }
+```
+
+---
+
+## Г.3 Квиз
+
+### POST /game/quiz/sessions/
+Начать новую квиз-сессию. Auth required.
+
+**Request:**
+```json
+{ "mode": "QUICK" }
+```
+или
+```json
+{ "mode": "CATEGORY", "category": "AIR" }
+```
+
+**Response 201:**
+```json
+{
+  "id": 42,
+  "mode": "QUICK",
+  "started_at": "2026-05-25T10:00:00Z",
+  "questions": [
+    {
+      "id": 1,
+      "text_uz": "...",
+      "category": "AIR",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "time_limit": 30,
+      "answers": [
+        { "id": 101, "text_uz": "..." },
+        { "id": 102, "text_uz": "..." },
+        { "id": 103, "text_uz": "..." },
+        { "id": 104, "text_uz": "..." }
+      ]
+    }
+  ]
+}
+```
+*Примечание: `is_correct` намеренно отсутствует в ответах (anti-cheat).*
+
+### POST /game/quiz/sessions/{session_id}/answer/
+Ответить на вопрос. Auth required.
+
+**Request:**
+```json
+{
+  "question_id": 1,
+  "answer_id": 101,
+  "time_spent_ms": 5432
+}
+```
+
+**Response 200:**
+```json
+{
+  "is_correct": true,
+  "correct_answer_id": 101,
+  "explanation_uz": "...",
+  "points_earned": 185,
+  "streak": 3,
+  "streak_multiplier": 2.0,
+  "time_bonus": 85,
+  "total_score": 650,
+  "is_game_over": false
+}
+```
+
+### POST /game/quiz/sessions/{session_id}/end/
+Завершить квиз-сессию. Auth required.
+
+**Response 200:**
+```json
+{
+  "session": { "id": 42, "score": 850, "correct_count": 8, ... },
+  "accuracy": 0.8,
+  "rank_title": "Tabiat do'sti",
+  "achievements_unlocked": [
+    { "key": "first_quiz", "title_uz": "Birinchi qadam", "icon": "🌱" }
+  ]
+}
+```
+
+### GET /game/quiz/questions/
+Получить список вопросов (публичный). Параметры: `?category=AIR&difficulty=1`.
+
+**Response 200:**
+```json
+{
+  "count": 150,
+  "results": [ { "id": 1, "text_uz": "...", ... } ]
+}
+```
+
+### GET /game/quiz/daily/
+Получить ежедневное задание. Auth required.
+
+**Response 200:**
+```json
+{
+  "id": 5,
+  "date": "2026-05-25",
+  "bonus_score": 50,
+  "is_completed": false,
+  "questions": [ ... ]
+}
+```
+
+### GET /game/quiz/stats/
+Статистика текущего пользователя. Auth required.
+
+**Response 200:**
+```json
+{
+  "total_quizzes": 12,
+  "accuracy_pct": 73.5,
+  "best_streak": 8,
+  "rank_title": "Tabiat do'sti",
+  "per_category": {
+    "AIR": { "total": 30, "correct": 24, "accuracy": 0.8 }
+  }
+}
+```
+
+---
+
+## Г.4 Мини-игра
+
+### POST /game/mini-game/score/
+Сохранить результат мини-игры. Auth required.
+
+**Request:**
+```json
+{ "score": 180, "correct_count": 18, "total_items": 20 }
+```
+**Response 201:** `{}`
+
+---
+
+## Г.5 Образование
+
+### GET /education/articles/
+Список образовательных статей. Публичный. Параметры: `?category=AIR&search=chiqindi`.
+
+**Response 200:**
+```json
+{
+  "count": 12,
+  "results": [
+    { "id": 1, "title_uz": "...", "summary_uz": "...", "category": "WATER", "read_time_minutes": 5 }
+  ]
+}
+```
+
+### GET /education/articles/{id}/
+Полный текст статьи. Публичный.
+
+**Response 200:**
+```json
+{ "id": 1, "title_uz": "...", "content_uz": "...", "category": "WATER" }
+```
+
+### GET /education/facts/random/
+Три случайных экологических факта. Публичный.
+
+**Response 200:**
+```json
+[ { "text_uz": "...", "category": "AIR" } ]
+```
+
+---
+
+## Г.6 Лидерборд
+
+### GET /leaderboard/
+Топ-50 игроков. Публичный.
+
+**Response 200:**
+```json
+{
+  "results": [
+    { "rank": 1, "player": "jakha", "score": 5000, "rank_title": "Eko-ustoz" }
+  ],
+  "my_rank": 12,
+  "my_score": 1340
+}
+```
+
+---
+
+## Г.7 Достижения
+
+### GET /game/achievements/
+Все достижения (публичный).
+
+**Response 200:**
+```json
+[ { "key": "first_quiz", "title_uz": "...", "icon": "🌱", "points_reward": 50 } ]
+```
+
+### GET /game/achievements/my/
+Полученные достижения текущего пользователя. Auth required.
+
+**Response 200:**
+```json
+[ { "id": 1, "achievement": { "key": "first_quiz", ... }, "unlocked_at": "..." } ]
+```
