@@ -1401,7 +1401,7 @@ Django REST Framework, React, web application
 
 ---
 
-### [ ] 11.4 Написать Главу 3 — Реализация
+### [x] 11.4 Написать Главу 3 — Реализация
 
 **Что сделать:**
 - Полностью переписать `docs/vkr/chapter3_implementation.md`
