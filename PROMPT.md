@@ -896,7 +896,7 @@ def update_leaderboard_on_achievement(sender, instance: PlayerAchievement, **kwa
 
 ## Phase 7: Frontend — Убрать Phaser, Quiz Types & Store
 
-### [ ] 7.1 Удалить Phaser, обновить types, создать quizStore
+### [x] 7.1 Удалить Phaser, обновить types, создать quizStore
 
 **Что сделать:**
 - Удалить директорию: `frontend/src/game/` (все файлы)

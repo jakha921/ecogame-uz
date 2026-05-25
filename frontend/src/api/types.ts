@@ -1,3 +1,5 @@
+// ─── Auth ────────────────────────────────────────────────────────────────────
+
 export interface Player {
   id: number;
   username: string;
@@ -6,128 +8,6 @@ export interface Player {
   avatar: string;
   total_score: number;
   date_joined: string;
-}
-
-export interface EcosystemState {
-  air: number;
-  water: number;
-  soil: number;
-  biodiversity: number;
-}
-
-export interface MapZone {
-  type: "FLORA" | "WATER" | "WASTE" | "ENERGY" | "FAUNA";
-  x: number;
-  y: number;
-  label?: string;
-}
-
-export interface MapConfig {
-  width?: number;
-  height?: number;
-  zones?: MapZone[];
-  // Isometric sandbox fields (Phase 1+)
-  iso_width?: number;
-  iso_height?: number;
-  initial_resources?: number;
-  regen_rate?: number;
-  ground?: number[];
-  pollution?: number[];
-  blocked?: number[];
-}
-
-export interface Level {
-  id: number;
-  number: number;
-  name_uz: string;
-  description_uz: string;
-  required_score: number;
-  map_config: MapConfig;
-  ecosystem_initial: EcosystemState;
-  is_unlocked: boolean;
-}
-
-export type ActionCategory = "FLORA" | "WATER" | "WASTE" | "ENERGY" | "FAUNA";
-
-export interface EcoAction {
-  id: number;
-  key: string;
-  name_uz: string;
-  description_uz: string;
-  category: ActionCategory;
-  score_value: number;
-  air_impact: number;
-  water_impact: number;
-  soil_impact: number;
-  biodiversity_impact: number;
-  cooldown_seconds: number;
-  unlock_level: number;
-  sprite_key: string;
-}
-
-export interface GameProgress {
-  id: number;
-  level: Level;
-  score: number;
-  air_quality: number;
-  water_purity: number;
-  soil_health: number;
-  biodiversity: number;
-  actions_performed: Record<string, number>;
-  completed: boolean;
-  completed_at: string | null;
-  updated_at: string;
-}
-
-export interface GameSession {
-  id: number;
-  level: Level;
-  started_at: string;
-  ended_at: string | null;
-  is_active: boolean;
-}
-
-export type ConditionType = "SCORE" | "ACTION_COUNT" | "LEVEL_COMPLETE" | "INDICATOR";
-
-export interface Achievement {
-  id: number;
-  key: string;
-  name_uz: string;
-  description_uz: string;
-  icon: string;
-  condition_type: ConditionType;
-  is_unlocked: boolean;
-}
-
-export interface PlayerAchievement {
-  id: number;
-  achievement: Achievement;
-  unlocked_at: string;
-}
-
-export interface LeaderboardEntry {
-  rank: number;
-  player_nickname: string;
-  player_avatar: string;
-  total_score: number;
-  levels_completed: number;
-  achievements_count: number;
-}
-
-export interface EducationalContent {
-  id: number;
-  title_uz: string;
-  body_uz: string;
-  category: ActionCategory;
-  image: string | null;
-  order: number;
-}
-
-export interface EcoFact {
-  id: number;
-  text_uz: string;
-  source: string;
-  category: ActionCategory;
 }
 
 export interface AuthTokens {
@@ -148,6 +28,10 @@ export interface LoginData {
   password: string;
 }
 
+// ─── Shared ──────────────────────────────────────────────────────────────────
+
+export type ActionCategory = "FLORA" | "WATER" | "WASTE" | "ENERGY" | "FAUNA";
+
 export interface PaginatedResponse<T> {
   count: number;
   next: string | null;
@@ -155,8 +39,134 @@ export interface PaginatedResponse<T> {
   results: T[];
 }
 
-export interface ActionItem {
-  action_key: string;
-  position_x: number;
-  position_y: number;
+// ─── Quiz ─────────────────────────────────────────────────────────────────────
+
+export type QuestionType = "MCQ" | "TRUE_FALSE" | "SCENARIO";
+export type QuizMode = "QUICK" | "CATEGORY" | "DAILY" | "MARATHON";
+
+export interface Answer {
+  id: number;
+  text_uz: string;
+  order: number;
+}
+
+export interface Question {
+  id: number;
+  text_uz: string;
+  category: ActionCategory;
+  difficulty: 1 | 2 | 3;
+  question_type: QuestionType;
+  explanation_uz: string;
+  time_limit: number;
+  answers: Answer[];
+}
+
+export interface QuizSession {
+  id: number;
+  mode: QuizMode;
+  category: ActionCategory | null;
+  score: number;
+  correct_count: number;
+  total_questions: number;
+  current_streak: number;
+  max_streak: number;
+  started_at: string;
+  finished_at: string | null;
+}
+
+export interface AnswerResult {
+  is_correct: boolean;
+  correct_answer_id: number | null;
+  explanation_uz: string;
+  points_earned: number;
+  streak: number;
+  streak_multiplier: number;
+  time_bonus: number;
+  total_score: number;
+  is_game_over: boolean;
+}
+
+export interface QuizResult {
+  session: QuizSession;
+  accuracy: number;
+  rank_title: string;
+  achievements_unlocked: Achievement[];
+}
+
+export interface PlayerStats {
+  total_quizzes: number;
+  total_correct: number;
+  accuracy_pct: number;
+  best_streak: number;
+  daily_streak: number;
+  rank_title: string;
+  per_category: Record<ActionCategory, { total: number; correct: number; accuracy: number }>;
+}
+
+export interface DailyChallenge {
+  id: number;
+  date: string;
+  bonus_score: number;
+  is_completed: boolean;
+  questions: Question[];
+}
+
+export interface SortingItem {
+  id: number;
+  name_uz: string;
+  image: string;
+  correct_bin: "plastic" | "glass" | "organic" | "paper" | "battery";
+}
+
+// ─── Achievements ─────────────────────────────────────────────────────────────
+
+export type ConditionType =
+  | "SCORE"
+  | "QUIZ_COUNT"
+  | "STREAK"
+  | "DAILY_STREAK"
+  | "CATEGORY_MASTER";
+
+export interface Achievement {
+  id: number;
+  key: string;
+  name_uz: string;
+  description_uz: string;
+  icon: string;
+  condition_type: ConditionType;
+}
+
+export interface PlayerAchievement {
+  id: number;
+  achievement: Achievement;
+  unlocked_at: string;
+}
+
+// ─── Leaderboard ──────────────────────────────────────────────────────────────
+
+export interface LeaderboardEntry {
+  rank: number;
+  player_nickname: string;
+  player_avatar: string;
+  total_score: number;
+  levels_completed: number;
+  achievements_count: number;
+}
+
+// ─── Education ────────────────────────────────────────────────────────────────
+
+export interface EducationalContent {
+  id: number;
+  title_uz: string;
+  body_uz: string;
+  category: ActionCategory;
+  image: string | null;
+  order: number;
+}
+
+export interface EcoFact {
+  id: number;
+  text_uz: string;
+  source: string;
+  category: ActionCategory;
 }

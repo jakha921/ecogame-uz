@@ -3,7 +3,7 @@ import {
   Bird,
   Crown,
   Droplets,
-  Home,
+  Flame,
   Leaf,
   Recycle,
   Star,
@@ -13,7 +13,7 @@ import {
   UserCircle,
   Wind,
 } from "lucide-react";
-import { gameApi } from "@/api/game";
+import { quizApi } from "@/api/quiz";
 import type { PlayerAchievement } from "@/api/types";
 import { useAuthStore } from "@/stores/authStore";
 import { t } from "@/i18n";
@@ -24,24 +24,25 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   water: <Droplets size={28} className="text-blue-500" />,
   recycle: <Recycle size={28} className="text-yellow-600" />,
   star: <Star size={28} className="text-yellow-500" />,
-  home: <Home size={28} className="text-orange-500" />,
+  fire: <Flame size={28} className="text-orange-500" />,
   air: <Wind size={28} className="text-cyan-500" />,
   leaf: <Leaf size={28} className="text-green-400" />,
   solar: <SunMedium size={28} className="text-orange-400" />,
   crown: <Crown size={28} className="text-yellow-600" />,
   bird: <Bird size={28} className="text-purple-500" />,
+  trophy: <Trophy size={28} className="text-yellow-500" />,
 };
 
 export function ProfilePage() {
   const { player, updateProfile } = useAuthStore();
   const [achievements, setAchievements] = useState<PlayerAchievement[]>([]);
-  const [allCount, setAllCount] = useState(0);
+  const [totalAchievements, setTotalAchievements] = useState(0);
   const [editing, setEditing] = useState(false);
   const [nickname, setNickname] = useState(player?.nickname ?? "");
 
   useEffect(() => {
-    gameApi.getMyAchievements().then(({ data }) => setAchievements(data.results));
-    gameApi.getAchievements().then(({ data }) => setAllCount(data.count));
+    quizApi.getMyAchievements().then(({ data }) => setAchievements(data));
+    quizApi.getAchievements().then(({ data }) => setTotalAchievements(data.count));
   }, []);
 
   const handleSave = async () => {
@@ -99,7 +100,7 @@ export function ProfilePage() {
           <div>
             <p className="text-xs text-gray-400">{t("profile.achievements")}</p>
             <p className="text-2xl font-bold text-green-700">
-              {achievements.length}/{allCount}
+              {achievements.length}/{totalAchievements}
             </p>
           </div>
         </div>
@@ -114,7 +115,11 @@ export function ProfilePage() {
               key={pa.id}
               className="bg-white rounded-xl p-4 border border-green-100 flex flex-col items-center text-center gap-2"
             >
-              <span>{ICON_MAP[pa.achievement.icon] ?? <Trophy size={28} className="text-yellow-500" />}</span>
+              <span>
+                {ICON_MAP[pa.achievement.icon] ?? (
+                  <Trophy size={28} className="text-yellow-500" />
+                )}
+              </span>
               <p className="text-sm font-semibold text-gray-700">{pa.achievement.name_uz}</p>
               <p className="text-xs text-gray-400">{pa.achievement.description_uz}</p>
             </div>
