@@ -12,17 +12,8 @@ import { ProfilePage } from "@/pages/ProfilePage";
 import { QuizPlayPage } from "@/pages/QuizPlayPage";
 import { QuizResultsPage } from "@/pages/QuizResultsPage";
 import { RegisterPage } from "@/pages/RegisterPage";
+import { EcoSortingPage } from "@/pages/EcoSortingPage";
 
-function ComingSoon({ title }: { title: string }) {
-  return (
-    <div className="flex items-center justify-center min-h-[60vh]">
-      <div className="text-center">
-        <h2 className="text-2xl font-bold mb-2">{title}</h2>
-        <p className="text-muted-foreground">Tez orada...</p>
-      </div>
-    </div>
-  );
-}
 
 export default function App() {
   const initFromStorage = useAuthStore((s) => s.initFromStorage);
@@ -85,7 +76,7 @@ export default function App() {
             path="/mini-game/sort"
             element={
               <ProtectedRoute>
-                <ComingSoon title="Chiqindilarni saralash" />
+                <EcoSortingPage />
               </ProtectedRoute>
             }
           />

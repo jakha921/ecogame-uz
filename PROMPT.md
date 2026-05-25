@@ -1126,7 +1126,7 @@ interface ModeCardProps {
 
 ## Phase 10: Frontend — Eco-sorting мини-игра
 
-### [ ] 10.1 Создать мини-игру сортировки отходов
+### [x] 10.1 Создать мини-игру сортировки отходов
 
 **Что сделать:**
 - Создать `frontend/src/data/sortingItems.ts`:
