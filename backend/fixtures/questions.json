@@ -1,0 +1,7952 @@
+[
+  {
+    "model": "game.question",
+    "pk": 1,
+    "fields": {
+      "text_uz": "O'zbekistonda bir yilda o'rtacha necha kun quyoshli bo'ladi?",
+      "category": "ENERGY",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "O'zbekiston yiliga 300 kundan ortiq quyoshli kun bilan Markaziy Osiyoning eng quyoshli davlatlaridan biri. Bu quyosh energiyasini keng qo'llash uchun ulkan imkoniyat beradi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston Quyosh energiyasi instituti, 2022",
+      "related_article": 4,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 2,
+    "fields": {
+      "text_uz": "Quyosh paneli qanday energiya hosil qiladi?",
+      "category": "ENERGY",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Fotovoltaik quyosh panellari quyosh nurini bevosita elektr energiyasiga aylantiradi. Bu jarayon fotovoltaik effekt orqali amalga oshiriladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Energetika vazirligi, O'zbekiston, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 3,
+    "fields": {
+      "text_uz": "1 kVt quvvatli quyosh paneli yiliga qancha CO2 emissiyasini kamaytiradi?",
+      "category": "ENERGY",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Quyosh paneli an'anaviy elektr manbalari (ko'mir, gaz) o'rnini bosib, yiliga taxminan 1.5 tonna CO2 chiqarilishini oldini oladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "IRENA (Xalqaro qayta tiklanuvchi energiya agentligi), 2023",
+      "related_article": 4,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 4,
+    "fields": {
+      "text_uz": "LED chiroq oddiy lambochkaga nisbatan necha foiz kam energiya sarflaydi?",
+      "category": "ENERGY",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "LED texnologiyasi elektr energiyasining 75-80% ini yorug'likka aylantiradi, oddiy lambochkalar esa faqat 10% ini. Shuning uchun LED da 75-80% energiya tejaladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Energiya samaradorligi markazi, Toshkent, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 5,
+    "fields": {
+      "text_uz": "O'zbekistonda elektr energiyasining asosiy manbai qaysi?",
+      "category": "ENERGY",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "O'zbekistonda elektr energiyasining 80% dan ortig'i tabiiy gaz va ko'mirda ishlaydigan issiqlik elektr stansiyalarida ishlab chiqariladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston Energetika vazirligi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 6,
+    "fields": {
+      "text_uz": "Uy-joy isitishda eng tejamkor usul qaysi?",
+      "category": "ENERGY",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Issiqlik nasosi (heat pump) elektr energiyasining har 1 kVh iga 3-5 kVh issiqlik beradi. Bu boshqa isitish usullariga nisbatan 3-5 marta samaraliroq.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Qayta tiklanuvchi energiya assotsiatsiyasi, 2022",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 7,
+    "fields": {
+      "text_uz": "O'zbekiston 2030 yilga qadar qayta tiklanuvchi energiya ulushini nechanchi foizga yetkazmoqchi?",
+      "category": "ENERGY",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "O'zbekiston hukumati 2030 yilga qadar qayta tiklanuvchi energiya manbalari ulushini 25% ga yetkazishni rejalashtirib, 5 GVt quyosh va 3 GVt shamol energiyasini quradi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston Prezidentining 2022-yil farmonlari, Energetika vazirligi",
+      "related_article": 4,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 8,
+    "fields": {
+      "text_uz": "Kerakmas joyda chiroqni yoqib qoldirish nima sababli ekologik muammo?",
+      "category": "ENERGY",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Ortiqcha elektr ishlatish elektr stansiyalarida ko'proq yoqilg'i yoqilishini talab qiladi, bu esa CO2 chiqarishni oshiradi va iqlim o'zgarishiga hissa qo'shadi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Ekologiya vazirligi, O'zbekiston, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 9,
+    "fields": {
+      "text_uz": "Bio-gaz qanday manba asosida olinadi?",
+      "category": "ENERGY",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Bio-gaz organik moddalar (chorva mollarining go'ngi, o'simlik qoldiqlari, oziq-ovqat chiqindilari) anaerob parchalanishi natijasida hosil bo'ladigan metan aralashmasidir.",
+      "image": "",
+      "time_limit": 30,
+      "source": "FAO (BMT Oziq-ovqat va qishloq xo'jaligi tashkiloti), 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 10,
+    "fields": {
+      "text_uz": "Shamol turbinasi nima hosil qiladi?",
+      "category": "ENERGY",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Shamol turbinalari shamol kinetik energiyasini mexanik energiyaga, so'ngra generator orqali elektr energiyasiga aylantiradi. CO2 chiqarmaydi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "IRENA, Shamol energiyasi hisoboti, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 11,
+    "fields": {
+      "text_uz": "Kichik GES (gidroelektrostansiya) qancha quvvatdan kichik stansiyaga aytiladi?",
+      "category": "ENERGY",
+      "difficulty": 3,
+      "question_type": "MCQ",
+      "explanation_uz": "Xalqaro amaliyotda 10 MVt (megavatt) dan kam quvvatli stansiyalar kichik GES deb tasniflanadi. Ular daryolar va ariqlar yaqinida quriladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Xalqaro energetika agentligi (IEA), 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 12,
+    "fields": {
+      "text_uz": "Televizorni 'standby' rejimida qoldirish nima sababli noto'g'ri?",
+      "category": "ENERGY",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Standby rejimidagi elektronika kuniga 0.5-10 Vt sarflaydi. Uy bo'yicha bu yiliga 50-100 kVh gacha ko'tariladi va keraksiz elektr sarfiga olib keladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Energiya samaradorligi bo'yicha xalqaro hamkorlik (CECP), 2022",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 13,
+    "fields": {
+      "text_uz": "Energiya samaradorligi 'A' sinfi nima anglatadi?",
+      "category": "ENERGY",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Evropa ittifoqining energiya belgilash tizimida 'A' sinfi (A+, A++) eng kam energiya sarflaydigan jihoz ekanini bildiradi. Bu xarid chog'ida muhim mezon.",
+      "image": "",
+      "time_limit": 30,
+      "source": "EU Energiya belgilash direktivi, 2021",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 14,
+    "fields": {
+      "text_uz": "Issiqlik elektr stansiyalari asosiy qanday issiqxona gazi chiqaradi?",
+      "category": "ENERGY",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Tabiiy gaz va ko'mir yoqilganda CO2 (karbonat angidrid) asosiy issiqxona gazi sifatida chiqariladi. Bu global isish va iqlim o'zgarishining bosh sababi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "IPCC (Iqlim o'zgarishi bo'yicha hukumatlararo panel), 2023",
+      "related_article": 2,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 15,
+    "fields": {
+      "text_uz": "1 MWh (megavatt-soat) necha kWh (kilovatt-soat) ga teng?",
+      "category": "ENERGY",
+      "difficulty": 3,
+      "question_type": "MCQ",
+      "explanation_uz": "Energiya o'lchov tizimida: 1 MVh = 1000 kVh. Oddiy uy oyiga 150-300 kVh sarflaydi, ya'ni 1 MVh taxminan bir uy uchun 3-6 oylik elektr.",
+      "image": "",
+      "time_limit": 30,
+      "source": "SI o'lchov tizimi, xalqaro standart",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 16,
+    "fields": {
+      "text_uz": "Quyosh isitish kollektori qanday maqsadda ishlatiladi?",
+      "category": "ENERGY",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Quyosh issiqlik kollektor (flat-plate yoki vakuum naychali) quyosh nurini issiqlikka aylantiradi va suv isitish yoki uy isitish uchun ishlatiladi. Elektr hosil qilmaydi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston Quyosh energiyasi instituti, 2022",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 17,
+    "fields": {
+      "text_uz": "Fotovoltaik (FV) panellar qanday energiyani elektr energiyasiga aylantiradi?",
+      "category": "ENERGY",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Fotovoltaik effekt yarim o'tkazgich materiallar (kremniy) quyosh fotonlarini elektr energiyasiga aylantirishida asoslanadi. Bu jarayonni Albert Eynshteyn 1905-yilda tushuntirgan.",
+      "image": "",
+      "time_limit": 30,
+      "source": "NASA Yer kuzatish markazi, quyosh energiyasi bo'limi",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 18,
+    "fields": {
+      "text_uz": "O'zbekistondagi eng katta suv elektr stansiyasi qaysi?",
+      "category": "ENERGY",
+      "difficulty": 3,
+      "question_type": "MCQ",
+      "explanation_uz": "Charvak GES (1971) Chirchiq daryosida joylashgan bo'lib, 621.5 MVt quvvatga ega. U O'zbekistonning eng katta GES i hisoblanadi va katta Toshkent hududini ta'minlaydi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zenergo, rasmiy ma'lumotlar, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 19,
+    "fields": {
+      "text_uz": "Termostat o'rnatish uy isitishiga qanday ta'sir qiladi?",
+      "category": "ENERGY",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Aqlli termostat haroratni avtomatik boshqarib, uy bo'sh paytda isitishni kamaytiradi. Bu isitish xarajatini 15-25% ga kamaytirishi mumkin.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Energiya samaradorligi bo'yicha Yevropa agentligi (EEA), 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 20,
+    "fields": {
+      "text_uz": "Bio-gaz qurilmasi qanday sharoitda ishlaydi?",
+      "category": "ENERGY",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Bio-gaz qurilmasi (bioreaktor) organik moddalarni kislorodsiz (anaerob) muhitda parchalaydi. Kislorod bo'lsa, metan o'rniga CO2 hosil bo'ladi va jarayon samarasiz.",
+      "image": "",
+      "time_limit": 30,
+      "source": "FAO, Bioenergetika qo'llanmasi, 2022",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 21,
+    "fields": {
+      "text_uz": "O'zbekistondagi Zarafshon shamol elektr stansiyasining quvvati necha MVt?",
+      "category": "ENERGY",
+      "difficulty": 3,
+      "question_type": "MCQ",
+      "explanation_uz": "ACWA Power va Masdar kompaniyalari qurgan Zarafshon shamol elektr stansiyasi 1500 MVt (1.5 GVt) quvvatga ega bo'lib, Markaziy Osiyoning eng yirik shamol loyihasi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "ACWA Power, Zarafshon loyihasi rasmiy ma'lumotlari, 2023",
+      "related_article": 4,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 22,
+    "fields": {
+      "text_uz": "LED chiroqlar oddiy lambochkalarga nisbatan ko'proq elektr sarflaydi.",
+      "category": "ENERGY",
+      "difficulty": 1,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Aksincha, LED chiroqlar 75-80% kam energiya sarflaydi va 10-25 marta uzoqroq ishlaydi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "Energiya samaradorligi markazi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 23,
+    "fields": {
+      "text_uz": "Quyosh panellari bulutli havoda ham elektr hosil qilishi mumkin.",
+      "category": "ENERGY",
+      "difficulty": 1,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, bulutli havoda ham diffuz quyosh nuri panel orqali o'tib elektr hosil qiladi, faqat hosildorlik 10-25% ga tushadi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "Fraunhofer Institut, Quyosh energiyasi bo'limi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 24,
+    "fields": {
+      "text_uz": "Shamol energiyasi ishlab chiqarish jarayonida CO2 chiqarmaydi.",
+      "category": "ENERGY",
+      "difficulty": 2,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, shamol turbinalari ishlaganda CO2 chiqarmaydi. Faqat qurilish jarayonida material ishlab chiqarishda ozgina CO2 chiqadi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "IRENA, Hayotiy tsikl tahlili, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 25,
+    "fields": {
+      "text_uz": "Bio-gaz an'anaviy tabiiy gazga nisbatan iqlim uchun zararli.",
+      "category": "ENERGY",
+      "difficulty": 2,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Yo'q, bio-gaz organik moddalardan hosil bo'lib, CO2 aylanma (carbon neutral) hisoblanadi. Tabiiy gaz esa yangi CO2 manbaidan olinadi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "BMT Iqlim o'zgarishi bo'yicha ramka konventsiyasi (UNFCCC), 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 26,
+    "fields": {
+      "text_uz": "Yadro energiyasi qayta tiklanuvchi energiya manbai hisoblanadi.",
+      "category": "ENERGY",
+      "difficulty": 3,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Yo'q, yadro energiyasi uran xom ashyosi chekli bo'lganligi sababli qayta tiklanuvchi emas, balki uglerodli bo'lmagan (low-carbon) manba sifatida tasniflanadi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "IRENA, Energiya tasnifi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 27,
+    "fields": {
+      "text_uz": "Energiya tejash yangi elektr stansiyasi qurish kabi muhim muammo yechimi.",
+      "category": "ENERGY",
+      "difficulty": 2,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, IEA ma'lumotlariga ko'ra, energiya samaradorligi eng arzon va tez ta'sir qiladigan 'yashil' manba — yangi quvvat qurish kerak bo'lmaydi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "IEA, Energiya samaradorligi hisoboti, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 28,
+    "fields": {
+      "text_uz": "Uyingizda 100W oddiy lambochka o'rniga 10W LED o'rnatdingiz. Bu chiroq kuniga 5 soat yonadi. Bir yilda qancha kVh elektr tejaladi?",
+      "category": "ENERGY",
+      "difficulty": 2,
+      "question_type": "SCENARIO",
+      "explanation_uz": "Tejalgan quvvat: 100-10=90W. 90W × 5soat/kun × 365kun = 164,250 Wh ≈ 164 kVh/yil. Bu taxminan uy uchun bir oylik elektr.",
+      "image": "",
+      "time_limit": 45,
+      "source": "Energiya samaradorligi hisob-kitobi",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 29,
+    "fields": {
+      "text_uz": "Uyingizga 2 kVt quvvatli quyosh paneli o'rnatdingiz. Kuniga o'rtacha 5 soat ishlaydi. Uy oyiga 150 kVh iste'mol qilsa, panel iste'molning necha foizini qoplaydi?",
+      "category": "ENERGY",
+      "difficulty": 3,
+      "question_type": "SCENARIO",
+      "explanation_uz": "Panel oyiga: 2kVt × 5soat × 30kun = 300 kVh hosil qiladi. 300/150 × 100% = 200%. Panel uyni to'liq qoplaydigan va ortiqcha energiya ham hosil qiladigan darajada.",
+      "image": "",
+      "time_limit": 45,
+      "source": "Quyosh energiyasi hisob-kitobi standartlari",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 30,
+    "fields": {
+      "text_uz": "Mahallada 50 ta uy bor. Har bir uy LED chiroqlarga o'tgach, oyiga 25 kVh tejadi. Bir yilda mahalla necha tonna CO2 kamaytiradi? (1 kVh ≈ 0.5 kg CO2)",
+      "category": "ENERGY",
+      "difficulty": 2,
+      "question_type": "SCENARIO",
+      "explanation_uz": "Yillik tejalgan elektr: 50uy × 25kVh × 12oy = 15,000 kVh. CO2: 15,000 × 0.5kg = 7,500 kg = 7.5 tonna CO2. Bu 340 ta daraxt ekishga teng.",
+      "image": "",
+      "time_limit": 45,
+      "source": "O'zbekiston Ekologiya va atrof-muhit vazirligi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 31,
+    "fields": {
+      "text_uz": "Orol dengizi qaysi asrning 60-yillarida 68,000 km² maydonni egallagan?",
+      "category": "WATER",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Orol dengizi 20-asrning o'rtalarida dunyoning to'rtinchi yirik ko'li edi. 1960-yillarda 68,000 km² ni egallagan, lekin sug'orish uchun suv olinishi tufayli quriy boshlagan.",
+      "image": "",
+      "time_limit": 30,
+      "source": "UNESCO Orol dengizi bo'yicha hisobot, 2022",
+      "related_article": 1,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 32,
+    "fields": {
+      "text_uz": "O'zbekistondagi eng uzun daryo qaysi?",
+      "category": "WATER",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Amudaryo Markaziy Osiyodagi eng uzun daryo bo'lib, umumiy uzunligi 2,540 km. U Pamir va Hindukush tog'laridan boshlanib, Orol dengiziga tomon oqadi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston geografiya ma'lumotlari, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 33,
+    "fields": {
+      "text_uz": "Orol dengizining hozirgi hajmi asl hajmining necha foizini tashkil etadi?",
+      "category": "WATER",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Orol dengizi 1960-yillardan buyon 90% dan ortiq qurib ketgan. Bugungi kunda atigi 10% i qolgan — bu iqlim bilan bog'liq eng katta inqirozlardan biri.",
+      "image": "",
+      "time_limit": 30,
+      "source": "ASBP (Orol dengizini qutqarish xalqaro jamg'armasi), 2023",
+      "related_article": 1,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 34,
+    "fields": {
+      "text_uz": "Orol dengizining qurishining asosiy sababi nima?",
+      "category": "WATER",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "1960-70-yillarda sovet davrida paxta yetishtirishni ko'paytirish maqsadida Amudaryo va Sirdaryodan ko'p miqdorda suv olingan, natijada dengizga suv yetib bormay qolgan.",
+      "image": "",
+      "time_limit": 30,
+      "source": "BMT Atrof-muhit dasturi (UNEP), Orol dengizi fojiasi, 2022",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 35,
+    "fields": {
+      "text_uz": "Ichimlik suvini tayyorlashning to'g'ri usuli qaysi?",
+      "category": "WATER",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Ichimlik suvi tozalash, koagulyatsiya, filtratsiya va xlor bilan dezinfeksiya bosqichlaridan o'tkaziladi. Bu bakteriya va viruslarni yo'q qiladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "JSSV (O'zbekiston ichimlik suvi ta'minoti) me'yorlari, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 36,
+    "fields": {
+      "text_uz": "Suv 0°C da qotsa, uning hajmi qanday o'zgaradi?",
+      "category": "WATER",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Suv muzga aylanganda hajmi taxminan 9% ga kengayadi. Bu suv molekulalari orasidagi vodorod bog'larining o'ziga xos tuzilishi tufayli sodir bo'ladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Kimyo va fizika asoslari, O'zbekiston ta'lim standarti",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 37,
+    "fields": {
+      "text_uz": "Tish tozalayotganda jo'mrakni yopmaslik kuniga qancha suv behuda ketishiga olib keladi?",
+      "category": "WATER",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Ochiq jo'mrakdan minutiga 6-8 litr suv oqadi. Tish tozalash 2 minutni olsada, jo'mrak yopilmasa 12-16 litr suv behuda ketadi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Jahon sog'liqni saqlash tashkiloti (WHO), Suv tejash bo'yicha qo'llanma",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 38,
+    "fields": {
+      "text_uz": "Sug'orish O'zbekistonda suv iste'molining qancha qismini tashkil etadi?",
+      "category": "WATER",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "O'zbekistonda sug'orish uchun sarflanadigan suv umumiy iste'molning taxminan 90% ini tashkil etadi. Bu dunyodagi eng yuqori ko'rsatkichlardan biri.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Suv xo'jaligi vazirligi, O'zbekiston, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 39,
+    "fields": {
+      "text_uz": "Amudaryo qaysi suv havzasiga quyilishi kerak edi?",
+      "category": "WATER",
+      "difficulty": 3,
+      "question_type": "MCQ",
+      "explanation_uz": "Amudaryo tarixan Orol dengiziga quyilgan. Lekin 1960-yillardan boshlab sug'orish uchun suv ko'p olinishi tufayli dengizga yetib bormay qo'ydi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'rta Osiyo suv resurslarini boshqarish komissiyasi (ICWC), 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 40,
+    "fields": {
+      "text_uz": "Quyidagilardan qaysi biri suvni tejash yo'li EMAS?",
+      "category": "WATER",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Noldan sug'orish (suv oqimini to'xtatmasdan) suvni ko'p sarflaydi. To'g'ri usullar: tomchi sug'orish, suv o'lchagich va qayta foydalanish.",
+      "image": "",
+      "time_limit": 30,
+      "source": "FAO, Suv samaradorligi bo'yicha qo'llanma, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 41,
+    "fields": {
+      "text_uz": "Orol dengizi qurib ketgandan so'ng nechta baliq turi yo'q bo'lib ketdi?",
+      "category": "WATER",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Orol dengizida 24 ta baliq turi yashagan. Sho'rlik oshgani va suv hajmi qisqargani tufayli barcha mahalliy baliq turlari yo'q bo'lib ketdi, baliqchilik sanoati inqirozga uchradi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "FAO, Orol dengizi biologik xilma-xilligi hisoboti, 2021",
+      "related_article": 1,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 42,
+    "fields": {
+      "text_uz": "Sirdaryo qaysi manbadan boshlanadi?",
+      "category": "WATER",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Sirdaryo Qirg'izistondagi Tyan-Shan tog'larida Qoradaryo va Norin daryolarining qo'shilishidan hosil bo'ladi. Umumiy uzunligi 3,018 km.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston geografiya ensiklopediyasi, 2022",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 43,
+    "fields": {
+      "text_uz": "Ifloslangan suv orqali qaysi kasallik tarqalishi mumkin?",
+      "category": "WATER",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Vabo (cholera) Vibrio cholerae bakteriyasi bilan ifloslangan suv orqali tarqaladi. Daryo va ko'l suvini tozalamasdan ichish vaboga olib kelishi mumkin.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Jahon sog'liqni saqlash tashkiloti (WHO), Suv xavfsizligi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 44,
+    "fields": {
+      "text_uz": "O'zbekistonda aholi boshiga qayta tiklanadigan chuchuk suv resursi qancha?",
+      "category": "WATER",
+      "difficulty": 3,
+      "question_type": "MCQ",
+      "explanation_uz": "O'zbekiston suv tanqisligi bo'yicha Markaziy Osiyo davlatlaridan biri. Aholi boshiga taxminan 1,700 m³/yil chuchuk suv to'g'ri keladi — bu suv tanqisligi chegarasiga yaqin.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Jahon banki, Markaziy Osiyo suv resurslari hisoboti, 2022",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 45,
+    "fields": {
+      "text_uz": "Tomchi sug'orish usulining asosiy afzalligi nima?",
+      "category": "WATER",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Tomchi sug'orish to'g'ridan-to'g'ri o'simlik ildiziga suv beradi, bug'lanish va oqimni minimallashtirib, an'anaviy usulga nisbatan 30-50% suv tejaydi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "FAO, Tomchi sug'orish statistikasi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 46,
+    "fields": {
+      "text_uz": "Zarafshon daryosi qaysi viloyatlardan o'tadi?",
+      "category": "WATER",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Zarafshon daryosi Tojikistondan boshlanib, O'zbekistonda Samarqand va Navoiy viloyatlaridan o'tadi. 'Samarqand' nomi ham bu daryo bilan bog'liq.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston geografiya ma'lumotlari, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 47,
+    "fields": {
+      "text_uz": "Suv molekulasining kimyoviy formulasi nima?",
+      "category": "WATER",
+      "difficulty": 3,
+      "question_type": "MCQ",
+      "explanation_uz": "Suv molekulasi 2 ta vodorod atomi va 1 ta kislorod atomidan iborat: H₂O. Bu oddiy formula lekin suvning benzin, spirt kabi suyuqliklardan farqli xususiyatlarini belgilaydi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Umumiy kimyo darsligi, O'zbekiston oliy ta'lim standarti",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 48,
+    "fields": {
+      "text_uz": "O'zbekistonda yog'ingarchilik eng ko'p qaysi mintaqada kuzatiladi?",
+      "category": "WATER",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "G'arbiy Tyan-Shan tog'larida (Toshkent viloyati tog'lari, Farg'ona tizmasi) yiliga 700-1000 mm yog'in tushadi. Tekislikda esa 100-300 mm atrofida.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zgidrometmarkaz, Iqlim atlasi, 2022",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 49,
+    "fields": {
+      "text_uz": "Suvni qayta foydalanishning to'g'ri misoli qaysi?",
+      "category": "WATER",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Sabzavot yuvgan suv organik bo'lib, o'simlik sug'orishga mutlaqo mos. Bu 'kulrang suv' qayta ishlatishning eng oson usuli va hech qanday tozalashni talab qilmaydi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "BMT Suv dasturi (UN-Water), 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 50,
+    "fields": {
+      "text_uz": "Orol dengizidan ko'tarilgan tuz bo'ronlari necha km masofagacha yetib borishi mumkin?",
+      "category": "WATER",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Orol dengizi qurib ketgan tubidan ko'tarilgan tuz va pestitsid bo'ronlari shamol orqali 500 km masofagacha tarqalishi kuzatilgan. Bu qo'shni hududlar qishloq xo'jaligiga zarar keltiradi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "ASBP, Orol dengizi ekologik muammolari, 2022",
+      "related_article": 1,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 51,
+    "fields": {
+      "text_uz": "Tomchi sug'orish texnologiyasini ixtiro qilgan mamlakat qaysi?",
+      "category": "WATER",
+      "difficulty": 3,
+      "question_type": "MCQ",
+      "explanation_uz": "Tomchi sug'orish 1960-yillarda Isroil olimlari tomonidan ishlab chiqilgan. Bu ixtiro cho'l mamlakatida qishloq xo'jaligini rivojlantirishga imkon berdi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Isroil qishloq xo'jaligi tarixi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 52,
+    "fields": {
+      "text_uz": "Orol dengizi bir vaqtlar dunyoning to'rtinchi yirik ko'li hisoblangan.",
+      "category": "WATER",
+      "difficulty": 1,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, Orol dengizi 1960-yillarda 68,000 km² maydon bilan dunyoning to'rtinchi yirik ko'li bo'lgan. Kaspiy, Yuqori va Viktoriya ko'llaridan keyin.",
+      "image": "",
+      "time_limit": 20,
+      "source": "UNESCO, Orol dengizi tarixi, 2022",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 53,
+    "fields": {
+      "text_uz": "Yer yuzidagi barcha suvning taxminan 3% i chuchuk suv hisoblanadi.",
+      "category": "WATER",
+      "difficulty": 1,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, Yer yuzidagi suvning atigi 2.5-3% i chuchuk suv. Lekin ularning ko'pi muzliklarda, er osti suvlarida — faqat 0.3% i daryolar va ko'llarda.",
+      "image": "",
+      "time_limit": 20,
+      "source": "USGS (AQSh geologiya xizmati), Dunyo suv resurslari, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 54,
+    "fields": {
+      "text_uz": "Amudaryo hozirda Orol dengiziga yetib boradi.",
+      "category": "WATER",
+      "difficulty": 2,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Yo'q, Amudaryo suv ko'p olinishi sababli 1980-yillardan boshlab Orol dengiziga yetib bormay qoldi. Bu dengizning qurib ketishiga asosiy sabab bo'ldi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "ASBP, Amudaryo oqim ma'lumotlari, 2022",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 55,
+    "fields": {
+      "text_uz": "Suvni tejash orqali elektr energiyasi ham tejaladi.",
+      "category": "WATER",
+      "difficulty": 2,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, suv tozalash, nasos qilish va isitish uchun katta elektr energiyasi kerak. 1 m³ suv tozalash uchun taxminan 0.3-0.5 kVh energiya sarflanadi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "O'zbekiston suv ta'minoti tizimi energiya sarfi tahlili, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 56,
+    "fields": {
+      "text_uz": "O'zbekiston Markaziy Osiyodagi suv resurslarining asosiy generatori hisoblanadi.",
+      "category": "WATER",
+      "difficulty": 3,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Yo'q, Markaziy Osiyodagi asosiy suv manbalari Tojikiston va Qirg'izistondagi tog' muzliklarida. O'zbekiston asosan quyi oqimda joylashgan suv iste'molchisi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "ICWC, Markaziy Osiyo suv balansi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 57,
+    "fields": {
+      "text_uz": "Ochiq jo'mrakdan bir daqiqada taxminan 6-8 litr suv oqadi.",
+      "category": "WATER",
+      "difficulty": 1,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, standart jo'mrakdan minutiga 6-8 litr suv oqadi. Tish tozalash, idish yuvish paytida jo'mrakni yopib qo'yish yiliga minglab litr suv tejaydi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "WHO, Uy xo'jaligida suv iste'moli normalari, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 58,
+    "fields": {
+      "text_uz": "Oilangiz kuniga 200 litr suv iste'mol qiladi. Jo'mrakni tuzatib, kuniga 50 litr tejaysiz. Bir oyda necha litr suv tejaladi?",
+      "category": "WATER",
+      "difficulty": 2,
+      "question_type": "SCENARIO",
+      "explanation_uz": "Tejamkorlik: 50 litr/kun × 30 kun = 1,500 litr/oy. Bu taxminan 1.5 tonna suv bo'lib, bir kishining ikki haftalik iste'moliga teng.",
+      "image": "",
+      "time_limit": 45,
+      "source": "Suv tejash hisob-kitobi asoslari",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 59,
+    "fields": {
+      "text_uz": "Orol dengizi qurib ketishi natijasida Xorazm va Qoraqalpog'iston viloyatlarida iqlim qanday o'zgargan?",
+      "category": "WATER",
+      "difficulty": 2,
+      "question_type": "SCENARIO",
+      "explanation_uz": "Katta suv havzasi yo'q bo'lganligi sababli iqlim keskin kontinental bo'lib ketdi: yoz harorati oshdi (+2-3°C), qish sovuqlashdi, yog'ingarchilik kamaydi.",
+      "image": "",
+      "time_limit": 45,
+      "source": "O'zgidrometmarkaz, Orol bo'yi iqlim o'zgarishlari, 2022",
+      "related_article": 1,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 60,
+    "fields": {
+      "text_uz": "Fermer 1 gektar paxtaga tomchi sug'orish o'rnatdi. Oddiy sug'orish 8000 m³/ga suv sarflasa, tomchi sug'orish 40% tejasa, bir yilda necha m³ suv tejaydi?",
+      "category": "WATER",
+      "difficulty": 3,
+      "question_type": "SCENARIO",
+      "explanation_uz": "Tejalgan suv: 8000 m³ × 40% = 3200 m³/yil/ga. Bu bir oilaning 10 yillik suv iste'moliga teng! Katta fermer xo'jaligi uchun bu ming dollar tejash demak.",
+      "image": "",
+      "time_limit": 45,
+      "source": "FAO, Tomchi sug'orish iqtisodiy tahlili, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 61,
+    "fields": {
+      "text_uz": "Bir kattalashgan daraxt yiliga o'rtacha qancha CO2 shimib oladi?",
+      "category": "FLORA",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Katta daraxt yiliga taxminan 22 kg CO2 absorb qiladi. 1000 ta daraxt ekish 22 tonna CO2 ni atmosferadan tortib olishga teng — bu 5 ta avtomobilning yillik chiqarishiga teng.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Arborday Foundation, Daraxt ekologiyasi, 2023",
+      "related_article": 2,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 62,
+    "fields": {
+      "text_uz": "Fotosintez jarayonida o'simliklar quyosh nuridan nimalar hosil qiladi?",
+      "category": "FLORA",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Fotosintezda o'simliklar CO2 + suv + yorug'lik → glyukoza + kislorod reaksiyasini amalga oshiradi. Kislorod atmosferaga, glyukoza esa o'sish uchun ishlatiladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Biologiya darsligi, O'zbekiston DTST, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 63,
+    "fields": {
+      "text_uz": "O'rmonlarni ko'p miqdorda qirqib olish (deforestation) ekologiyaga qanday asosiy zarar yetkazadi?",
+      "category": "FLORA",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "O'rmonlar CO2 ning asosiy yutuvchisi. Ular qirqilganda: 1) atmosferada CO2 ko'payadi, 2) yer siljishlari bo'ladi, 3) biologik xilma-xillik yo'qoladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "WWF, Deforestation hisoboti, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 64,
+    "fields": {
+      "text_uz": "O'zbekistondagi Zarafshon yong'oq o'rmoni qanday maqomga ega?",
+      "category": "FLORA",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Zarafshon davlat biosfera qo'riqxonasi 1975-yilda tashkil etilgan. UNESCO biosfera rezervatlar tarmog'iga kiritilgan bo'lib, noyob tog' eko-tizimini saqlaydi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston Ekologiya qo'mitasi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 65,
+    "fields": {
+      "text_uz": "Daraxt ekish uchun qaysi mavsumlar eng qulay?",
+      "category": "FLORA",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Bahor (mart-aprel) va kuz (oktyabr-noyabr) eng qulay mavsumlar. Bu paytlarda daraxtlar uxlash davrida bo'lib, ildiz tutish uchun mo'tadil harorat va namlik mavjud.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston o'rmon xo'jaligi qo'llanmasi, 2022",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 66,
+    "fields": {
+      "text_uz": "O'zbekiston o'rmonlari mamlakatning qancha qismini egallaydi?",
+      "category": "FLORA",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "O'zbekistonda o'rmon va butazorlar umumiy maydonning taxminan 8% ini tashkil etadi. Bu Yevropa o'rtacha 37% ga nisbatan juda kam, shuning uchun ko'kalamzorlashtirish muhim.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston o'rmon xo'jaligi davlat qo'mitasi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 67,
+    "fields": {
+      "text_uz": "O'zbekistondagi 'Yashil Makon' dasturining maqsadi nima?",
+      "category": "FLORA",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "'Yashil Makon' — O'zbekiston Prezidentining 2021-yil farmoni bilan boshlangan dastur. Maqsad: 2026 yilga qadar 1 mlrd daraxt va buta o'simlik ekish, iqlimlashuvga hissa qo'shish.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston Prezidentining 2021-yil farmoni, Ekologiya vazirligi",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 68,
+    "fields": {
+      "text_uz": "O'simliklar fotosintez uchun qaysi yorug'lik to'lqin uzunliklaridan ko'proq foydalanadi?",
+      "category": "FLORA",
+      "difficulty": 3,
+      "question_type": "MCQ",
+      "explanation_uz": "Xlorofill asosan ko'k (430-450 nm) va qizil (640-680 nm) yorug'likni yutadi. Yashil yorug'lik aks ettiriladi, shuning uchun o'simliklar bizga yashil ko'rinadi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'simlik fiziologiyasi, Oliy ta'lim darsligi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 69,
+    "fields": {
+      "text_uz": "O'zbekistonda ko'kalamzorlashtirish uchun eng ko'p qaysi daraxtlar ekiladi?",
+      "category": "FLORA",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Terak (poplar) tez o'sgani va shimoliy mintaqalarda chidamliligi uchun, chinor esa katta soya berishi va uzoq umrliligi uchun O'zbekistonda ko'p ekiladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston o'rmon xo'jaligi ilmiy-tadqiqot instituti, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 70,
+    "fields": {
+      "text_uz": "Shaharlarda daraxt ekish shahar haroratini necha gradusga pasaytirishi mumkin?",
+      "category": "FLORA",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Shahar daraxtlari soya berish va suv bug'lantirish (evapotranspirasiya) orqali shahar haroratini 1-2°C ga, ba'zan 5°C gacha pasaytirishi mumkin.",
+      "image": "",
+      "time_limit": 30,
+      "source": "C40 Shaharlar iqlim rahbariyati, 2023",
+      "related_article": 2,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 71,
+    "fields": {
+      "text_uz": "O'simliklar ildizlari orqali asosan nima oladi?",
+      "category": "FLORA",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Ildizlar tuproqdan suv va unda erigan mineral moddalar (azot, fosfor, kaliy va boshqalar) ni o'zlashtiradi. Bu moddalar o'sish va rivojlanish uchun zarur.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'simlik fiziologiyasi darsligi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 72,
+    "fields": {
+      "text_uz": "Daraxt qancha vaqt umr ko'rishi mumkin?",
+      "category": "FLORA",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Ko'plab daraxt turlari yuzlab, ba'zilari minglab yil umr ko'radi. Dunyodagi eng keksa daraxt — 5000 yillik Bristlecone Pine (AQSh). O'zbekistondagi chinorlar 500-700 yil umr ko'radi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Dendrologiya asoslari, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 73,
+    "fields": {
+      "text_uz": "Dengiz tubida chuqur suvlarda o'simliklar fotosintez qila olmaydigan asosiy sabab nima?",
+      "category": "FLORA",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Yorug'lik dengizning taxminan 200 m chuqurligida so'nib qoladi. Fotosintez uchun yorug'lik kerak. Shuning uchun dengiz o'simliklari faqat 'fotic zona' (yorug' qavatda) yashaydi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Okeanografiya asoslari, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 74,
+    "fields": {
+      "text_uz": "Chimyon tog'lari o'rmonida qaysi daraxt turi ustun?",
+      "category": "FLORA",
+      "difficulty": 3,
+      "question_type": "MCQ",
+      "explanation_uz": "Chimyon (Toshkent viloyati) tog'larida archa (juniper) dominant tur hisoblanadi. Archa o'rmonlari O'zbekistonda 500,000 gektardan ortiq maydonni egallaydi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston o'rmon xo'jaligi instituti, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 75,
+    "fields": {
+      "text_uz": "Butun dunyodagi o'rmonlar yer kislorodining qancha qismini hosil qiladi?",
+      "category": "FLORA",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Yer yuzidagi o'rmonlar, ayniqsa tropik o'rmonlar, atmosfera kislorodining taxminan 28-30% ini ishlab chiqaradi. Okean fitoplanktonlari esa 50-80% ni hosil qiladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "NASA Yer kuzatish markazi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 76,
+    "fields": {
+      "text_uz": "Daraxt ildizlari tuproq eroziyasini qanday to'xtatadi?",
+      "category": "FLORA",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Daraxt ildizlari tuproqni mexanik ravishda ushlab turadi, suv oqimini sekinlashtiradi va tuproq strukturasini mustahkamlaydi. Bu shamol va yomg'ir eroziyasiga qarshi eng samarali vosita.",
+      "image": "",
+      "time_limit": 30,
+      "source": "FAO, Tuproq eroziyasiga qarshi kurash, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 77,
+    "fields": {
+      "text_uz": "Qizilqum cho'lida ko'kalamzorlashtirish uchun qaysi o'simliklar ekiladi?",
+      "category": "FLORA",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Saksovul (saxaul) va qandim cho'l sharoitiga moslashgan o'simliklar bo'lib, kamsuv va issiqqa chidamli. Ularni ekish cho'l tarqalishini to'xtatadi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston cho'llashtirish va qumlashtirish dasturi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 78,
+    "fields": {
+      "text_uz": "Bitta katta eman (oak) daraxti qancha hasharot turini boqishi mumkin?",
+      "category": "FLORA",
+      "difficulty": 3,
+      "question_type": "MCQ",
+      "explanation_uz": "Ekologik tadqiqotlar ko'rsatishicha, bitta katta eman daraxti 280-500 dan ortiq hasharot turini oziqlanish, yashash va ko'payish uchun yashash joyi sifatida ta'minlaydi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Douglas Tallamy, Ona o'simliklar ekologiyasi, 2022",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 79,
+    "fields": {
+      "text_uz": "Fotosintezda CO2 dan hosil bo'ladigan asosiy organik modda qaysi?",
+      "category": "FLORA",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Fotosintez: 6CO₂ + 6H₂O → C₆H₁₂O₆ (glyukoza) + 6O₂. Glyukoza o'simlikning 'ovqati' bo'lib, energiya manbai va yangi hujayra qurilishiga xizmat qiladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Biologiya: Hayot ilmi, O'zbekiston DTST, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 80,
+    "fields": {
+      "text_uz": "Shaharda daraxtlar qanday qo'shimcha ekologik vazifalarni bajaradi?",
+      "category": "FLORA",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Shahar daraxtlari: 1) soya va salqin beradi (issiqlik orolini pasaytiradi), 2) havo tozalaydi (chang, NO₂ va SO₂ ni yutadi), 3) shovqin kamaytiradi, 4) yomg'ir suvini ushlab qoladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "C40 Cities, Yashil infrastruktura, 2023",
+      "related_article": 2,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 81,
+    "fields": {
+      "text_uz": "Evkalipt daraxti kuniga qancha suv iste'mol qiladi?",
+      "category": "FLORA",
+      "difficulty": 3,
+      "question_type": "MCQ",
+      "explanation_uz": "Evkalipt tez o'suvchi daraxt bo'lib, kuniga 200-500 litr suv iste'mol qiladi. Shuning uchun quruq mintaqalarda ekish tavsiya qilinmaydi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "CSIRO (Avstraliya ilmiy-tadqiqot tashkiloti), 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 82,
+    "fields": {
+      "text_uz": "O'simliklar fotosintez jarayonida kislorod chiqaradi.",
+      "category": "FLORA",
+      "difficulty": 1,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, fotosintezda CO₂ va suv yorug'lik yordamida glyukoza va kislorodga aylanadi. Atmosferadagi kislorodning katta qismi o'simliklar tufayli mavjud.",
+      "image": "",
+      "time_limit": 20,
+      "source": "Biologiya asoslari, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 83,
+    "fields": {
+      "text_uz": "O'rmonlarni qirqib olish iqlim o'zgarishiga hissa qo'shadi.",
+      "category": "FLORA",
+      "difficulty": 1,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, o'rmonlar CO2 saqlaydi. Qirqilganda saqlangan CO2 atmosferaga chiqadi. Global deforestation yillik CO2 emissiyasining 10-15% ini tashkil etadi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "IPCC, Yer foydalanish va iqlim hisoboti, 2022",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 84,
+    "fields": {
+      "text_uz": "Kaktus ham fotosintez qiladi.",
+      "category": "FLORA",
+      "difficulty": 2,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, kaktuslar CAM (Crassulacean Acid Metabolism) deb atalgan maxsus fotosintez turi bilan ishlaydi — kunduzi stomalarini yopadi, kechqurun CO2 yig'adi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "O'simlik fiziologiyasi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 85,
+    "fields": {
+      "text_uz": "Daraxt ekish hududning er osti suv resurslarini kamaytiradi.",
+      "category": "FLORA",
+      "difficulty": 2,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Yo'q, daraxtlar ildizlari tuproq strukturasini yaxshilab, suv singishini (infiltratsiya) oshiradi, er osti suvlarini to'ldiradi va er osti suvini kamaytirmaydi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "FAO, Daraxt va suv o'zaro ta'siri, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 86,
+    "fields": {
+      "text_uz": "O'zbekistonda o'rmon maydoni mamlakatning 15% dan ortiq qismini egallaydi.",
+      "category": "FLORA",
+      "difficulty": 3,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Yo'q, O'zbekistonda o'rmon va butazorlar umumiy maydonning taxminan 8% ini tashkil etadi. Bu ko'rsatkich Yevropa o'rtachasidan (37%) ancha past.",
+      "image": "",
+      "time_limit": 20,
+      "source": "O'zbekiston o'rmon xo'jaligi qo'mitasi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 87,
+    "fields": {
+      "text_uz": "Bahor fasli daraxt ekish uchun eng qulay vaqtlardan biri.",
+      "category": "FLORA",
+      "difficulty": 1,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, bahorda tuproq issig'i, namligi va ko'chat o'sishi uchun ideal sharoitlar mavjud. Mart-aprel oylari O'zbekistonda daraxt ekish uchun eng qulay davr.",
+      "image": "",
+      "time_limit": 20,
+      "source": "O'zbekiston o'rmon xo'jaligi qo'llanmasi, 2022",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 88,
+    "fields": {
+      "text_uz": "Maktabdagi 500 o'quvchi har biri 2 tadan daraxt ekdi. Bu daraxtlar yiliga necha kg CO2 yutib oladi? (1 daraxt ≈ 22 kg CO2/yil)",
+      "category": "FLORA",
+      "difficulty": 2,
+      "question_type": "SCENARIO",
+      "explanation_uz": "Jami daraxtlar: 500 × 2 = 1000 ta. CO2 yutish: 1000 × 22 kg = 22,000 kg/yil = 22 tonna CO2/yil. Bu 5 ta avtomobilning yillik chiqarishiga teng!",
+      "image": "",
+      "time_limit": 45,
+      "source": "Arborday Foundation hisob-kitobi",
+      "related_article": 2,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 89,
+    "fields": {
+      "text_uz": "Shaharda 100 ta katta daraxt kesildi, 20 ta yangi kichik daraxt ekildi. Yillik CO2 yutish qanday o'zgardi? (katta daraxt=22 kg, kichik=2 kg)",
+      "category": "FLORA",
+      "difficulty": 2,
+      "question_type": "SCENARIO",
+      "explanation_uz": "Oldingi: 100 × 22 = 2200 kg/yil. Keyingi: 20 × 2 = 40 kg/yil. Farq: 2200 - 40 = 2160 kg kamaydi. Bu ekologik jihatdan katta zarar — yangi daraxtlar 10 yildan keyin kattalar qatoriga kiradi.",
+      "image": "",
+      "time_limit": 45,
+      "source": "Shahar yashil infratuzilmasi tahlili",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 90,
+    "fields": {
+      "text_uz": "Fermer dala chekkasiga 3 km uzunligida himoya daraxtzoqi ekmoqchi. Har 4 metrda 1 daraxt ekilsa, jami nechta daraxt kerak?",
+      "category": "FLORA",
+      "difficulty": 3,
+      "question_type": "SCENARIO",
+      "explanation_uz": "Uzunlik: 3 km = 3000 m. Soni: 3000 / 4 = 750 ta daraxt. Bunday himoya daraxtzorlar qishloq xo'jaligi yerlarini shamol eroziyasidan saqlaydi.",
+      "image": "",
+      "time_limit": 45,
+      "source": "Agro-o'rmonchilik hisob-kitobi asoslari",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 91,
+    "fields": {
+      "text_uz": "Bitta plastik shishani qayta ishlash necha soat elektr energiyasi tejaydi?",
+      "category": "WASTE",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "1 ta plastik shishani qayta ishlash yangi plastik ishlab chiqarishga nisbatan taxminan 2 soatlik elektr energiyasini tejaydi. Bu 100W lambochkani 2 soat yoqishga yetadi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Plastik qayta ishlash sanoati ma'lumotlari, 2023",
+      "related_article": 3,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 92,
+    "fields": {
+      "text_uz": "Plastik to'liq parchalanishi uchun taxminan qancha vaqt ketadi?",
+      "category": "WASTE",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Oddiy plastik (PET, HDPE) tabiatda 400-500 yil ichida parchalanadi. Bu vaqt ichida plastik mikroplastikga aylanib, tuproq va suvni ifloslantiradi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Plastik ifloslantirish koalitsiyasi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 93,
+    "fields": {
+      "text_uz": "1 tonna qog'ozni qayta ishlash nechta daraxtni kesishdan saqlab qoladi?",
+      "category": "WASTE",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "1 tonna qayta ishlangan qog'oz 17 ta katta daraxtni, 26,500 litr suvni va 3.3 m³ poligon maydonini tejaydi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "American Forest & Paper Association, 2023",
+      "related_article": 3,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 94,
+    "fields": {
+      "text_uz": "Shisha qayta ishlash yangi shisha ishlab chiqarishga nisbatan necha foiz kam energiya sarflaydi?",
+      "category": "WASTE",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Qayta ishlangan shishadan yangi shisha tayyorlash yangi xom ashyodan ishlab chiqarishga nisbatan 30-35% kam energiya sarflaydi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Glass Packaging Institute, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 95,
+    "fields": {
+      "text_uz": "Chiqindilarni saralashning asosiy ekologik maqsadi nima?",
+      "category": "WASTE",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Saralash har xil turdagi chiqindilarni qayta ishlash va qayta foydalanish imkonini beradi. Bu xom ashyo sarfini, energiya iste'molini va poligon maydonini kamaytiradi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Ekologiya vazirligi, O'zbekiston, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 96,
+    "fields": {
+      "text_uz": "Batareyani oddiy axlatga tashlash nima uchun xavfli?",
+      "category": "WASTE",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Batareyalar qo'rg'oshin, simob, kadmiy va litiy kabi og'ir metallarni o'z ichiga oladi. Ular tuproqqa sinib, er osti suvlarini 400-500 yil mobaynida ifloslantirishi mumkin.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Basel konventsiyasi, Xavfli chiqindilar, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 97,
+    "fields": {
+      "text_uz": "Elektron chiqindilar (e-waste) nima?",
+      "category": "WASTE",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "E-waste — ishlatilmay qolgan elektron va elektr jihozlar: kompyuter, telefon, televizor, printer. Ular zararli metallar va kimyoviy moddalar o'z ichiga oladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "BMT E-waste statistikasi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 98,
+    "fields": {
+      "text_uz": "O'zbekistonda yiliga taxminan qancha tonna qattiq maishiy chiqindi hosil bo'ladi?",
+      "category": "WASTE",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "O'zbekistonda yiliga taxminan 5-6 million tonna qattiq maishiy chiqindi hosil bo'ladi. Shundan atigi 5-10% qayta ishlanadi, qolganlari poligonlarda ko'miladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Ekologiya vazirligi, Chiqindilar boshqaruvi hisoboti, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 99,
+    "fields": {
+      "text_uz": "Organik chiqindilardan (ovqat qoldiqlari) tayyorlanadigan natural o'g'it qanday ataladi?",
+      "category": "WASTE",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Kompost — organik moddalar aerob (kislorodli) sharoitda parchalanishi natijasida hosil bo'ladigan tabiiy o'g'it. U tuproqni boyitadi, suvni saqlaydi va kimyoviy o'g'it sarfini kamaytiradi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "FAO, Kompostlash bo'yicha qo'llanma, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 100,
+    "fields": {
+      "text_uz": "O'zbekistonda chiqindilarni qayta ishlash sanoati qaysi shaharda eng ko'p rivojlangan?",
+      "category": "WASTE",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Toshkentda O'zbekistondagi chiqindi qayta ishlash korxonalarining ko'pi joylashgan. Shuningdek, Toshkent viloyatidagi Zangiota, Chirchiqda qayta ishlash zavodlari mavjud.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston Ekologiya vazirligi, 2023",
+      "related_article": 3,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 101,
+    "fields": {
+      "text_uz": "1 martalik plastik qopni nima bilan almashtirish eng yaxshi?",
+      "category": "WASTE",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Ko'p martalik matoli sumka yoki savat ishlatish plastik qop iste'molini keskin kamaytiradi. 1 ta matoli sumka 700 ta plastik qopni almashtiradi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "BMT Atrof-muhit dasturi (UNEP), Plastik ifloslantirish, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 102,
+    "fields": {
+      "text_uz": "Kompyuter axlatga tashlanganda qanday zararli moddalar tuproqqa o'tishi mumkin?",
+      "category": "WASTE",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Kompyuterlar qo'rg'oshin (kondensatorlarda), simob (displeylarda), kadmiy (batareyalarda) va brom (plastik qutilarda) kabi og'ir metallar o'z ichiga oladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "WHO, E-waste va sog'liq, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 103,
+    "fields": {
+      "text_uz": "'Zero Waste' (Nol Chiqindi) tamoyilining to'g'ri tartibi qaysi?",
+      "category": "WASTE",
+      "difficulty": 3,
+      "question_type": "MCQ",
+      "explanation_uz": "5R tamoyili: Refuse (rad etish) → Reduce (kamaytirish) → Reuse (qayta ishlatish) → Recycle (qayta ishlash) → Rot (kompostlash). Bu tartibda yuqoridagi usullar samaraliroq.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Zero Waste International Alliance, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 104,
+    "fields": {
+      "text_uz": "Bioplastik an'anaviy plastikdan nimasi bilan farqlanadi?",
+      "category": "WASTE",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Bioplastik o'simlik xom ashyosidan (makkajo'xori, qand lavlagi) tayyorlanadi va mikroorganizmlar ta'sirida 3-6 oyda parchalanadi. Oddiy plastik 400-500 yil parchalanmaydi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "European Bioplastics, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 105,
+    "fields": {
+      "text_uz": "Quyidagi chiqindilardan qaysi biri eng tez parchalanadi?",
+      "category": "WASTE",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Meva po'stlog'i va boshqa organik chiqindilar 1-6 oy ichida parchalanadi. Qog'oz 2-6 hafta, temir 80-100 yil, shisha 4000+ yil, plastik 400-500 yil.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Chiqindi parchalanishi jadvali, Ekologiya vazirligi",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 106,
+    "fields": {
+      "text_uz": "LFG (Landfill Gas/Poligon gazi) nima?",
+      "category": "WASTE",
+      "difficulty": 3,
+      "question_type": "MCQ",
+      "explanation_uz": "Poligonlardagi organik chiqindilar anaerob parchalanadi va taxminan 50% metan (CH₄), 50% CO₂ aralashmasini hosil qiladi. Metan CO₂ dan 25 marta kuchli issiqxona gazi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "EPA (AQSh Atrof-muhit muhofaza agentligi), 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 107,
+    "fields": {
+      "text_uz": "Chiqindilarni kamaytirish uchun birinchi qadam nima?",
+      "category": "WASTE",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "5R tamoyilida birinchi qadam — 'Refuse' (rad etish). Kerak bo'lmagan narsani sotib olmaslik yoki qabul qilmaslik eng samarali usul, chunki bu holda chiqindi hosil bo'lmaydi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Zero Waste International Alliance, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 108,
+    "fields": {
+      "text_uz": "O'zbekistonda yog'ochga arzon va ekologik alternativa bo'lishi mumkin bo'lgan o'simlik qaysi?",
+      "category": "WASTE",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Bambu tez o'suvchi o'simlik (kuniga 90 sm gacha) bo'lib, yog'ochdan mustahkamroq, 3-5 yilda kesishga tayyor va CO2 ni intensiv yutadi. Arid iqlimga ham moslashtirilgan navlari bor.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Bambu sanoati xalqaro tashkiloti, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 109,
+    "fields": {
+      "text_uz": "Bitta shisha idishni qayta ishlash atmosferaga qancha CO2 chiqarishni oldini oladi?",
+      "category": "WASTE",
+      "difficulty": 3,
+      "question_type": "MCQ",
+      "explanation_uz": "1 ta shisha idishni qayta ishlash yangi shisha ishlab chiqarishga nisbatan taxminan 300 g CO2 kamayishiga olib keladi. Bu elektr sarfi va xom ashyo kamayishi hisobida.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Glass Packaging Institute, Hayotiy tsikl tahlili, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 110,
+    "fields": {
+      "text_uz": "O'zbekistonda eskirgan telefon va kompyuterni nima qilish kerak?",
+      "category": "WASTE",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "E-chiqindilar ixtisoslashgan to'plash punktlariga topshirilishi shart. Bu zararli metallarning tuproqqa o'tishini oldini oladi va qayta ishlash imkonini beradi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston Ekologiya vazirligi, E-waste ko'rsatmasi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 111,
+    "fields": {
+      "text_uz": "O'zbekistonda 2030 yilgacha chiqindi qayta ishlashni necha foizga yetkazish rejalashtirilgan?",
+      "category": "WASTE",
+      "difficulty": 3,
+      "question_type": "MCQ",
+      "explanation_uz": "O'zbekiston hukumatining rejasiga ko'ra, 2030 yilga qadar qattiq maishiy chiqindilarning 50% ini qayta ishlash maqsad qilingan. Hozircha atigi 5-10% qayta ishlanadi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston Ekologiya vazirligi, Chiqindilar boshqaruvi strategiyasi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 112,
+    "fields": {
+      "text_uz": "Plastik sumkalar qayta ishlanishi mumkin.",
+      "category": "WASTE",
+      "difficulty": 1,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, PE (polietilen) plastik sumkalar texnik jihatdan qayta ishlanishi mumkin. Lekin ularni oddiy axlatga tashlamang — maxsus to'plash punktlariga topshiring.",
+      "image": "",
+      "time_limit": 20,
+      "source": "Plastik qayta ishlash sanoati, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 113,
+    "fields": {
+      "text_uz": "Batareyani oddiy axlatga tashlab yuborish xavfsiz.",
+      "category": "WASTE",
+      "difficulty": 1,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Yo'q! Batareyalar og'ir metallar (qo'rg'oshin, kadmiy, simob) o'z ichiga oladi. Tuproq va suvga o'tib 400+ yil mobaynida ifloslantiradi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "Basel konventsiyasi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 114,
+    "fields": {
+      "text_uz": "Bitta plastik shishaning tabiatda parchalanishi uchun 500 yildan ortiq vaqt kerak.",
+      "category": "WASTE",
+      "difficulty": 2,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, PET plastik tabiatda 400-500 yil ichida to'liq parchalanadi. Bu davrda u mikro va nanoplastiklarga bo'linib, oziq-zanjirga kirib boradi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "Plastik ifloslantirish koalitsiyasi, 2023",
+      "related_article": 3,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 115,
+    "fields": {
+      "text_uz": "Kompost qilish organik chiqindilarni foydali o'g'itga aylantiradi.",
+      "category": "WASTE",
+      "difficulty": 2,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, to'g'ri kompostlash ovqat qoldiqlari va o'simlik chiqindilarini 2-3 oyda tuproqni boyituvchi humused o'g'itga aylantiradi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "FAO, Organik chiqindilar boshqaruvi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 116,
+    "fields": {
+      "text_uz": "Shisha to'liq qayta ishlanishi mumkin va bu jarayon cheksiz takrorlanishi mumkin.",
+      "category": "WASTE",
+      "difficulty": 3,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, shisha qayta ishlaganda sifati yo'qolmaydi (metall va qog'ozdan farqli). Nazariy jihatdan cheksiz marta qayta ishlanishi mumkin.",
+      "image": "",
+      "time_limit": 20,
+      "source": "Glass Packaging Institute, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 117,
+    "fields": {
+      "text_uz": "Qayta ishlash (recycling) uchun chiqindilarni oldindan saralash kerak.",
+      "category": "WASTE",
+      "difficulty": 1,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, aralashgan chiqindilar qayta ishlash zavodida saralanishi kerak, bu qo'shimcha xarajat. Uyda saralash jarayonni arzonlashtiradi va samaradorlikni oshiradi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "Chiqindi boshqaruvi sanoati, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 118,
+    "fields": {
+      "text_uz": "Oilangiz oyiga 30 ta plastik shisha iste'mol qiladi. Barchasini qayta ishlashga bersa, bir yilda necha soat elektr tejaladi? (1 shisha = 2 soat elektr tejaydi)",
+      "category": "WASTE",
+      "difficulty": 2,
+      "question_type": "SCENARIO",
+      "explanation_uz": "Yilik saqlangan shishalar: 30 shisha/oy × 12 oy = 360 shisha. Tejilgan elektr: 360 × 2 soat = 720 soat. Bu oddiy lampochkaning qariyb bir oylik ishi!",
+      "image": "",
+      "time_limit": 45,
+      "source": "Plastik qayta ishlash iqtisodiy tahlili",
+      "related_article": 3,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 119,
+    "fields": {
+      "text_uz": "Maktab 100 kg qog'oz chiqindisini qayta ishlashga topshirdi. Nechta daraxt saqlanib qoldi? (1 tonna qog'oz = 17 daraxt)",
+      "category": "WASTE",
+      "difficulty": 2,
+      "question_type": "SCENARIO",
+      "explanation_uz": "100 kg = 0.1 tonna. 0.1 × 17 = 1.7 daraxt saqlanib qoladi. Butun maktab yilida 1 tonna qog'oz topshirsa — 17 daraxt!",
+      "image": "",
+      "time_limit": 45,
+      "source": "American Forest & Paper Association hisob-kitobi",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 120,
+    "fields": {
+      "text_uz": "Shahar poligoniga oyiga 4000 tonna chiqindi keladi. 40% organik bo'lsa, kompostlash dasturini joriy qilsa, poligon hajmi necha tonnaga kamayadi?",
+      "category": "WASTE",
+      "difficulty": 3,
+      "question_type": "SCENARIO",
+      "explanation_uz": "Organik chiqindi: 4000 × 40% = 1600 tonna/oy. Kompostlash bu miqdorni to'liq yo'naltirib, poligon hajmini 1600 tonna ga kamaytiradi. Bu poligon xizmat muddatini uzaytiradi.",
+      "image": "",
+      "time_limit": 45,
+      "source": "Chiqindilarni boshqarish texnologiyalari, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 121,
+    "fields": {
+      "text_uz": "O'zbekiston Qizil kitobiga nechta hayvon turi kiritilgan?",
+      "category": "FAUNA",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "O'zbekistonning Qizil kitobiga 184 ta hayvon turi kiritilgan, jumladan sut emizuvchilar, qushlar, reptiliyalar, baliqlar va hasharotlar.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston Qizil kitobi, 5-nashr, 2022",
+      "related_article": 5,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 122,
+    "fields": {
+      "text_uz": "Jayron (Gazella subgutturosa) qaysi hayvon turkumiga kiradi?",
+      "category": "FAUNA",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Jayron — tuyoqlilar turkumining juft tuyoqlilar tartibiga kiruvchi antilopa. U O'zbekiston Qizil kitobiga kiritilgan noyob hayvon.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston hayvonot dunyosi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 123,
+    "fields": {
+      "text_uz": "Quyidagi hayvonlardan qaysi biri O'zbekiston Qizil kitobida?",
+      "category": "FAUNA",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Jayron O'zbekiston Qizil kitobida noyob va himoyaga muhtoj tur sifatida kiritilgan. Populyatsiyasi so'nggi yillarda Qizilqum qo'riqxonasida tiklanmoqda.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston Qizil kitobi, 2022",
+      "related_article": 5,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 124,
+    "fields": {
+      "text_uz": "O'zbekistonda suv qushlari uchun muhim yashash joyi qaysi?",
+      "category": "FAUNA",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Aydarkul ko'li (Navoiy viloyati) va Arnasoy ko'llari suv qushlari uchun Markaziy Osiyoning eng muhim qishlash joylaridan biri. Yuz minglab qush bu yerda qishlaydi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Wetlands International, Markaziy Osiyo suv qushlari, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 125,
+    "fields": {
+      "text_uz": "Oziq-zanjir (food chain) nima?",
+      "category": "FAUNA",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Oziq-zanjir — tirik organizmlar orasidagi oziq-ovqat bog'liqligini ko'rsatuvchi tizim. Masalan: o'simlik → quyon → tulki → bo'ri. Har bir halqa oldingilarni iste'mol qiladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Ekologiya asoslari, O'zbekiston DTST, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 126,
+    "fields": {
+      "text_uz": "O'zbekiston Qizil kitobidagi sut emizuvchilar ichida qaysi yirik yirtqich bor?",
+      "category": "FAUNA",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Qoplayon (Panthera pardus, leopard) O'zbekiston Qizil kitobiga kiritilgan. Surxondaryo va Hisor tog'larida uchraydi, lekin soni juda kam — bir necha o'n ta.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston Qizil kitobi, 2022",
+      "related_article": 5,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 127,
+    "fields": {
+      "text_uz": "Hayvonlarning mavsumiy ko'chishi qanday ataladi?",
+      "category": "FAUNA",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Migratsiya — hayvonlar (qushlar, baliqlar, sut emizuvchilar) ning yashash sharoiti, oziq va ko'payish maqsadida mavsumiy ravishda bir hududdan boshqasiga ko'chishi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Hayvonot ekologiyasi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 128,
+    "fields": {
+      "text_uz": "Archa o'rmonlari qaysi tog' hayvonlari uchun asosiy yashash joyi?",
+      "category": "FAUNA",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Tog' archa o'rmonlari argali (tog' qo'yi), qor qoploni (irbis) va boshqa tog' hayvonlari uchun oziq va boshpana beradi. O'rmonlar kamayishi bu turlar uchun katta xavf.",
+      "image": "",
+      "time_limit": 30,
+      "source": "WWF O'zbekiston, Tog' ekotizimi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 129,
+    "fields": {
+      "text_uz": "Yo'q bo'lib ketish xavfidagi hayvonlarni saqlash uchun nima tashkil etiladi?",
+      "category": "FAUNA",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Tabiat qo'riqxonalari (davlat qo'riqxonalari, milliy parklar, biosfera rezervatlari) noyob tur yashash muhitini saqlaydi va inson faoliyatidan himoya qiladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "IUCN, Himoyalangan hududlar, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 130,
+    "fields": {
+      "text_uz": "Oziq-zanjirda bitta turning yo'q bo'lishi ekotizimga qanday ta'sir qiladi?",
+      "category": "FAUNA",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Kaskat ta'sir (trophic cascade): bir turning yo'q bo'lishi butun oziq-zanjirni buzadi. Masalan, bo'ri yo'q bo'lsa kiyik ko'payadi, kiyik o'simliklarni qirtishlaydi, eroziya boshlanadi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Yellowstone wolflar qayta keltirilishi tadqiqoti, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 131,
+    "fields": {
+      "text_uz": "Usturt platosida noyob hayvon — Usturt qoplig'ochi (saiga antilopa/ufloni) qaysi xususiyati bilan ajraladi?",
+      "category": "FAUNA",
+      "difficulty": 3,
+      "question_type": "MCQ",
+      "explanation_uz": "Saiga antilopa (Saiga tatarica) noyob burun tuzilishi bilan ajralib turadi — katta, haziq buruni qishda sovuq havoni isitadi. Kritik xavf ostidagi tur: 95% kamaygan.",
+      "image": "",
+      "time_limit": 30,
+      "source": "IUCN Qizil ro'yxati, Saiga tatarica, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 132,
+    "fields": {
+      "text_uz": "Baliqlar qanday nafas oladi?",
+      "category": "FAUNA",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Baliqlar jabra (gill) orqali nafas oladi. Jabra suvdagi erigan kislorodni qonga o'tkazadi. Baliqlar suvdan tashqarida nafas ola olmaydi (maxsus o'pkali baliqlar bundan mustasno).",
+      "image": "",
+      "time_limit": 30,
+      "source": "Zoologiya asoslari, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 133,
+    "fields": {
+      "text_uz": "O'zbekistondagi 'Zarafshon' qo'riqxonasi qaysi noyob tur himoyasi uchun tashkil etilgan?",
+      "category": "FAUNA",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Zarafshon davlat qo'riqxonasi (1975) qunduz (Castor fiber) populyatsiyasini saqlash uchun asos solingan. Bu Markaziy Osiyodagi qunduzning so'nggi yashash joylaridan biri.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston Ekologiya vazirligi, Qo'riqxonalar tarmog'i, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 134,
+    "fields": {
+      "text_uz": "Qushlar migratsiyasining asosiy sabablari nima?",
+      "category": "FAUNA",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Qushlar oziq yetarli bo'lgan joylarga, ko'payish uchun qulay muhitga va qishni iliq iqlimda o'tkazishga migratsiya qiladi. Mavsumiy o'zgarish asosiy omil.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Ornitoilogiya asoslari, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 135,
+    "fields": {
+      "text_uz": "O'zbek jayroni populyatsiyasi so'nggi 50 yilda qanday o'zgargan?",
+      "category": "FAUNA",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Jayron populyatsiyasi ov, yashash muhitining yo'qolishi va podaning uzilishi tufayli so'nggi 50 yilda 80% dan ortiq kamaygan. Hozirda qo'riqxonalarda 10,000-15,000 ta bor.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston Qizil kitobi, 2022; IUCN, 2023",
+      "related_article": 5,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 136,
+    "fields": {
+      "text_uz": "Qizilqum biosfera qo'riqxonasida qaysi hayvon turlari himoyalanadi?",
+      "category": "FAUNA",
+      "difficulty": 3,
+      "question_type": "MCQ",
+      "explanation_uz": "Qizilqum davlat biosfera qo'riqxonasida jayron, ufloni (saiga), qoraquloq (caracal), saksovul to'ti kabi cho'l turlari himoyalanadi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Qizilqum biosfera qo'riqxonasi, rasmiy ma'lumotlar, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 137,
+    "fields": {
+      "text_uz": "Biodiversitet (biologik xilma-xillik) nima?",
+      "category": "FAUNA",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "Biodiversitet — muayyan hududdagi yoki butun Yerdagi tirik organizmlar (o'simlik, hayvon, mikroorganizm), ularning genofondlari va ekotizimlari xilma-xilligi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Biologik xilma-xillik to'g'risidagi konventsiya (CBD), 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 138,
+    "fields": {
+      "text_uz": "Hasharotlar ekotizimdagi qaysi muhim vazifalarni bajaradi?",
+      "category": "FAUNA",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Hasharotlar: 1) o'simliklarni changlatadi (83% o'simlik turi ularsiz ko'paymaydi), 2) chirindi va go'ngni parchalaydi, 3) oziq-zanjirda asosiy halqa vazifasini o'taydi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Entomologiya jamiyati xalqaro hisoboti, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 139,
+    "fields": {
+      "text_uz": "Global qor qoploni (irbis, snow leopard) populyatsiyasi qancha deb baholanadi?",
+      "category": "FAUNA",
+      "difficulty": 3,
+      "question_type": "MCQ",
+      "explanation_uz": "Dunyo bo'yicha qor qoploni populyatsiyasi 4,000-6,500 ta deb taxmin qilinadi. O'zbekistonda Hisor va Pamir-Oloy tog'larida bir necha o'n ta uchraydi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "Snow Leopard Trust, Global soni, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 140,
+    "fields": {
+      "text_uz": "Tabiat qo'riqxonasi va milliy bog' o'rtasidagi asosiy farq nima?",
+      "category": "FAUNA",
+      "difficulty": 2,
+      "question_type": "MCQ",
+      "explanation_uz": "Tabiat qo'riqxonasida inson kirishi va faoliyati qat'iyan cheklangan (faqat ilmiy tadqiqot). Milliy bog'da esa turizm, tarbiyaviy faoliyat ruxsat etiladi.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston Ekologiya vazirligi, Himoyalangan hududlar qonunchilig, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 141,
+    "fields": {
+      "text_uz": "O'zbekistonda nechta davlat tabiat qo'riqxonasi mavjud?",
+      "category": "FAUNA",
+      "difficulty": 1,
+      "question_type": "MCQ",
+      "explanation_uz": "O'zbekistonda 9 ta davlat tabiat qo'riqxonasi bor: Zarafshon, Nurota, Qizilqum, Badai-Tugay, Hisor, Zomin, Chatqol, Surxon va Arnasoy.",
+      "image": "",
+      "time_limit": 30,
+      "source": "O'zbekiston Ekologiya vazirligi, 2023",
+      "related_article": 5,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 142,
+    "fields": {
+      "text_uz": "Jayron O'zbekistonda yo'q bo'lib ketish xavfi ostidagi tur hisoblanadi.",
+      "category": "FAUNA",
+      "difficulty": 1,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, jayron O'zbekiston Qizil kitobida 'himoyaga muhtoj' tur sifatida ro'yxatda. Ularning soni so'nggi o'n yilliklarda keskin kamaygan.",
+      "image": "",
+      "time_limit": 20,
+      "source": "O'zbekiston Qizil kitobi, 5-nashr, 2022",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 143,
+    "fields": {
+      "text_uz": "Yirtqich hayvonlar ekotizimdagi oziq-zanjirda muhim rol o'ynaydi.",
+      "category": "FAUNA",
+      "difficulty": 1,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, yirtqichlar o'ljalar sonini boshqarib, o'simliklar va boshqa resurslarni haddan tashqari iste'mol qilinishidan saqlaydi. Ular 'kaskat ta'sir' orqali butun ekotizimni tartibga soladi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "Ekologiya asoslari, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 144,
+    "fields": {
+      "text_uz": "O'zbekiston Qizil kitobiga kiritilgan turlarning barchasini ov qilish man etilgan.",
+      "category": "FAUNA",
+      "difficulty": 2,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, O'zbekiston qonunchiligiga ko'ra Qizil kitobdagi barcha turlarni ov qilish, tutish va sotish qat'iyan man etilgan. Buzganlar jinoiy javobgarlikka tortiladi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "O'zbekiston 'Qizil kitob' to'g'risida qonun, 2002",
+      "related_article": 5,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 145,
+    "fields": {
+      "text_uz": "Hasharotlarning yo'q bo'lib ketishi o'simliklarning ko'payishiga ta'sir qilmaydi.",
+      "category": "FAUNA",
+      "difficulty": 2,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Yo'q! Dunyo o'simliklarining 80% dan ortig'i changlatish uchun hasharotlarga muhtoj. Ari, kapalak va boshqa changlatuvchilar yo'q bo'lsa, ko'plab o'simliklar yo'q bo'lib ketadi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "FAO, Changlatuvchilar va oziq-ovqat xavfsizligi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 146,
+    "fields": {
+      "text_uz": "Dengiz toshbaqalari plastik sumkani meduza deb adashtirib yeyishi mumkin.",
+      "category": "FAUNA",
+      "difficulty": 3,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, plastik sumkalar dengizda meduza kabi suzib yuradi. Toshbaqalar ularni yutishi natijasida ich-ichakda tiqilib qoladi va o'lib ketadi. Bu dengiz hayvonlari uchun katta xavf.",
+      "image": "",
+      "time_limit": 20,
+      "source": "WWF, Plastik dengiz ifloslantirishi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 147,
+    "fields": {
+      "text_uz": "Hayvonlarning yashash muhitini saqlash ularni himoya qilishning eng samarali usuli.",
+      "category": "FAUNA",
+      "difficulty": 1,
+      "question_type": "TRUE_FALSE",
+      "explanation_uz": "Ha, yashash muhiti yo'q bo'lsa, hatto eng yaxshi himoya choralar ham samarasiz. 'Habitat loss' global darajada biologik xilma-xillikni yo'qotishning asosiy sababi.",
+      "image": "",
+      "time_limit": 20,
+      "source": "IUCN, Biologik xilma-xillikni yo'qotish omillari, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 148,
+    "fields": {
+      "text_uz": "Qo'riqxonada 50 ta jayron bor. Himoya olib borish natijasida populyatsiya yiliga 10% o'sadi. 3 yildan keyin nechta jayron bo'ladi?",
+      "category": "FAUNA",
+      "difficulty": 2,
+      "question_type": "SCENARIO",
+      "explanation_uz": "Yillik o'sish: 50 × (1.10)³ = 50 × 1.331 = 66.5 ≈ 67 ta. Geometrik o'sish kichik populyatsiyalar uchun juda muhim — har bir individ qimmatli.",
+      "image": "",
+      "time_limit": 45,
+      "source": "Populyatsion ekologiya hisob-kitobi",
+      "related_article": 5,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 149,
+    "fields": {
+      "text_uz": "Ekotizimda bo'rilar yo'q qilingach, kiyiklar soni 3 barobarga oshdi. Kiyiklar o'simliklarni qirtishladi, tuproq eroziyasi boshlandi. Bu qanday ekologik hodisa?",
+      "category": "FAUNA",
+      "difficulty": 2,
+      "question_type": "SCENARIO",
+      "explanation_uz": "Bu 'trofik kaskad' (trophic cascade) — oziq-zanjirdagi o'zgarish boshqa darajalarga tarqalishi. Yellowstoneda bo'ri qaytarilganda daryo o'zagi ham o'zgardi (ekotizim muhandisligi).",
+      "image": "",
+      "time_limit": 45,
+      "source": "William Ripple, Yellowstone bo'ri tadqiqoti, 2012; Nature, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.question",
+    "pk": 150,
+    "fields": {
+      "text_uz": "Saiga antilopa populyatsiyasi 1990-yilda 1,000,000 bo'lgan. 2006-yilga kelib 95% kamaygan. Nechta qolgan?",
+      "category": "FAUNA",
+      "difficulty": 3,
+      "question_type": "SCENARIO",
+      "explanation_uz": "Kamaygan: 1,000,000 × 95% = 950,000. Qolgan: 1,000,000 - 950,000 = 50,000 ta. Bu iqlim o'zgarishi, ov va yashash muhitining buzilishi oqibati.",
+      "image": "",
+      "time_limit": 45,
+      "source": "IUCN, Saiga tatarica, Populyatsiya dinamikasi, 2023",
+      "related_article": null,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1001,
+    "fields": {
+      "question": 1,
+      "text_uz": "150 kun",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1002,
+    "fields": {
+      "question": 1,
+      "text_uz": "200 kun",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1003,
+    "fields": {
+      "question": 1,
+      "text_uz": "250 kun",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1004,
+    "fields": {
+      "question": 1,
+      "text_uz": "300 kun",
+      "is_correct": true,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1005,
+    "fields": {
+      "question": 2,
+      "text_uz": "Issiqlik energiyasi",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1006,
+    "fields": {
+      "question": 2,
+      "text_uz": "Elektr energiyasi",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1007,
+    "fields": {
+      "question": 2,
+      "text_uz": "Kimyoviy energiya",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1008,
+    "fields": {
+      "question": 2,
+      "text_uz": "Mexanik energiya",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1009,
+    "fields": {
+      "question": 3,
+      "text_uz": "0.5 tonna",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1010,
+    "fields": {
+      "question": 3,
+      "text_uz": "1 tonna",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1011,
+    "fields": {
+      "question": 3,
+      "text_uz": "1.5 tonna",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1012,
+    "fields": {
+      "question": 3,
+      "text_uz": "3 tonna",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1013,
+    "fields": {
+      "question": 4,
+      "text_uz": "20%",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1014,
+    "fields": {
+      "question": 4,
+      "text_uz": "50%",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1015,
+    "fields": {
+      "question": 4,
+      "text_uz": "75%",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1016,
+    "fields": {
+      "question": 4,
+      "text_uz": "90%",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1017,
+    "fields": {
+      "question": 5,
+      "text_uz": "Quyosh energiyasi",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1018,
+    "fields": {
+      "question": 5,
+      "text_uz": "Shamol energiyasi",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1019,
+    "fields": {
+      "question": 5,
+      "text_uz": "Issiqlik elektr stansiyalari",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1020,
+    "fields": {
+      "question": 5,
+      "text_uz": "Gidroelektr",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1021,
+    "fields": {
+      "question": 6,
+      "text_uz": "Elektr issitgich",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1022,
+    "fields": {
+      "question": 6,
+      "text_uz": "Gaz qozon",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1023,
+    "fields": {
+      "question": 6,
+      "text_uz": "Issiqlik nasosi",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1024,
+    "fields": {
+      "question": 6,
+      "text_uz": "Ko'mir",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1025,
+    "fields": {
+      "question": 7,
+      "text_uz": "10%",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1026,
+    "fields": {
+      "question": 7,
+      "text_uz": "15%",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1027,
+    "fields": {
+      "question": 7,
+      "text_uz": "20%",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1028,
+    "fields": {
+      "question": 7,
+      "text_uz": "25%",
+      "is_correct": true,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1029,
+    "fields": {
+      "question": 8,
+      "text_uz": "Lampochka tezroq buziladi",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1030,
+    "fields": {
+      "question": 8,
+      "text_uz": "Elektr stansiyalar ko'proq CO2 chiqaradi",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1031,
+    "fields": {
+      "question": 8,
+      "text_uz": "Suv sarfi ko'payadi",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1032,
+    "fields": {
+      "question": 8,
+      "text_uz": "Hech qanday ta'siri yo'q",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1033,
+    "fields": {
+      "question": 9,
+      "text_uz": "Neft qazib olish jarayonida",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1034,
+    "fields": {
+      "question": 9,
+      "text_uz": "Organik chiqindilarni anaerob parchalashda",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1035,
+    "fields": {
+      "question": 9,
+      "text_uz": "Kimyoviy sintez orqali",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1036,
+    "fields": {
+      "question": 9,
+      "text_uz": "Suv bug'lantirish natijasida",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1037,
+    "fields": {
+      "question": 10,
+      "text_uz": "Issiqlik energiyasi",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1038,
+    "fields": {
+      "question": 10,
+      "text_uz": "Elektr energiyasi",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1039,
+    "fields": {
+      "question": 10,
+      "text_uz": "Kimyoviy energiya",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1040,
+    "fields": {
+      "question": 10,
+      "text_uz": "Bosimli suv",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1041,
+    "fields": {
+      "question": 11,
+      "text_uz": "1 MVt",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1042,
+    "fields": {
+      "question": 11,
+      "text_uz": "5 MVt",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1043,
+    "fields": {
+      "question": 11,
+      "text_uz": "10 MVt",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1044,
+    "fields": {
+      "question": 11,
+      "text_uz": "50 MVt",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1045,
+    "fields": {
+      "question": 12,
+      "text_uz": "Ekran buziladi",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1046,
+    "fields": {
+      "question": 12,
+      "text_uz": "Ovoz chiqaradi",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1047,
+    "fields": {
+      "question": 12,
+      "text_uz": "Elektr sarflashda davom etadi",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1048,
+    "fields": {
+      "question": 12,
+      "text_uz": "Internet aloqani uzadi",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1049,
+    "fields": {
+      "question": 13,
+      "text_uz": "Eng ko'p energiya sarflaydi",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1050,
+    "fields": {
+      "question": 13,
+      "text_uz": "Eng kam energiya sarflaydi",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1051,
+    "fields": {
+      "question": 13,
+      "text_uz": "O'rtacha energiya sarflaydi",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1052,
+    "fields": {
+      "question": 13,
+      "text_uz": "Xavfli jihozlar",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1053,
+    "fields": {
+      "question": 14,
+      "text_uz": "Kislorod",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1054,
+    "fields": {
+      "question": 14,
+      "text_uz": "CO2 (karbonat angidrid)",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1055,
+    "fields": {
+      "question": 14,
+      "text_uz": "Azot",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1056,
+    "fields": {
+      "question": 14,
+      "text_uz": "Vodorod",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1057,
+    "fields": {
+      "question": 15,
+      "text_uz": "100 kVh",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1058,
+    "fields": {
+      "question": 15,
+      "text_uz": "500 kVh",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1059,
+    "fields": {
+      "question": 15,
+      "text_uz": "1000 kVh",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1060,
+    "fields": {
+      "question": 15,
+      "text_uz": "10000 kVh",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1061,
+    "fields": {
+      "question": 16,
+      "text_uz": "Elektr hosil qilish",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1062,
+    "fields": {
+      "question": 16,
+      "text_uz": "Issiq suv va uy isitish",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1063,
+    "fields": {
+      "question": 16,
+      "text_uz": "Havo sovitish",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1064,
+    "fields": {
+      "question": 16,
+      "text_uz": "Shamol hosil qilish",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1065,
+    "fields": {
+      "question": 17,
+      "text_uz": "Shamol energiyasini",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1066,
+    "fields": {
+      "question": 17,
+      "text_uz": "Issiqlik energiyasini",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1067,
+    "fields": {
+      "question": 17,
+      "text_uz": "Quyosh (yorug'lik) nurini",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1068,
+    "fields": {
+      "question": 17,
+      "text_uz": "Suv oqimini",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1069,
+    "fields": {
+      "question": 18,
+      "text_uz": "Charvak GES",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1070,
+    "fields": {
+      "question": 18,
+      "text_uz": "Qayroqum GES",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1071,
+    "fields": {
+      "question": 18,
+      "text_uz": "Tuyamo'yin GES",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1072,
+    "fields": {
+      "question": 18,
+      "text_uz": "Andijan GES",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1073,
+    "fields": {
+      "question": 19,
+      "text_uz": "Havo tozalanadi",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1074,
+    "fields": {
+      "question": 19,
+      "text_uz": "Isitish xarajati kamayadi",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1075,
+    "fields": {
+      "question": 19,
+      "text_uz": "Suv tejaladi",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1076,
+    "fields": {
+      "question": 19,
+      "text_uz": "Chiqindi kamayadi",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1077,
+    "fields": {
+      "question": 20,
+      "text_uz": "Kislorod bilan boyitilgan muhitda",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1078,
+    "fields": {
+      "question": 20,
+      "text_uz": "Kislorodsiz, yopiq muhitda",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1079,
+    "fields": {
+      "question": 20,
+      "text_uz": "Yuqori haroratda",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1080,
+    "fields": {
+      "question": 20,
+      "text_uz": "UV nur ta'sirida",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1081,
+    "fields": {
+      "question": 21,
+      "text_uz": "100 MVt",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1082,
+    "fields": {
+      "question": 21,
+      "text_uz": "500 MVt",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1083,
+    "fields": {
+      "question": 21,
+      "text_uz": "1500 MVt",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1084,
+    "fields": {
+      "question": 21,
+      "text_uz": "3000 MVt",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1085,
+    "fields": {
+      "question": 22,
+      "text_uz": "Ha",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1086,
+    "fields": {
+      "question": 22,
+      "text_uz": "Yo'q",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1087,
+    "fields": {
+      "question": 23,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1088,
+    "fields": {
+      "question": 23,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1089,
+    "fields": {
+      "question": 24,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1090,
+    "fields": {
+      "question": 24,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1091,
+    "fields": {
+      "question": 25,
+      "text_uz": "Ha",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1092,
+    "fields": {
+      "question": 25,
+      "text_uz": "Yo'q",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1093,
+    "fields": {
+      "question": 26,
+      "text_uz": "Ha",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1094,
+    "fields": {
+      "question": 26,
+      "text_uz": "Yo'q",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1095,
+    "fields": {
+      "question": 27,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1096,
+    "fields": {
+      "question": 27,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1097,
+    "fields": {
+      "question": 28,
+      "text_uz": "50 kVh",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1098,
+    "fields": {
+      "question": 28,
+      "text_uz": "100 kVh",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1099,
+    "fields": {
+      "question": 28,
+      "text_uz": "164 kVh",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1100,
+    "fields": {
+      "question": 28,
+      "text_uz": "250 kVh",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1101,
+    "fields": {
+      "question": 29,
+      "text_uz": "50%",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1102,
+    "fields": {
+      "question": 29,
+      "text_uz": "100%",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1103,
+    "fields": {
+      "question": 29,
+      "text_uz": "150%",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1104,
+    "fields": {
+      "question": 29,
+      "text_uz": "200%",
+      "is_correct": true,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1105,
+    "fields": {
+      "question": 30,
+      "text_uz": "3 tonna",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1106,
+    "fields": {
+      "question": 30,
+      "text_uz": "5 tonna",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1107,
+    "fields": {
+      "question": 30,
+      "text_uz": "7.5 tonna",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1108,
+    "fields": {
+      "question": 30,
+      "text_uz": "15 tonna",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1109,
+    "fields": {
+      "question": 31,
+      "text_uz": "18-asr",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1110,
+    "fields": {
+      "question": 31,
+      "text_uz": "19-asr",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1111,
+    "fields": {
+      "question": 31,
+      "text_uz": "20-asr",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1112,
+    "fields": {
+      "question": 31,
+      "text_uz": "21-asr",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1113,
+    "fields": {
+      "question": 32,
+      "text_uz": "Sirdaryo",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1114,
+    "fields": {
+      "question": 32,
+      "text_uz": "Amudaryo",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1115,
+    "fields": {
+      "question": 32,
+      "text_uz": "Zarafshon",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1116,
+    "fields": {
+      "question": 32,
+      "text_uz": "Chirchiq",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1117,
+    "fields": {
+      "question": 33,
+      "text_uz": "50%",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1118,
+    "fields": {
+      "question": 33,
+      "text_uz": "30%",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1119,
+    "fields": {
+      "question": 33,
+      "text_uz": "10%",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1120,
+    "fields": {
+      "question": 33,
+      "text_uz": "5%",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1121,
+    "fields": {
+      "question": 34,
+      "text_uz": "Iqlim isishi",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1122,
+    "fields": {
+      "question": 34,
+      "text_uz": "Paxta dehqonchiligiga ko'p suv sarflash",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1123,
+    "fields": {
+      "question": 34,
+      "text_uz": "Zilzila",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1124,
+    "fields": {
+      "question": 34,
+      "text_uz": "Sanoat ifloslanishi",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1125,
+    "fields": {
+      "question": 35,
+      "text_uz": "Daryo suvini to'g'ridan to'g'ri ichish",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1126,
+    "fields": {
+      "question": 35,
+      "text_uz": "Tozalash va dezinfeksiya qilish",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1127,
+    "fields": {
+      "question": 35,
+      "text_uz": "Qor suvini eritish",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1128,
+    "fields": {
+      "question": 35,
+      "text_uz": "Dengiz suvini iste'mol qilish",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1129,
+    "fields": {
+      "question": 36,
+      "text_uz": "Hajm o'zgarmaydi",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1130,
+    "fields": {
+      "question": 36,
+      "text_uz": "Hajm 9% ga kengayadi",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1131,
+    "fields": {
+      "question": 36,
+      "text_uz": "Hajm 9% ga qisqaradi",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1132,
+    "fields": {
+      "question": 36,
+      "text_uz": "Hajm ikki barobarga kengayadi",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1133,
+    "fields": {
+      "question": 37,
+      "text_uz": "1-2 litr",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1134,
+    "fields": {
+      "question": 37,
+      "text_uz": "5-10 litr",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1135,
+    "fields": {
+      "question": 37,
+      "text_uz": "15-20 litr",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1136,
+    "fields": {
+      "question": 37,
+      "text_uz": "50-100 litr",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1137,
+    "fields": {
+      "question": 38,
+      "text_uz": "30%",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1138,
+    "fields": {
+      "question": 38,
+      "text_uz": "50%",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1139,
+    "fields": {
+      "question": 38,
+      "text_uz": "75%",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1140,
+    "fields": {
+      "question": 38,
+      "text_uz": "90%",
+      "is_correct": true,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1141,
+    "fields": {
+      "question": 39,
+      "text_uz": "Kaspiy dengiziga",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1142,
+    "fields": {
+      "question": 39,
+      "text_uz": "Orol dengiziga",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1143,
+    "fields": {
+      "question": 39,
+      "text_uz": "Qora dengiziga",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1144,
+    "fields": {
+      "question": 39,
+      "text_uz": "Balxash ko'liga",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1145,
+    "fields": {
+      "question": 40,
+      "text_uz": "Tomchi sug'orish tizimini o'rnatish",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1146,
+    "fields": {
+      "question": 40,
+      "text_uz": "Suv o'lchagich o'rnatish",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1147,
+    "fields": {
+      "question": 40,
+      "text_uz": "Noldan sug'orish",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1148,
+    "fields": {
+      "question": 40,
+      "text_uz": "Yomg'ir suvini yig'ish",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1149,
+    "fields": {
+      "question": 41,
+      "text_uz": "5 tur",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1150,
+    "fields": {
+      "question": 41,
+      "text_uz": "15 tur",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1151,
+    "fields": {
+      "question": 41,
+      "text_uz": "24 tur",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1152,
+    "fields": {
+      "question": 41,
+      "text_uz": "50 tur",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1153,
+    "fields": {
+      "question": 42,
+      "text_uz": "Pamir tog'laridan",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1154,
+    "fields": {
+      "question": 42,
+      "text_uz": "Qoradaryo va Norining qo'shilishidan",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1155,
+    "fields": {
+      "question": 42,
+      "text_uz": "Hisor tog'laridan",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1156,
+    "fields": {
+      "question": 42,
+      "text_uz": "Aral dengizidan",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1157,
+    "fields": {
+      "question": 43,
+      "text_uz": "Gripp",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1158,
+    "fields": {
+      "question": 43,
+      "text_uz": "Vabo (Cholera)",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1159,
+    "fields": {
+      "question": 43,
+      "text_uz": "O'pka saraton",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1160,
+    "fields": {
+      "question": 43,
+      "text_uz": "Tish chirishi",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1161,
+    "fields": {
+      "question": 44,
+      "text_uz": "500 m³",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1162,
+    "fields": {
+      "question": 44,
+      "text_uz": "1700 m³",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1163,
+    "fields": {
+      "question": 44,
+      "text_uz": "5000 m³",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1164,
+    "fields": {
+      "question": 44,
+      "text_uz": "10000 m³",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1165,
+    "fields": {
+      "question": 45,
+      "text_uz": "Sug'orish jarayoni tezroq",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1166,
+    "fields": {
+      "question": 45,
+      "text_uz": "30-50% suv tejaydi",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1167,
+    "fields": {
+      "question": 45,
+      "text_uz": "Hosil miqdori 2 barobarga oshadi",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1168,
+    "fields": {
+      "question": 45,
+      "text_uz": "O'g'it sarfi kamayadi",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1169,
+    "fields": {
+      "question": 46,
+      "text_uz": "Farg'ona va Toshkent",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1170,
+    "fields": {
+      "question": 46,
+      "text_uz": "Samarqand va Navoiy",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1171,
+    "fields": {
+      "question": 46,
+      "text_uz": "Qashqadaryo va Surxondaryo",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1172,
+    "fields": {
+      "question": 46,
+      "text_uz": "Buxoro va Xorazm",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1173,
+    "fields": {
+      "question": 47,
+      "text_uz": "HO",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1174,
+    "fields": {
+      "question": 47,
+      "text_uz": "H₂O",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1175,
+    "fields": {
+      "question": 47,
+      "text_uz": "H₃O",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1176,
+    "fields": {
+      "question": 47,
+      "text_uz": "HO₂",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1177,
+    "fields": {
+      "question": 48,
+      "text_uz": "Qizilqum cho'lida",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1178,
+    "fields": {
+      "question": 48,
+      "text_uz": "G'arbiy Tyan-Shan tog'larida",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1179,
+    "fields": {
+      "question": 48,
+      "text_uz": "Aral bo'yida",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1180,
+    "fields": {
+      "question": 48,
+      "text_uz": "Ustyurt platosida",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1181,
+    "fields": {
+      "question": 49,
+      "text_uz": "Yangi suv sotib olish",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1182,
+    "fields": {
+      "question": 49,
+      "text_uz": "Sabzavot yuvgan suvni bog' sug'orishda ishlatish",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1183,
+    "fields": {
+      "question": 49,
+      "text_uz": "Jo'mrakni doim ochiq qoldirish",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1184,
+    "fields": {
+      "question": 49,
+      "text_uz": "Katta idishda suv to'plash",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1185,
+    "fields": {
+      "question": 50,
+      "text_uz": "50 km",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1186,
+    "fields": {
+      "question": 50,
+      "text_uz": "200 km",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1187,
+    "fields": {
+      "question": 50,
+      "text_uz": "500 km",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1188,
+    "fields": {
+      "question": 50,
+      "text_uz": "2000 km",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1189,
+    "fields": {
+      "question": 51,
+      "text_uz": "Frantsiya",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1190,
+    "fields": {
+      "question": 51,
+      "text_uz": "AQSh",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1191,
+    "fields": {
+      "question": 51,
+      "text_uz": "Isroil",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1192,
+    "fields": {
+      "question": 51,
+      "text_uz": "Hindiston",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1193,
+    "fields": {
+      "question": 52,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1194,
+    "fields": {
+      "question": 52,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1195,
+    "fields": {
+      "question": 53,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1196,
+    "fields": {
+      "question": 53,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1197,
+    "fields": {
+      "question": 54,
+      "text_uz": "Ha",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1198,
+    "fields": {
+      "question": 54,
+      "text_uz": "Yo'q",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1199,
+    "fields": {
+      "question": 55,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1200,
+    "fields": {
+      "question": 55,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1201,
+    "fields": {
+      "question": 56,
+      "text_uz": "Ha",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1202,
+    "fields": {
+      "question": 56,
+      "text_uz": "Yo'q",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1203,
+    "fields": {
+      "question": 57,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1204,
+    "fields": {
+      "question": 57,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1205,
+    "fields": {
+      "question": 58,
+      "text_uz": "500 litr",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1206,
+    "fields": {
+      "question": 58,
+      "text_uz": "1000 litr",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1207,
+    "fields": {
+      "question": 58,
+      "text_uz": "1500 litr",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1208,
+    "fields": {
+      "question": 58,
+      "text_uz": "2000 litr",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1209,
+    "fields": {
+      "question": 59,
+      "text_uz": "Yoz sovuqroq va qish iliqroq bo'ldi",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1210,
+    "fields": {
+      "question": 59,
+      "text_uz": "Yoz issiqroq va qish sovuqroq bo'ldi",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1211,
+    "fields": {
+      "question": 59,
+      "text_uz": "Yil bo'yi nam iqlim bo'ldi",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1212,
+    "fields": {
+      "question": 59,
+      "text_uz": "Iqlim o'zgarmadi",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1213,
+    "fields": {
+      "question": 60,
+      "text_uz": "2000 m³",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1214,
+    "fields": {
+      "question": 60,
+      "text_uz": "3200 m³",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1215,
+    "fields": {
+      "question": 60,
+      "text_uz": "4000 m³",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1216,
+    "fields": {
+      "question": 60,
+      "text_uz": "6400 m³",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1217,
+    "fields": {
+      "question": 61,
+      "text_uz": "5 kg",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1218,
+    "fields": {
+      "question": 61,
+      "text_uz": "10 kg",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1219,
+    "fields": {
+      "question": 61,
+      "text_uz": "22 kg",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1220,
+    "fields": {
+      "question": 61,
+      "text_uz": "50 kg",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1221,
+    "fields": {
+      "question": 62,
+      "text_uz": "CO2 va azot",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1222,
+    "fields": {
+      "question": 62,
+      "text_uz": "Kislorod va glyukoza",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1223,
+    "fields": {
+      "question": 62,
+      "text_uz": "Suv va tuz",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1224,
+    "fields": {
+      "question": 62,
+      "text_uz": "Metan va kislorod",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1225,
+    "fields": {
+      "question": 63,
+      "text_uz": "Suv ko'payadi",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1226,
+    "fields": {
+      "question": 63,
+      "text_uz": "Atmosferada CO2 ko'payadi",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1227,
+    "fields": {
+      "question": 63,
+      "text_uz": "Hayvon ko'payadi",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1228,
+    "fields": {
+      "question": 63,
+      "text_uz": "Shamol kuchayadi",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1229,
+    "fields": {
+      "question": 64,
+      "text_uz": "Milliy park",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1230,
+    "fields": {
+      "question": 64,
+      "text_uz": "Biosfera qo'riqxonasi",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1231,
+    "fields": {
+      "question": 64,
+      "text_uz": "Tabiiy yodgorlik",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1232,
+    "fields": {
+      "question": 64,
+      "text_uz": "Sanoat hududi",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1233,
+    "fields": {
+      "question": 65,
+      "text_uz": "Yoz va qish",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1234,
+    "fields": {
+      "question": 65,
+      "text_uz": "Bahor va kuz",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1235,
+    "fields": {
+      "question": 65,
+      "text_uz": "Faqat yoz",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1236,
+    "fields": {
+      "question": 65,
+      "text_uz": "Faqat qish",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1237,
+    "fields": {
+      "question": 66,
+      "text_uz": "1%",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1238,
+    "fields": {
+      "question": 66,
+      "text_uz": "8%",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1239,
+    "fields": {
+      "question": 66,
+      "text_uz": "20%",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1240,
+    "fields": {
+      "question": 66,
+      "text_uz": "35%",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1241,
+    "fields": {
+      "question": 67,
+      "text_uz": "Yangi binolar qurish",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1242,
+    "fields": {
+      "question": 67,
+      "text_uz": "1 mlrd daraxt va buta ekish",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1243,
+    "fields": {
+      "question": 67,
+      "text_uz": "Ko'chalarni kengaytirish",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1244,
+    "fields": {
+      "question": 67,
+      "text_uz": "Sanoatni rivojlantirish",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1245,
+    "fields": {
+      "question": 68,
+      "text_uz": "Yashil yorug'lik (500-560 nm)",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1246,
+    "fields": {
+      "question": 68,
+      "text_uz": "Ko'k va qizil yorug'lik",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1247,
+    "fields": {
+      "question": 68,
+      "text_uz": "Sariq yorug'lik (570-590 nm)",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1248,
+    "fields": {
+      "question": 68,
+      "text_uz": "To'q sariq yorug'lik",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1249,
+    "fields": {
+      "question": 69,
+      "text_uz": "Qayin va eman",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1250,
+    "fields": {
+      "question": 69,
+      "text_uz": "Terak va chinor",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1251,
+    "fields": {
+      "question": 69,
+      "text_uz": "Archa va qayin",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1252,
+    "fields": {
+      "question": 69,
+      "text_uz": "Eman va o'rik",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1253,
+    "fields": {
+      "question": 70,
+      "text_uz": "0.5°C",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1254,
+    "fields": {
+      "question": 70,
+      "text_uz": "1-2°C",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1255,
+    "fields": {
+      "question": 70,
+      "text_uz": "5°C",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1256,
+    "fields": {
+      "question": 70,
+      "text_uz": "10°C",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1257,
+    "fields": {
+      "question": 71,
+      "text_uz": "Kislorod va CO2",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1258,
+    "fields": {
+      "question": 71,
+      "text_uz": "Suv va mineral moddalar",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1259,
+    "fields": {
+      "question": 71,
+      "text_uz": "Shakar va kraxmal",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1260,
+    "fields": {
+      "question": 71,
+      "text_uz": "Yorug'lik va issiqlik",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1261,
+    "fields": {
+      "question": 72,
+      "text_uz": "10-20 yil",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1262,
+    "fields": {
+      "question": 72,
+      "text_uz": "50-100 yil",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1263,
+    "fields": {
+      "question": 72,
+      "text_uz": "100-1000 yil va undan ko'p",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1264,
+    "fields": {
+      "question": 72,
+      "text_uz": "Faqat 30-50 yil",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1265,
+    "fields": {
+      "question": 73,
+      "text_uz": "Suv juda sovuq",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1266,
+    "fields": {
+      "question": 73,
+      "text_uz": "Yorug'lik yetmaydi",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1267,
+    "fields": {
+      "question": 73,
+      "text_uz": "Mineral moddalar yo'q",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1268,
+    "fields": {
+      "question": 73,
+      "text_uz": "Kislorod yo'q",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1269,
+    "fields": {
+      "question": 74,
+      "text_uz": "Archa (juniper)",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1270,
+    "fields": {
+      "question": 74,
+      "text_uz": "Qayin",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1271,
+    "fields": {
+      "question": 74,
+      "text_uz": "Eman (oak)",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1272,
+    "fields": {
+      "question": 74,
+      "text_uz": "Terak",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1273,
+    "fields": {
+      "question": 75,
+      "text_uz": "10%",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1274,
+    "fields": {
+      "question": 75,
+      "text_uz": "28-30%",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1275,
+    "fields": {
+      "question": 75,
+      "text_uz": "50%",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1276,
+    "fields": {
+      "question": 75,
+      "text_uz": "80%",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1277,
+    "fields": {
+      "question": 76,
+      "text_uz": "Kimyoviy moddalar chiqaradi",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1278,
+    "fields": {
+      "question": 76,
+      "text_uz": "Ildizlari tuproqni mahkam ushlab turadi",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1279,
+    "fields": {
+      "question": 76,
+      "text_uz": "Tuproqni qotiradi",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1280,
+    "fields": {
+      "question": 76,
+      "text_uz": "Suv to'siq hosil qiladi",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1281,
+    "fields": {
+      "question": 77,
+      "text_uz": "Terak va chinor",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1282,
+    "fields": {
+      "question": 77,
+      "text_uz": "Saksovul va qandim",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1283,
+    "fields": {
+      "question": 77,
+      "text_uz": "Archa va qayin",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1284,
+    "fields": {
+      "question": 77,
+      "text_uz": "Eman va o'rik",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1285,
+    "fields": {
+      "question": 78,
+      "text_uz": "50 tur",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1286,
+    "fields": {
+      "question": 78,
+      "text_uz": "100 tur",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1287,
+    "fields": {
+      "question": 78,
+      "text_uz": "280-500 tur",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1288,
+    "fields": {
+      "question": 78,
+      "text_uz": "1000+ tur",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1289,
+    "fields": {
+      "question": 79,
+      "text_uz": "Azot",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1290,
+    "fields": {
+      "question": 79,
+      "text_uz": "Glyukoza",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1291,
+    "fields": {
+      "question": 79,
+      "text_uz": "Ozon",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1292,
+    "fields": {
+      "question": 79,
+      "text_uz": "Vodorod",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1293,
+    "fields": {
+      "question": 80,
+      "text_uz": "Faqat estetik ko'rinish uchun",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1294,
+    "fields": {
+      "question": 80,
+      "text_uz": "Soya, havo tozalash va shovqin kamaytirish",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1295,
+    "fields": {
+      "question": 80,
+      "text_uz": "Faqat CO2 yutish",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1296,
+    "fields": {
+      "question": 80,
+      "text_uz": "Faqat yomg'ir tutish",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1297,
+    "fields": {
+      "question": 81,
+      "text_uz": "5-10 litr",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1298,
+    "fields": {
+      "question": 81,
+      "text_uz": "50 litr",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1299,
+    "fields": {
+      "question": 81,
+      "text_uz": "200-500 litr",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1300,
+    "fields": {
+      "question": 81,
+      "text_uz": "1000+ litr",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1301,
+    "fields": {
+      "question": 82,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1302,
+    "fields": {
+      "question": 82,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1303,
+    "fields": {
+      "question": 83,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1304,
+    "fields": {
+      "question": 83,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1305,
+    "fields": {
+      "question": 84,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1306,
+    "fields": {
+      "question": 84,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1307,
+    "fields": {
+      "question": 85,
+      "text_uz": "Ha",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1308,
+    "fields": {
+      "question": 85,
+      "text_uz": "Yo'q",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1309,
+    "fields": {
+      "question": 86,
+      "text_uz": "Ha",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1310,
+    "fields": {
+      "question": 86,
+      "text_uz": "Yo'q",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1311,
+    "fields": {
+      "question": 87,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1312,
+    "fields": {
+      "question": 87,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1313,
+    "fields": {
+      "question": 88,
+      "text_uz": "5,500 kg",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1314,
+    "fields": {
+      "question": 88,
+      "text_uz": "11,000 kg",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1315,
+    "fields": {
+      "question": 88,
+      "text_uz": "22,000 kg",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1316,
+    "fields": {
+      "question": 88,
+      "text_uz": "44,000 kg",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1317,
+    "fields": {
+      "question": 89,
+      "text_uz": "2160 kg kamaydi",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1318,
+    "fields": {
+      "question": 89,
+      "text_uz": "1000 kg kamaydi",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1319,
+    "fields": {
+      "question": 89,
+      "text_uz": "200 kg kamaydi",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1320,
+    "fields": {
+      "question": 89,
+      "text_uz": "O'zgarmadi",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1321,
+    "fields": {
+      "question": 90,
+      "text_uz": "500 ta",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1322,
+    "fields": {
+      "question": 90,
+      "text_uz": "750 ta",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1323,
+    "fields": {
+      "question": 90,
+      "text_uz": "1000 ta",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1324,
+    "fields": {
+      "question": 90,
+      "text_uz": "1500 ta",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1325,
+    "fields": {
+      "question": 91,
+      "text_uz": "0.5 soat",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1326,
+    "fields": {
+      "question": 91,
+      "text_uz": "2 soat",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1327,
+    "fields": {
+      "question": 91,
+      "text_uz": "5 soat",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1328,
+    "fields": {
+      "question": 91,
+      "text_uz": "10 soat",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1329,
+    "fields": {
+      "question": 92,
+      "text_uz": "10 yil",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1330,
+    "fields": {
+      "question": 92,
+      "text_uz": "50 yil",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1331,
+    "fields": {
+      "question": 92,
+      "text_uz": "500 yil",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1332,
+    "fields": {
+      "question": 92,
+      "text_uz": "5000 yil",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1333,
+    "fields": {
+      "question": 93,
+      "text_uz": "5 ta",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1334,
+    "fields": {
+      "question": 93,
+      "text_uz": "10 ta",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1335,
+    "fields": {
+      "question": 93,
+      "text_uz": "17 ta",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1336,
+    "fields": {
+      "question": 93,
+      "text_uz": "50 ta",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1337,
+    "fields": {
+      "question": 94,
+      "text_uz": "10%",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1338,
+    "fields": {
+      "question": 94,
+      "text_uz": "20%",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1339,
+    "fields": {
+      "question": 94,
+      "text_uz": "30%",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1340,
+    "fields": {
+      "question": 94,
+      "text_uz": "60%",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1341,
+    "fields": {
+      "question": 95,
+      "text_uz": "Shaharni tartibli ko'rinishga keltirish",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1342,
+    "fields": {
+      "question": 95,
+      "text_uz": "Chiqindilarni qayta ishlashga imkon berish",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1343,
+    "fields": {
+      "question": 95,
+      "text_uz": "Yong'in xavfini kamaytirish",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1344,
+    "fields": {
+      "question": 95,
+      "text_uz": "Poligon xarajatini qisqartirish",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1345,
+    "fields": {
+      "question": 96,
+      "text_uz": "Portlash xavfi",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1346,
+    "fields": {
+      "question": 96,
+      "text_uz": "Og'ir metallar tuproq va suvni ifloslantiradi",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1347,
+    "fields": {
+      "question": 96,
+      "text_uz": "Yong'in chiqaradi",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1348,
+    "fields": {
+      "question": 96,
+      "text_uz": "Havo ifloslanadi",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1349,
+    "fields": {
+      "question": 97,
+      "text_uz": "Elektr toki bilan bog'liq har qanday narsa",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1350,
+    "fields": {
+      "question": 97,
+      "text_uz": "Eski elektron jihozlar: telefon, kompyuter, TV",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1351,
+    "fields": {
+      "question": 97,
+      "text_uz": "Faqat batareyalar",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1352,
+    "fields": {
+      "question": 97,
+      "text_uz": "Faqat simlar",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1353,
+    "fields": {
+      "question": 98,
+      "text_uz": "100,000 tonna",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1354,
+    "fields": {
+      "question": 98,
+      "text_uz": "1 million tonna",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1355,
+    "fields": {
+      "question": 98,
+      "text_uz": "5 million tonna",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1356,
+    "fields": {
+      "question": 98,
+      "text_uz": "20 million tonna",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1357,
+    "fields": {
+      "question": 99,
+      "text_uz": "Zaharli kimyoviy modda",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1358,
+    "fields": {
+      "question": 99,
+      "text_uz": "Kompost (tabiiy o'g'it)",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1359,
+    "fields": {
+      "question": 99,
+      "text_uz": "Ifloslantiruvchi kukun",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1360,
+    "fields": {
+      "question": 99,
+      "text_uz": "Kimyoviy reaktiv",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1361,
+    "fields": {
+      "question": 100,
+      "text_uz": "Samarqand",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1362,
+    "fields": {
+      "question": 100,
+      "text_uz": "Toshkent",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1363,
+    "fields": {
+      "question": 100,
+      "text_uz": "Buxoro",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1364,
+    "fields": {
+      "question": 100,
+      "text_uz": "Nukus",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1365,
+    "fields": {
+      "question": 101,
+      "text_uz": "Ko'p martalik matoli sumka",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1366,
+    "fields": {
+      "question": 101,
+      "text_uz": "Qo'shimcha plastik qop",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1367,
+    "fields": {
+      "question": 101,
+      "text_uz": "Qog'oz qop qo'lda",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1368,
+    "fields": {
+      "question": 101,
+      "text_uz": "Hech narsa olib yurmaslik",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1369,
+    "fields": {
+      "question": 102,
+      "text_uz": "Faqat mis va temir",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1370,
+    "fields": {
+      "question": 102,
+      "text_uz": "Qo'rg'oshin, simob va kadmiy",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1371,
+    "fields": {
+      "question": 102,
+      "text_uz": "Faqat plastik",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1372,
+    "fields": {
+      "question": 102,
+      "text_uz": "Faqat shisha",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1373,
+    "fields": {
+      "question": 103,
+      "text_uz": "Ishlatish, qayta ishlash, yo'q qilish",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1374,
+    "fields": {
+      "question": 103,
+      "text_uz": "Rad etish, kamaytirish, qayta ishlatish, qayta ishlash, kompostlash",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1375,
+    "fields": {
+      "question": 103,
+      "text_uz": "Yig'ish, yoqish, ko'mish",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1376,
+    "fields": {
+      "question": 103,
+      "text_uz": "Saralash, yoqish, tarqatish",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1377,
+    "fields": {
+      "question": 104,
+      "text_uz": "Arzonroq ishlab chiqariladi",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1378,
+    "fields": {
+      "question": 104,
+      "text_uz": "Tez parchalanadi",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1379,
+    "fields": {
+      "question": 104,
+      "text_uz": "Yanada qattiqroq",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1380,
+    "fields": {
+      "question": 104,
+      "text_uz": "Ko'p rangli bo'ladi",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1381,
+    "fields": {
+      "question": 105,
+      "text_uz": "Shisha",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1382,
+    "fields": {
+      "question": 105,
+      "text_uz": "Plastik",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1383,
+    "fields": {
+      "question": 105,
+      "text_uz": "Meva po'stlog'i",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1384,
+    "fields": {
+      "question": 105,
+      "text_uz": "Temir",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1385,
+    "fields": {
+      "question": 106,
+      "text_uz": "Qurilish chiqindisi gazlari",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1386,
+    "fields": {
+      "question": 106,
+      "text_uz": "Organik chiqindi parchalanishidan hosil bo'lgan metan",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1387,
+    "fields": {
+      "question": 106,
+      "text_uz": "Suyuq kimyoviy chiqindi",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1388,
+    "fields": {
+      "question": 106,
+      "text_uz": "Oziq-ovqat chiqindi bugi",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1389,
+    "fields": {
+      "question": 107,
+      "text_uz": "Ko'proq qayta ishlash",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1390,
+    "fields": {
+      "question": 107,
+      "text_uz": "Ortiqcha narsa sotib olmaslik",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1391,
+    "fields": {
+      "question": 107,
+      "text_uz": "Katta axlatdon sotib olish",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1392,
+    "fields": {
+      "question": 107,
+      "text_uz": "Yoqib yuborish",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1393,
+    "fields": {
+      "question": 108,
+      "text_uz": "Alyuminiy",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1394,
+    "fields": {
+      "question": 108,
+      "text_uz": "Bambu",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1395,
+    "fields": {
+      "question": 108,
+      "text_uz": "Mis",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1396,
+    "fields": {
+      "question": 108,
+      "text_uz": "Qo'rg'oshin",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1397,
+    "fields": {
+      "question": 109,
+      "text_uz": "50 g",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1398,
+    "fields": {
+      "question": 109,
+      "text_uz": "300 g",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1399,
+    "fields": {
+      "question": 109,
+      "text_uz": "1 kg",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1400,
+    "fields": {
+      "question": 109,
+      "text_uz": "5 kg",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1401,
+    "fields": {
+      "question": 110,
+      "text_uz": "Oddiy axlatga tashlash",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1402,
+    "fields": {
+      "question": 110,
+      "text_uz": "Ixtisoslashgan to'plash punktlariga topshirish",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1403,
+    "fields": {
+      "question": 110,
+      "text_uz": "Yoqib yuborish",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1404,
+    "fields": {
+      "question": 110,
+      "text_uz": "Ko'mib qo'yish",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1405,
+    "fields": {
+      "question": 111,
+      "text_uz": "15%",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1406,
+    "fields": {
+      "question": 111,
+      "text_uz": "25%",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1407,
+    "fields": {
+      "question": 111,
+      "text_uz": "50%",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1408,
+    "fields": {
+      "question": 111,
+      "text_uz": "80%",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1409,
+    "fields": {
+      "question": 112,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1410,
+    "fields": {
+      "question": 112,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1411,
+    "fields": {
+      "question": 113,
+      "text_uz": "Ha",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1412,
+    "fields": {
+      "question": 113,
+      "text_uz": "Yo'q",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1413,
+    "fields": {
+      "question": 114,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1414,
+    "fields": {
+      "question": 114,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1415,
+    "fields": {
+      "question": 115,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1416,
+    "fields": {
+      "question": 115,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1417,
+    "fields": {
+      "question": 116,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1418,
+    "fields": {
+      "question": 116,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1419,
+    "fields": {
+      "question": 117,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1420,
+    "fields": {
+      "question": 117,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1421,
+    "fields": {
+      "question": 118,
+      "text_uz": "180 soat",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1422,
+    "fields": {
+      "question": 118,
+      "text_uz": "360 soat",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1423,
+    "fields": {
+      "question": 118,
+      "text_uz": "720 soat",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1424,
+    "fields": {
+      "question": 118,
+      "text_uz": "1440 soat",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1425,
+    "fields": {
+      "question": 119,
+      "text_uz": "0.5 ta daraxt",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1426,
+    "fields": {
+      "question": 119,
+      "text_uz": "1.7 ta daraxt",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1427,
+    "fields": {
+      "question": 119,
+      "text_uz": "5 ta daraxt",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1428,
+    "fields": {
+      "question": 119,
+      "text_uz": "17 ta daraxt",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1429,
+    "fields": {
+      "question": 120,
+      "text_uz": "800 tonna",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1430,
+    "fields": {
+      "question": 120,
+      "text_uz": "1200 tonna",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1431,
+    "fields": {
+      "question": 120,
+      "text_uz": "1600 tonna",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1432,
+    "fields": {
+      "question": 120,
+      "text_uz": "2000 tonna",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1433,
+    "fields": {
+      "question": 121,
+      "text_uz": "50 tur",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1434,
+    "fields": {
+      "question": 121,
+      "text_uz": "100 tur",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1435,
+    "fields": {
+      "question": 121,
+      "text_uz": "184 tur",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1436,
+    "fields": {
+      "question": 121,
+      "text_uz": "300 tur",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1437,
+    "fields": {
+      "question": 122,
+      "text_uz": "Yovvoyi cho'chqa (suidae)",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1438,
+    "fields": {
+      "question": 122,
+      "text_uz": "Antilopa (bovidae)",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1439,
+    "fields": {
+      "question": 122,
+      "text_uz": "Bo'ri (canidae)",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1440,
+    "fields": {
+      "question": 122,
+      "text_uz": "Ot (equidae)",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1441,
+    "fields": {
+      "question": 123,
+      "text_uz": "Uy mushuki",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1442,
+    "fields": {
+      "question": 123,
+      "text_uz": "Qo'y",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1443,
+    "fields": {
+      "question": 123,
+      "text_uz": "Jayron",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1444,
+    "fields": {
+      "question": 123,
+      "text_uz": "Mol sigir",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1445,
+    "fields": {
+      "question": 124,
+      "text_uz": "Amudaryo deltasi faqat",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1446,
+    "fields": {
+      "question": 124,
+      "text_uz": "Aydarkul va Arnasoy ko'llari",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1447,
+    "fields": {
+      "question": 124,
+      "text_uz": "Qizilqum cho'li",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1448,
+    "fields": {
+      "question": 124,
+      "text_uz": "Toshkent suv ombori",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1449,
+    "fields": {
+      "question": 125,
+      "text_uz": "Parazitizm",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1450,
+    "fields": {
+      "question": 125,
+      "text_uz": "Raqobat",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1451,
+    "fields": {
+      "question": 125,
+      "text_uz": "Oziq-zanjir",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1452,
+    "fields": {
+      "question": 125,
+      "text_uz": "Simbioz",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1453,
+    "fields": {
+      "question": 126,
+      "text_uz": "Tuyaqush",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1454,
+    "fields": {
+      "question": 126,
+      "text_uz": "Qoplayon (leopard)",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1455,
+    "fields": {
+      "question": 126,
+      "text_uz": "Timsoh",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1456,
+    "fields": {
+      "question": 126,
+      "text_uz": "Pingvin",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1457,
+    "fields": {
+      "question": 127,
+      "text_uz": "Hibernas",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1458,
+    "fields": {
+      "question": 127,
+      "text_uz": "Migratsiya",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1459,
+    "fields": {
+      "question": 127,
+      "text_uz": "Ko'payish",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1460,
+    "fields": {
+      "question": 127,
+      "text_uz": "Uyqu davri",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1461,
+    "fields": {
+      "question": 128,
+      "text_uz": "Suv qushlari",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1462,
+    "fields": {
+      "question": 128,
+      "text_uz": "Tog' qo'yi (argali) va qor qoploni",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1463,
+    "fields": {
+      "question": 128,
+      "text_uz": "Cho'l kaltakesaklari",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1464,
+    "fields": {
+      "question": 128,
+      "text_uz": "Dengiz balig'lari",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1465,
+    "fields": {
+      "question": 129,
+      "text_uz": "Sanoat zavodi",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1466,
+    "fields": {
+      "question": 129,
+      "text_uz": "Tabiat qo'riqxonasi",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1467,
+    "fields": {
+      "question": 129,
+      "text_uz": "Yo'l qurilishi",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1468,
+    "fields": {
+      "question": 129,
+      "text_uz": "Ko'chmas mulk",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1469,
+    "fields": {
+      "question": 130,
+      "text_uz": "Faqat yirik hayvonlarga ta'sir qiladi",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1470,
+    "fields": {
+      "question": 130,
+      "text_uz": "Bir turning yo'q bo'lishi butun ekotizimni o'zgartirishi mumkin",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1471,
+    "fields": {
+      "question": 130,
+      "text_uz": "Faqat estetik muammo",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1472,
+    "fields": {
+      "question": 130,
+      "text_uz": "Hech qanday ta'siri yo'q",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1473,
+    "fields": {
+      "question": 131,
+      "text_uz": "Qanotlari bor",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1474,
+    "fields": {
+      "question": 131,
+      "text_uz": "Noyob katta burun tuzilishi",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1475,
+    "fields": {
+      "question": 131,
+      "text_uz": "Dengizda yashaydi",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1476,
+    "fields": {
+      "question": 131,
+      "text_uz": "Tunda ko'rishi yaxshi",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1477,
+    "fields": {
+      "question": 132,
+      "text_uz": "O'pka orqali",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1478,
+    "fields": {
+      "question": 132,
+      "text_uz": "Teri orqali",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1479,
+    "fields": {
+      "question": 132,
+      "text_uz": "Jabra orqali",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1480,
+    "fields": {
+      "question": 132,
+      "text_uz": "Og'iz orqali",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1481,
+    "fields": {
+      "question": 133,
+      "text_uz": "Jayron",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1482,
+    "fields": {
+      "question": 133,
+      "text_uz": "Qunduz",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1483,
+    "fields": {
+      "question": 133,
+      "text_uz": "Qoplayon",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1484,
+    "fields": {
+      "question": 133,
+      "text_uz": "Qo'ng'ir ayiq",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1485,
+    "fields": {
+      "question": 134,
+      "text_uz": "Oziq va yashash muhitini yaxshilash",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1486,
+    "fields": {
+      "question": 134,
+      "text_uz": "Faqat yirtqichlardan qochish",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1487,
+    "fields": {
+      "question": 134,
+      "text_uz": "O'yin-kulgu maqsadida",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1488,
+    "fields": {
+      "question": 134,
+      "text_uz": "Tasodifiy harakat",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1489,
+    "fields": {
+      "question": 135,
+      "text_uz": "Deyarli o'zgarmagan",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1490,
+    "fields": {
+      "question": 135,
+      "text_uz": "Ikki barobarga ko'paygan",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1491,
+    "fields": {
+      "question": 135,
+      "text_uz": "80% dan ortiq kamaygan",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1492,
+    "fields": {
+      "question": 135,
+      "text_uz": "To'liq yo'q bo'lib ketgan",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1493,
+    "fields": {
+      "question": 136,
+      "text_uz": "Qunduz va qoplayon",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1494,
+    "fields": {
+      "question": 136,
+      "text_uz": "Jayron, ufloni va qoraquluq",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1495,
+    "fields": {
+      "question": 136,
+      "text_uz": "Qo'ng'ir ayiq va bo'ri",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1496,
+    "fields": {
+      "question": 136,
+      "text_uz": "Timsoh va kayman",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1497,
+    "fields": {
+      "question": 137,
+      "text_uz": "Bitta turning ko'p bo'lishi",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1498,
+    "fields": {
+      "question": 137,
+      "text_uz": "Barcha tirik organizmlar xilma-xilligi",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1499,
+    "fields": {
+      "question": 137,
+      "text_uz": "Bir xil o'simliklarning ko'payishi",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1500,
+    "fields": {
+      "question": 137,
+      "text_uz": "Faqat noyob turlar",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1501,
+    "fields": {
+      "question": 138,
+      "text_uz": "Faqat zararli",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1502,
+    "fields": {
+      "question": 138,
+      "text_uz": "Changlatish, tuproqni boyitish, oziq-zanjirda muhim rol",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1503,
+    "fields": {
+      "question": 138,
+      "text_uz": "Hech qanday roli yo'q",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1504,
+    "fields": {
+      "question": 138,
+      "text_uz": "Faqat noqulaylik keltirish",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1505,
+    "fields": {
+      "question": 139,
+      "text_uz": "100 dan kamroq",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1506,
+    "fields": {
+      "question": 139,
+      "text_uz": "500 dan kamroq",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1507,
+    "fields": {
+      "question": 139,
+      "text_uz": "4000-6500",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1508,
+    "fields": {
+      "question": 139,
+      "text_uz": "10,000 dan ko'proq",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1509,
+    "fields": {
+      "question": 140,
+      "text_uz": "Farqi yo'q",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1510,
+    "fields": {
+      "question": 140,
+      "text_uz": "Qo'riqxonaga kirish cheklangan, milliy bog'da turizm ruxsat",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1511,
+    "fields": {
+      "question": 140,
+      "text_uz": "Milliy bog' kattaroq",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1512,
+    "fields": {
+      "question": 140,
+      "text_uz": "Qo'riqxonada maxsus oziq beriladi",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1513,
+    "fields": {
+      "question": 141,
+      "text_uz": "3 ta",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1514,
+    "fields": {
+      "question": 141,
+      "text_uz": "6 ta",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1515,
+    "fields": {
+      "question": 141,
+      "text_uz": "9 ta",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1516,
+    "fields": {
+      "question": 141,
+      "text_uz": "15 ta",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1517,
+    "fields": {
+      "question": 142,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1518,
+    "fields": {
+      "question": 142,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1519,
+    "fields": {
+      "question": 143,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1520,
+    "fields": {
+      "question": 143,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1521,
+    "fields": {
+      "question": 144,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1522,
+    "fields": {
+      "question": 144,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1523,
+    "fields": {
+      "question": 145,
+      "text_uz": "Ha",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1524,
+    "fields": {
+      "question": 145,
+      "text_uz": "Yo'q",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1525,
+    "fields": {
+      "question": 146,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1526,
+    "fields": {
+      "question": 146,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1527,
+    "fields": {
+      "question": 147,
+      "text_uz": "Ha",
+      "is_correct": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1528,
+    "fields": {
+      "question": 147,
+      "text_uz": "Yo'q",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1529,
+    "fields": {
+      "question": 148,
+      "text_uz": "55 ta",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1530,
+    "fields": {
+      "question": 148,
+      "text_uz": "60 ta",
+      "is_correct": false,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1531,
+    "fields": {
+      "question": 148,
+      "text_uz": "67 ta",
+      "is_correct": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1532,
+    "fields": {
+      "question": 148,
+      "text_uz": "80 ta",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1533,
+    "fields": {
+      "question": 149,
+      "text_uz": "To'g'ridan-to'g'ri ta'sir",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1534,
+    "fields": {
+      "question": 149,
+      "text_uz": "Trofik kaskad (kaskad ta'siri)",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1535,
+    "fields": {
+      "question": 149,
+      "text_uz": "Ijobiy ta'sir",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1536,
+    "fields": {
+      "question": 149,
+      "text_uz": "Qisqa muddatli ta'sir",
+      "is_correct": false,
+      "order": 4
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1537,
+    "fields": {
+      "question": 150,
+      "text_uz": "5,000 ta",
+      "is_correct": false,
+      "order": 1
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1538,
+    "fields": {
+      "question": 150,
+      "text_uz": "50,000 ta",
+      "is_correct": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1539,
+    "fields": {
+      "question": 150,
+      "text_uz": "100,000 ta",
+      "is_correct": false,
+      "order": 3
+    }
+  },
+  {
+    "model": "game.answer",
+    "pk": 1540,
+    "fields": {
+      "question": 150,
+      "text_uz": "500,000 ta",
+      "is_correct": false,
+      "order": 4
+    }
+  }
+]

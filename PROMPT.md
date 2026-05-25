@@ -8,7 +8,7 @@
 >
 > **Команда запуска ralph-loop:**
 > ```
-> /ralph-loop:ralph-loop "Прочитай PROMPT.md (/Users/jakha/MyFiles/University/Diploma/PROMPT.md). Найди первую незавершённую задачу [ ]. Выполни её полностью — создай файлы, напиши код, запусти проверку (uv run python manage.py check для бэкенда, npm run build для фронтенда). Отметь [x] в PROMPT.md. Закоммить изменения. Повторяй до ALL PHASES COMPLETE." --max-iterations 70 --completion-promise "ALL PHASES COMPLETE" /compact /senior-qa /senior-backend /senior-frontend /frontend-design:frontend-design /server-advisor
+> /ralph-loop:ralph-loop "Прочитай PROMPT.md (/Users/jakha/MyFiles/University/Diploma/PROMPT.md). Найди первую незавершённую задачу [ ]. Выполни её полностью — создай файлы, напиши код, запусти проверку (uv run python manage.py check для бэкенда, npm run build для фронтенда). Отметь [x] в PROMPT.md. Закоммить изменения. Повторяй до ALL PHASES COMPLETE." --max-iterations 70 --completion-promise "ALL PHASES COMPLETE" /compact /senior-qa /senior-backend /senior-frontend /frontend-design:frontend-design /server-advisor /coolify-manager
 > ```
 
 ---
@@ -749,7 +749,7 @@ def update_leaderboard_on_achievement(sender, instance: PlayerAchievement, **kwa
 
 ## Phase 5: Backend — Фикстуры (150 вопросов)
 
-### [ ] 5.1 Создать fixtures/questions.json
+### [x] 5.1 Создать fixtures/questions.json
 
 **Что сделать:**
 - Создать файл `backend/fixtures/questions.json`
@@ -807,6 +807,10 @@ def update_leaderboard_on_achievement(sender, instance: PlayerAchievement, **kwa
   - FAUNA (pk 121-150): Qizil kitob, jayron, qunduz, qushlar, baliq, tabiat qo'riqxonalari
 
 - Каждый вопрос должен содержать реальный образовательный факт об экологии Узбекистана
+- **Распределение по сложности**: 75 easy (difficulty=1), 53 medium (difficulty=2), 22 hard (difficulty=3)
+- **Типы вопросов**: 105 MCQ (4 варианта), 30 TRUE_FALSE (Ha/Yo'q), 15 SCENARIO (сценарий + ответ)
+- **Каждый вопрос обязательно**: `explanation_uz` (2-3 предложения факта), `source` (реальный источник)
+- **15-20 вопросов** должны иметь `related_article` = pk образовательной статьи (1-5 из educational_content)
 
 **Проверка:** `uv run python manage.py loaddata fixtures/questions.json`
 **Коммит:** `feat: Phase 5 — 150 quiz вопросов на узбекском языке`
@@ -834,6 +838,26 @@ def update_leaderboard_on_achievement(sender, instance: PlayerAchievement, **kwa
 
 **Проверка:** `uv run python manage.py loaddata fixtures/quiz_achievements.json`
 **Коммит:** `feat: Phase 5 — quiz achievements fixture (10 достижений)`
+
+---
+
+### [ ] 5.3 Удалить сломанный eco_actions.json и обновить deploy.sh
+
+**Проблема:** `fixtures/eco_actions.json` ссылается на удалённую модель `game.EcoAction` (удалена в миграции 0003). `deploy.sh` пытается загрузить этот fixture → краш при деплое.
+
+**Что сделать:**
+- Удалить файл `backend/fixtures/eco_actions.json`
+- Открыть `deploy.sh`, убрать строку с `eco_actions.json` из loaddata команды:
+  ```bash
+  # Было:
+  docker compose exec backend uv run python manage.py loaddata fixtures/eco_actions.json
+  # Убрать эту строку
+  ```
+- Проверить `backend/fixtures/achievements.json` — если в нём есть `condition_type: "LEVEL_COMPLETE"` или `"ACTION_COUNT"`, заменить на `"SCORE"` или `"QUIZ_COUNT"` (quiz-совместимые значения из ConditionType enum)
+- Запустить `uv run python manage.py loaddata fixtures/achievements.json` — убедиться что загружается
+
+**Проверка:** `uv run python manage.py loaddata fixtures/educational_content.json fixtures/eco_facts.json fixtures/achievements.json` — без ошибок
+**Коммит:** `fix: Phase 5 — удалить сломанный eco_actions fixture, исправить deploy.sh`
 
 ---
 
@@ -1072,6 +1096,34 @@ interface ModeCardProps {
 
 ---
 
+### [ ] 9.2 Обновить ProfilePage и документацию
+
+**Что сделать:**
+
+- Обновить `frontend/src/pages/ProfilePage.tsx`:
+  - Добавить секцию "Quiz statistikasi": вызвать `GET /game/quiz/stats/` и показать:
+    - `rank_title` (заголовок ранга, крупно)
+    - `total_quizzes` (количество пройденных квизов)
+    - `accuracy_pct` (точность, %)
+    - `best_streak` (лучший стрик)
+  - Добавить секцию "Mening yutuqlarim": вызвать `GET /game/achievements/my/` и показать список
+  - Для анонимных пользователей (`isAnonymous=true`): показать баннер "Akkaunt yarating — natijalaringizni saqlaydigan bo'ling" с кнопкой "Ro'yxatdan o'tish"
+
+- Обновить `README.md`:
+  - Убрать все упоминания Phaser.js
+  - В Tech Stack убрать "Phaser.js", добавить "Quiz Engine with 4 modes"
+  - Обновить раздел Features: описать quiz modes вместо sandbox
+  - Обновить Project Structure: убрать `game/` из frontend, добавить `components/quiz/`
+
+- Обновить `CLAUDE.md`:
+  - В секции "Структура" убрать `game/` из frontend, добавить `components/quiz/` и `stores/quizStore.ts`
+  - Добавить quiz API endpoints в описание
+
+**Проверка:** `npm run build` + `grep -r "phaser" README.md CLAUDE.md` — результат пустой
+**Коммит:** `docs: Phase 9 — обновить ProfilePage (quiz stats), README и CLAUDE.md`
+
+---
+
 ## Phase 10: Frontend — Eco-sorting мини-игра
 
 ### [ ] 10.1 Создать мини-игру сортировки отходов
@@ -1145,6 +1197,40 @@ export const SORTING_ITEMS: SortingItem[] = [
 ---
 
 ## Phase 11: ВКР — Дипломная работа с нуля
+
+> **Форматирование ГОСТ для всех глав:**
+> Times New Roman 14pt, интервал 1.5, абзацный отступ 1.25 см, поля: лево 30мм / право 10мм / верх 20мм / низ 20мм.
+> Заголовки глав — ПРОПИСНЫМИ, по центру, жирный. Заголовки параграфов — с отступа, жирный.
+> Рисунки: «Рисунок X.Y — Название» под рисунком. Таблицы: «Таблица X.Y — Название» над таблицей.
+> Листинги: Courier New 10pt, в рамке. Ссылки: [N] в тексте, ГОСТ Р 7.0.5-2008.
+
+---
+
+### [ ] 11.0 Создать Аннотацию на 3 языках
+
+**Что сделать:**
+- Создать файл `docs/vkr/annotation.md`
+- Объём: ~1.5 страницы (3 версии по 0.5 стр)
+- Структура каждой аннотации: цель → методы → результаты → ключевые слова (5-7 слов)
+
+```
+АННОТАЦИЯ (Русский, 150-200 слов)
+Ключевые слова: геймификация, экологическое образование, викторина, узбекский язык,
+Django REST Framework, React, веб-приложение
+
+ANNOTATSIYA (O'zbek tili, 150-200 so'z)
+Kalit so'zlar: geymifikatsiya, ekologik ta'lim, viktorina, o'zbek tili,
+Django REST Framework, React, veb-ilova
+
+ABSTRACT (English, 150-200 words)
+Keywords: gamification, environmental education, quiz, Uzbek language,
+Django REST Framework, React, web application
+```
+
+**Проверка:** Файл `docs/vkr/annotation.md` существует, содержит 3 аннотации
+**Коммит:** `docs: ВКР — Аннотация на 3 языках (ru, uz, en)`
+
+---
 
 ### [ ] 11.1 Написать Введение
 
@@ -1462,6 +1548,28 @@ export const SORTING_ITEMS: SortingItem[] = [
 ---
 
 ## Phase 12: Deploy + Презентация
+
+### [ ] 12.0 Mobile testing и UI polish
+
+**Что сделать:**
+- Открыть http://localhost:5173 в Chrome → DevTools → Toggle Device Toolbar
+- Протестировать на 3 разрешениях:
+  - **375px** (iPhone SE): главное меню, квиз, мини-игра, профиль
+  - **390px** (iPhone 14 Pro): то же самое
+  - **768px** (iPad): то же самое
+- Проверить:
+  - Кнопки ответов (AnswerButton) ≥ 48px высотой для touch targets
+  - Timer виден и читаем
+  - StreakCounter не перекрывает вопрос
+  - Мини-игра: drag-and-drop **ИЛИ** tap-кнопки работают (не зависает)
+  - Навигация / Layout.tsx hamburger menu работает на мобильном
+- Исправить найденные UI-проблемы
+- Проверить `npm run build` после исправлений
+
+**Проверка:** Все экраны выглядят корректно на 375px, кнопки кликабельны
+**Коммит:** `fix: Phase 12 — mobile responsive fixes перед деплоем`
+
+---
 
 ### [ ] 12.1 Задеплоить на production и протестировать
 
