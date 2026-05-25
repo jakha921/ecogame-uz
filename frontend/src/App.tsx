@@ -9,6 +9,8 @@ import { LeaderboardPage } from "@/pages/LeaderboardPage";
 import { LoginPage } from "@/pages/LoginPage";
 import { MainMenu } from "@/pages/MainMenu";
 import { ProfilePage } from "@/pages/ProfilePage";
+import { QuizPlayPage } from "@/pages/QuizPlayPage";
+import { QuizResultsPage } from "@/pages/QuizResultsPage";
 import { RegisterPage } from "@/pages/RegisterPage";
 
 function ComingSoon({ title }: { title: string }) {
@@ -43,7 +45,7 @@ export default function App() {
             path="/quiz/quick"
             element={
               <ProtectedRoute>
-                <ComingSoon title="Tezkor viktorina" />
+                <QuizPlayPage mode="QUICK" />
               </ProtectedRoute>
             }
           />
@@ -51,7 +53,7 @@ export default function App() {
             path="/quiz/category/:category"
             element={
               <ProtectedRoute>
-                <ComingSoon title="Kategoriya viktorinasi" />
+                <QuizPlayPage mode="CATEGORY" />
               </ProtectedRoute>
             }
           />
@@ -59,7 +61,7 @@ export default function App() {
             path="/quiz/daily"
             element={
               <ProtectedRoute>
-                <ComingSoon title="Kunlik topshiriq" />
+                <QuizPlayPage mode="DAILY" />
               </ProtectedRoute>
             }
           />
@@ -67,7 +69,7 @@ export default function App() {
             path="/quiz/marathon"
             element={
               <ProtectedRoute>
-                <ComingSoon title="Marafon rejimi" />
+                <QuizPlayPage mode="MARATHON" />
               </ProtectedRoute>
             }
           />
@@ -75,7 +77,7 @@ export default function App() {
             path="/quiz/results/:sessionId"
             element={
               <ProtectedRoute>
-                <ComingSoon title="Natijalar" />
+                <QuizResultsPage />
               </ProtectedRoute>
             }
           />

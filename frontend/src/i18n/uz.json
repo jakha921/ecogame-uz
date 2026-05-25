@@ -11,19 +11,47 @@
     "logout": "Chiqish"
   },
   "game": {
-    "air_quality": "Havo sifati",
-    "water_purity": "Suv tozaligi",
-    "soil_health": "Tuproq holati",
-    "biodiversity": "Biologik xilma-xillik",
     "score": "Ball",
     "level": "Daraja",
-    "start": "Boshlash",
-    "pause": "Pauza",
-    "resume": "Davom ettirish",
-    "level_complete": "Daraja tugallandi!",
-    "locked": "Qulflangan",
-    "required_score": "Kerakli ball",
-    "completed": "Bajarildi"
+    "start": "Boshlash"
+  },
+  "quiz": {
+    "title": "Ekologik viktorina",
+    "quick": "Tezkor o'yin",
+    "quick_desc": "10 ta tasodifiy savol",
+    "category": "Kategoriya bo'yicha",
+    "category_desc": "Bir kategoriyadan barcha savollar",
+    "daily": "Kunlik vazifa",
+    "daily_desc": "Har kuni yangi savollar + bonus",
+    "marathon": "Marafon",
+    "marathon_desc": "Birinchi xatogacha o'ynang",
+    "correct": "To'g'ri!",
+    "wrong": "Noto'g'ri!",
+    "time_up": "Vaqt tugadi!",
+    "next_question": "Keyingi savol",
+    "results": "Natijalar",
+    "accuracy": "Aniqlik",
+    "your_score": "Sizning ballingiz",
+    "best_streak": "Eng uzun ketma-ketlik",
+    "play_again": "Qayta o'ynash",
+    "select_category": "Kategoriya tanlang"
+  },
+  "categories": {
+    "FLORA": "O'simliklar",
+    "WATER": "Suv",
+    "WASTE": "Chiqindi",
+    "ENERGY": "Energiya",
+    "FAUNA": "Hayvonlar"
+  },
+  "mini_game": {
+    "title": "Chiqindi saralash",
+    "desc": "Chiqindilarni to'g'ri idishga joylashtiring",
+    "recyclable": "Qayta ishlanadigan",
+    "organic": "Organik",
+    "landfill": "Poligon",
+    "drag_hint": "Chiqindini ushlab, kerakli idishga tashlang",
+    "correct": "To'g'ri!",
+    "wrong": "Noto'g'ri idish!"
   },
   "auth": {
     "username": "Foydalanuvchi nomi",

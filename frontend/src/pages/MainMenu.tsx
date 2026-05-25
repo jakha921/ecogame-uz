@@ -5,13 +5,18 @@ import {
   Calendar,
   Flame,
   Leaf,
+  Recycle,
+  Star,
+  Target,
   Trophy,
   UserCircle,
   Zap,
 } from "lucide-react";
 import { educationApi } from "@/api/education";
 import type { EcoFact } from "@/api/types";
+import { ModeCard } from "@/components/quiz";
 import { useAuthStore } from "@/stores/authStore";
+import { useQuizStore } from "@/stores/quizStore";
 
 const CATEGORY_COLORS: Record<string, string> = {
   FLORA: "bg-green-50 text-green-700 border-green-200",
@@ -21,47 +26,9 @@ const CATEGORY_COLORS: Record<string, string> = {
   FAUNA: "bg-purple-50 text-purple-700 border-purple-200",
 };
 
-const QUIZ_MODES = [
-  {
-    key: "quick",
-    path: "/quiz/quick",
-    label: "Tezkor o'yin",
-    description: "10 ta savol, barcha mavzular",
-    icon: <Zap size={28} className="text-yellow-500" />,
-    gradient: "from-yellow-500 to-orange-400",
-    protected: true,
-  },
-  {
-    key: "daily",
-    path: "/quiz/daily",
-    label: "Kunlik topshiriq",
-    description: "Har kuni yangi savollar + bonus ball",
-    icon: <Calendar size={28} className="text-blue-500" />,
-    gradient: "from-blue-500 to-cyan-400",
-    protected: true,
-  },
-  {
-    key: "marathon",
-    path: "/quiz/marathon",
-    label: "Marafon",
-    description: "Bitta xato = o'yin tugaydi",
-    icon: <Flame size={28} className="text-red-500" />,
-    gradient: "from-red-500 to-pink-400",
-    protected: true,
-  },
-  {
-    key: "education",
-    path: "/education",
-    label: "O'qish",
-    description: "Ekologik maqolalar va faktlar",
-    icon: <BookOpen size={28} className="text-green-600" />,
-    gradient: "from-green-600 to-emerald-500",
-    protected: false,
-  },
-];
-
 export function MainMenu() {
   const { player, isAnonymous } = useAuthStore();
+  const { playerStats, loadStats, dailyChallenge, loadDailyChallenge } = useQuizStore();
   const [dailyFact, setDailyFact] = useState<EcoFact | null>(null);
   const navigate = useNavigate();
 
@@ -69,7 +36,11 @@ export function MainMenu() {
     educationApi.getRandomFact().then(({ data }) => {
       if ("text_uz" in data) setDailyFact(data as EcoFact);
     });
-  }, []);
+    if (!isAnonymous) {
+      loadStats();
+      loadDailyChallenge();
+    }
+  }, [isAnonymous, loadStats, loadDailyChallenge]);
 
   const handleMode = (path: string, isProtected: boolean) => {
     if (isProtected && isAnonymous) {
@@ -88,9 +59,21 @@ export function MainMenu() {
           <h1 className="text-3xl font-bold text-white">EcoGame</h1>
         </div>
         <p className="text-green-100 text-base max-w-md">
-          Ekologiya haqida bilimingizni sinab ko'ring. Savollar, darajalar va
-          mukofotlar kutmoqda!
+          Ekologiya haqida bilimingizni sinab ko'ring. Savollar, streak va mukofotlar kutmoqda!
         </p>
+        {playerStats && (
+          <div className="flex items-center gap-4 mt-1 flex-wrap">
+            <span className="bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">
+              {playerStats.rank_title}
+            </span>
+            {playerStats.daily_streak > 0 && (
+              <span className="flex items-center gap-1 bg-orange-400/30 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                <Flame size={12} />
+                {playerStats.daily_streak} kun ketma-ket
+              </span>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Player card */}
@@ -112,10 +95,24 @@ export function MainMenu() {
               </p>
             )}
           </div>
-          <div className="ml-auto flex items-center gap-2 text-gray-700">
-            <Trophy size={18} className="text-yellow-500" />
-            <span className="font-bold">{player.total_score}</span>
-            <span className="text-xs text-gray-400">ball</span>
+          <div className="ml-auto flex items-center gap-4">
+            {playerStats && (
+              <>
+                <div className="text-right">
+                  <p className="text-xs text-gray-400">Aniqlik</p>
+                  <p className="font-bold text-green-700">{Math.round(playerStats.accuracy_pct)}%</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs text-gray-400">O'yinlar</p>
+                  <p className="font-bold text-green-700">{playerStats.total_quizzes}</p>
+                </div>
+              </>
+            )}
+            <div className="flex items-center gap-2 text-gray-700">
+              <Trophy size={18} className="text-yellow-500" />
+              <span className="font-bold">{player.total_score}</span>
+              <span className="text-xs text-gray-400">ball</span>
+            </div>
           </div>
         </div>
       )}
@@ -123,26 +120,82 @@ export function MainMenu() {
       {/* Quiz modes */}
       <div>
         <h2 className="text-lg font-bold text-gray-700 mb-4">O'yin rejimlari</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {QUIZ_MODES.map((mode) => (
-            <button
-              key={mode.key}
-              onClick={() => handleMode(mode.path, mode.protected)}
-              className="bg-white rounded-2xl border-2 border-transparent hover:border-green-400 hover:shadow-xl p-5 flex items-start gap-4 text-left transition-all cursor-pointer"
-            >
-              <div
-                className={`rounded-xl p-3 bg-gradient-to-br ${mode.gradient} bg-opacity-10 flex-shrink-0`}
-              >
-                {mode.icon}
-              </div>
-              <div>
-                <p className="font-bold text-gray-800">{mode.label}</p>
-                <p className="text-sm text-gray-500 mt-0.5">{mode.description}</p>
-              </div>
-            </button>
-          ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <ModeCard
+            title="Tezkor o'yin"
+            description="10 ta tasodifiy savol"
+            icon={<Zap size={24} className="text-yellow-500" />}
+            color="bg-yellow-50"
+            onClick={() => handleMode("/quiz/quick", true)}
+          />
+          <ModeCard
+            title="Kunlik vazifa"
+            description="Har kuni yangi savollar + bonus"
+            icon={<Calendar size={24} className="text-blue-500" />}
+            color="bg-blue-50"
+            onClick={() => handleMode("/quiz/daily", true)}
+            badge={dailyChallenge && !dailyChallenge.is_completed ? "Yangi!" : undefined}
+          />
+          <ModeCard
+            title="Marafon"
+            description="Birinchi xatogacha o'ynang"
+            icon={<Flame size={24} className="text-red-500" />}
+            color="bg-red-50"
+            onClick={() => handleMode("/quiz/marathon", true)}
+          />
+          <ModeCard
+            title="Kategoriya bo'yicha"
+            description="Bir mavzudan chuqur savollar"
+            icon={<Target size={24} className="text-purple-500" />}
+            color="bg-purple-50"
+            onClick={() => handleMode("/quiz/category/FLORA", true)}
+          />
         </div>
       </div>
+
+      {/* Mini game + Education row */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <ModeCard
+          title="Chiqindi saralash"
+          description="Drag & drop mini-o'yin"
+          icon={<Recycle size={24} className="text-green-600" />}
+          color="bg-green-50"
+          onClick={() => handleMode("/mini-game/sort", true)}
+          badge="Mini"
+        />
+        <ModeCard
+          title="O'qish"
+          description="Ekologik maqolalar va faktlar"
+          icon={<BookOpen size={24} className="text-teal-600" />}
+          color="bg-teal-50"
+          onClick={() => navigate("/education")}
+        />
+      </div>
+
+      {/* Stats by category */}
+      {playerStats && (
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <Star size={16} className="text-yellow-500" />
+            <h2 className="text-base font-bold text-gray-700">Kategoriya bo'yicha</h2>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+            {(Object.entries(playerStats.per_category) as [string, { total: number; correct: number; accuracy: number }][]).map(
+              ([cat, stats]) => (
+                <div
+                  key={cat}
+                  className={`rounded-xl p-3 border text-center cursor-pointer hover:shadow-md transition-shadow ${CATEGORY_COLORS[cat] ?? "bg-gray-50 border-gray-200"}`}
+                  onClick={() => handleMode(`/quiz/category/${cat}`, true)}
+                >
+                  <p className="text-xs font-semibold">{cat}</p>
+                  <p className="text-lg font-bold">{Math.round(stats.accuracy * 100)}%</p>
+                  <p className="text-xs opacity-60">{stats.total} savol</p>
+                </div>
+              ),
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Daily fact */}
       {dailyFact && (

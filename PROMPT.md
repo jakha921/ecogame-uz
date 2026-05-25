@@ -1022,7 +1022,7 @@ interface ModeCardProps {
 
 ## Phase 9: Frontend — Quiz Pages
 
-### [ ] 9.1 Создать QuizPlayPage и QuizResultsPage
+### [x] 9.1 Создать QuizPlayPage и QuizResultsPage
 
 **Что сделать:**
 - Создать `frontend/src/pages/QuizPlayPage.tsx`:
