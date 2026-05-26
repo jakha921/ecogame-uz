@@ -2273,7 +2273,7 @@ cd frontend && npm run build
 
 ---
 
-### [ ] 17.3 Деплой на production ecogame.fullfocus.dev
+### [x] 17.3 Деплой на production ecogame.fullfocus.dev
 
 **Что сделать:**
 1. `git push origin main`
