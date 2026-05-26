@@ -29,7 +29,7 @@ export function GoogleLoginButton({ redirectTo = "/" }: GoogleLoginButtonProps) 
       useOneTap={false}
       theme="outline"
       size="large"
-      width="100%"
+      width={340}
     />
   );
 }
