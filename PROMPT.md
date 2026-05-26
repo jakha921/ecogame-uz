@@ -1666,7 +1666,7 @@ cd backend && uv run python manage.py check
 
 ---
 
-### [ ] 13.2 Добавить поле google_id в модель Player
+### [x] 13.2 Добавить поле google_id в модель Player
 
 **Что сделать:**
 1. В `backend/apps/accounts/models.py` в класс `Player` добавить после поля `session_key`:

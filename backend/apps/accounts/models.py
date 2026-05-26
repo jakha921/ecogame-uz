@@ -12,6 +12,9 @@ class Player(AbstractUser):
     session_key = models.CharField(
         max_length=64, unique=True, null=True, blank=True, verbose_name="Ключ сессии"
     )
+    google_id = models.CharField(
+        max_length=255, unique=True, null=True, blank=True, verbose_name="Google ID"
+    )
 
     class Meta:
         verbose_name = "Игрок"
