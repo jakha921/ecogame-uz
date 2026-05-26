@@ -14,6 +14,8 @@ DATABASES = {"default": env.db("DATABASE_URL")}
 
 CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=["https://ecogame.fullfocus.dev"])
 
+GOOGLE_CLIENT_ID = env("GOOGLE_CLIENT_ID", default="")
+
 # Security settings for production
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT = False  # Handled by nginx/Coolify

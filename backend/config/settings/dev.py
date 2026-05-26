@@ -15,5 +15,7 @@ DATABASES = {
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+GOOGLE_CLIENT_ID = ""
+
 # Show emails in console during dev
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

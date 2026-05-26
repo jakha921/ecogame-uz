@@ -106,6 +106,8 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
+GOOGLE_CLIENT_ID = ""
+
 # Unfold Admin
 UNFOLD = {
     "SITE_TITLE": "EcoGame Admin",

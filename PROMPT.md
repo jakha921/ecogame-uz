@@ -1631,7 +1631,7 @@ Django REST Framework, React, web application
 > Источник: `/Users/jakha/Programming/config/Google-Auth-FullFocus/`
 > Подход: SPA flow — фронтенд → Google ID token → POST /auth/google/ → бэкенд верифицирует → JWT
 
-### [ ] 13.1 Добавить google-auth зависимость и GOOGLE_CLIENT_ID настройку
+### [x] 13.1 Добавить google-auth зависимость и GOOGLE_CLIENT_ID настройку
 
 **Что сделать:**
 1. В `backend/pyproject.toml` в секцию `dependencies` добавить `"google-auth>=2.29"` (после `"Pillow>=10.4"`)
