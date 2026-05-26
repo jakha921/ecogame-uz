@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 import pytest
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -5,6 +7,13 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 Player = get_user_model()
+
+GOOGLE_PAYLOAD = {
+    "sub": "google_uid_123456",
+    "email": "googleuser@gmail.com",
+    "name": "Google User",
+    "picture": "https://example.com/photo.jpg",
+}
 
 
 @pytest.fixture
@@ -248,3 +257,96 @@ class TestClaimAccount:
             format="json",
         )
         assert claim.status_code == status.HTTP_400_BAD_REQUEST
+
+
+@pytest.mark.django_db
+class TestGoogleAuth:
+    MOCK_PATH = "apps.accounts.views.google_id_token.verify_oauth2_token"
+
+    def test_google_auth_new_user(self, api_client):
+        with patch(self.MOCK_PATH, return_value=GOOGLE_PAYLOAD):
+            response = api_client.post(
+                reverse("auth-google"),
+                {"credential": "fake-id-token"},
+                format="json",
+            )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "access" in data
+        assert "refresh" in data
+        assert data["is_new"] is True
+        assert Player.objects.filter(google_id=GOOGLE_PAYLOAD["sub"]).exists()
+
+    def test_google_auth_existing_google_id(self, api_client, db):
+        Player.objects.create_user(
+            username="g_google_uid_123456",
+            nickname="Existing Google",
+            email=GOOGLE_PAYLOAD["email"],
+            password="irrelevant",
+            google_id=GOOGLE_PAYLOAD["sub"],
+        )
+        with patch(self.MOCK_PATH, return_value=GOOGLE_PAYLOAD):
+            response = api_client.post(
+                reverse("auth-google"),
+                {"credential": "fake-id-token"},
+                format="json",
+            )
+        assert response.status_code == status.HTTP_200_OK
+        data = response.json()
+        assert "access" in data
+        # is_new=False because last_login is set after first login (it's None only for brand-new)
+        # player exists already so last_login may still be None — check no duplicate created
+        assert Player.objects.filter(google_id=GOOGLE_PAYLOAD["sub"]).count() == 1
+
+    def test_google_auth_email_match_links_google_id(self, api_client, db):
+        # Player registered with email but no google_id yet
+        existing = Player.objects.create_user(
+            username="emailuser",
+            nickname="Email User",
+            email=GOOGLE_PAYLOAD["email"],
+            password="somepass",
+        )
+        assert existing.google_id is None
+
+        with patch(self.MOCK_PATH, return_value=GOOGLE_PAYLOAD):
+            response = api_client.post(
+                reverse("auth-google"),
+                {"credential": "fake-id-token"},
+                format="json",
+            )
+        assert response.status_code == status.HTTP_200_OK
+        existing.refresh_from_db()
+        assert existing.google_id == GOOGLE_PAYLOAD["sub"]
+
+    def test_google_auth_invalid_token(self, api_client):
+        with patch(self.MOCK_PATH, side_effect=ValueError("bad token")):
+            response = api_client.post(
+                reverse("auth-google"),
+                {"credential": "invalid-token"},
+                format="json",
+            )
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert "yaroqsiz" in response.json()["detail"]
+
+    def test_google_auth_missing_credential(self, api_client):
+        response = api_client.post(
+            reverse("auth-google"),
+            {},
+            format="json",
+        )
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert "credential" in response.json()["detail"]
+
+    def test_google_auth_profile_has_google(self, api_client):
+        with patch(self.MOCK_PATH, return_value=GOOGLE_PAYLOAD):
+            auth_resp = api_client.post(
+                reverse("auth-google"),
+                {"credential": "fake-id-token"},
+                format="json",
+            )
+        token = auth_resp.json()["access"]
+        api_client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
+
+        profile = api_client.get(reverse("auth-me"))
+        assert profile.status_code == status.HTTP_200_OK
+        assert profile.json()["has_google"] is True

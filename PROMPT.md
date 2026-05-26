@@ -1806,7 +1806,7 @@ cd backend && uv run python manage.py check
 
 ---
 
-### [ ] 13.5 Написать тесты для Google Auth (6 тестов)
+### [x] 13.5 Написать тесты для Google Auth (6 тестов)
 
 **Что сделать:**
 В `backend/apps/accounts/tests/test_api.py` добавить класс `TestGoogleAuth` с 6 тестами.
