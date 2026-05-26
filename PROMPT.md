@@ -1840,7 +1840,7 @@ cd backend && uv run pytest apps/accounts/tests/test_api.py -v
 
 ## Phase 14: Frontend — Google Auth
 
-### [ ] 14.1 Установить @react-oauth/google и добавить env переменные
+### [x] 14.1 Установить @react-oauth/google и добавить env переменные
 
 **Что сделать:**
 1. `cd frontend && npm install @react-oauth/google`
