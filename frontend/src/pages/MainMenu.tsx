@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   BookOpen,
   Calendar,
@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { educationApi } from "@/api/education";
 import type { EcoFact } from "@/api/types";
+import { GoogleLoginButton } from "@/components/GoogleLoginButton";
 import { ModeCard } from "@/components/quiz";
 import { useAuthStore } from "@/stores/authStore";
 import { useQuizStore } from "@/stores/quizStore";
@@ -112,6 +113,28 @@ export function MainMenu() {
               <Trophy size={18} className="text-yellow-500" />
               <span className="font-bold">{player.total_score}</span>
               <span className="text-xs text-gray-400">ball</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Google Sign-In prompt for anonymous users */}
+      {isAnonymous && (
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-5 border border-blue-100 flex flex-col gap-4">
+          <div>
+            <p className="font-bold text-blue-800 text-sm">
+              Google orqali tizimga kiring — natijalaringiz saqlanadi
+            </p>
+            <p className="text-xs text-blue-600 mt-1">
+              Hozir vaqtinchalik akkauntdasiz. Kirganingizdan so'ng ball va yutuqlar saqlanadi.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <GoogleLoginButton />
+            <div className="flex gap-3 text-xs text-blue-600">
+              <Link to="/login" className="hover:underline">Kirish</Link>
+              <span>·</span>
+              <Link to="/register" className="hover:underline">Ro'yxatdan o'tish</Link>
             </div>
           </div>
         </div>
