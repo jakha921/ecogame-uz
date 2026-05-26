@@ -2228,7 +2228,7 @@ cd backend && uv run python manage.py check
 
 ## Phase 17: Production Deploy
 
-### [ ] 17.1 Обновить Docker конфигурации для Google Auth env vars
+### [x] 17.1 Обновить Docker конфигурации для Google Auth env vars
 
 **Что сделать:**
 
@@ -2259,7 +2259,7 @@ cd frontend && npm run build
 
 ---
 
-### [ ] 17.2 Финальная верификация перед деплоем
+### [x] 17.2 Финальная верификация перед деплоем
 
 **Что сделать:**
 1. `cd backend && uv run python manage.py check`
