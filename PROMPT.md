@@ -1693,7 +1693,7 @@ cd backend && uv run python manage.py check
 
 ---
 
-### [ ] 13.3 Создать GoogleAuthView и добавить URL
+### [x] 13.3 Создать GoogleAuthView и добавить URL
 
 **Что сделать:**
 

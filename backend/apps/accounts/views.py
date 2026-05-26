@@ -1,7 +1,10 @@
 import secrets
 import uuid
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
+from google.auth.transport import requests as google_requests
+from google.oauth2 import id_token as google_id_token
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -114,3 +117,68 @@ class ClaimAccountView(APIView):
         player.save()
 
         return Response(PlayerSerializer(player).data)
+
+
+class GoogleAuthView(APIView):
+    """Аутентификация через Google ID token. Возвращает JWT токены."""
+
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        credential = request.data.get("credential", "")
+        if not credential:
+            return Response(
+                {"detail": "credential talab qilinadi."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            payload = google_id_token.verify_oauth2_token(
+                credential,
+                google_requests.Request(),
+                settings.GOOGLE_CLIENT_ID,
+            )
+        except ValueError:
+            return Response(
+                {"detail": "Google token yaroqsiz."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        google_id = payload["sub"]
+        email = payload.get("email", "")
+        name = payload.get("name", "")
+
+        # 1. Find by google_id
+        player = Player.objects.filter(google_id=google_id).first()
+
+        if not player:
+            # 2. Find by email — link google_id
+            player = Player.objects.filter(email=email).first()
+            if player:
+                player.google_id = google_id
+                player.save(update_fields=["google_id"])
+            else:
+                # 3. Create new player
+                uid = uuid.uuid4().hex[:8]
+                nickname = name[:48] if name else f"Player_{uid}"
+                base = nickname
+                i = 1
+                while Player.objects.filter(nickname=nickname).exists():
+                    nickname = f"{base}_{i}"
+                    i += 1
+                player = Player.objects.create_user(
+                    username=f"g_{google_id[:20]}",
+                    email=email,
+                    nickname=nickname,
+                    password=secrets.token_hex(16),
+                    google_id=google_id,
+                )
+
+        refresh = RefreshToken.for_user(player)
+        return Response(
+            {
+                "access": str(refresh.access_token),
+                "refresh": str(refresh),
+                "is_new": player.last_login is None,
+            }
+        )

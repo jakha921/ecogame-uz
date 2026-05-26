@@ -4,6 +4,10 @@ from rest_framework import serializers
 Player = get_user_model()
 
 
+class GoogleAuthSerializer(serializers.Serializer):
+    credential = serializers.CharField(help_text="Google ID token from frontend")
+
+
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
     password_confirm = serializers.CharField(write_only=True)
