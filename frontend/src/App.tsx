@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
@@ -23,6 +24,7 @@ export default function App() {
   }, [initFromStorage]);
 
   return (
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID ?? ""}>
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
@@ -91,5 +93,6 @@ export default function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </GoogleOAuthProvider>
   );
 }

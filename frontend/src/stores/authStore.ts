@@ -11,6 +11,7 @@ interface AuthState {
   isLoading: boolean;
   login: (data: LoginData) => Promise<void>;
   loginAnonymous: () => Promise<void>;
+  googleLogin: (credential: string) => Promise<void>;
   register: (data: RegisterData) => Promise<void>;
   logout: () => void;
   fetchProfile: () => Promise<void>;
@@ -54,6 +55,26 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       localStorage.setItem("access_token", tokens.access);
       localStorage.setItem("refresh_token", tokens.refresh);
       set({ accessToken: tokens.access, refreshToken: tokens.refresh, isAuthenticated: true });
+      await get().fetchProfile();
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  googleLogin: async (credential) => {
+    set({ isLoading: true });
+    try {
+      const { data: tokens } = await authApi.googleAuth(credential);
+      localStorage.setItem("access_token", tokens.access);
+      localStorage.setItem("refresh_token", tokens.refresh);
+      localStorage.removeItem("is_anonymous");
+      localStorage.removeItem("anon_session_key");
+      set({
+        accessToken: tokens.access,
+        refreshToken: tokens.refresh,
+        isAuthenticated: true,
+        isAnonymous: false,
+      });
       await get().fetchProfile();
     } finally {
       set({ isLoading: false });

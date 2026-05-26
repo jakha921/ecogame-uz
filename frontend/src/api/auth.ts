@@ -1,4 +1,4 @@
-import type { AuthTokens, LoginData, Player, RegisterData } from "./types";
+import type { AuthTokens, GoogleAuthResponse, LoginData, Player, RegisterData } from "./types";
 import { apiClient } from "./client";
 
 export interface AnonymousTokens extends AuthTokens {
@@ -18,4 +18,6 @@ export const authApi = {
   getProfile: () => apiClient.get<Player>("/auth/me/"),
   updateProfile: (data: Partial<Pick<Player, "nickname" | "avatar" | "email">>) =>
     apiClient.patch<Player>("/auth/me/", data),
+  googleAuth: (credential: string) =>
+    apiClient.post<GoogleAuthResponse>("/auth/google/", { credential }),
 };

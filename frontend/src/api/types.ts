@@ -8,6 +8,13 @@ export interface Player {
   avatar: string;
   total_score: number;
   date_joined: string;
+  has_google?: boolean;
+}
+
+export interface GoogleAuthResponse {
+  access: string;
+  refresh: string;
+  is_new: boolean;
 }
 
 export interface AuthTokens {

@@ -1861,7 +1861,7 @@ cd frontend && npm run build
 
 ---
 
-### [ ] 14.2 GoogleOAuthProvider + GoogleLoginButton + authStore.googleLogin
+### [x] 14.2 GoogleOAuthProvider + GoogleLoginButton + authStore.googleLogin
 
 **Что сделать:**
 
