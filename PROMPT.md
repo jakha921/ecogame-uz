@@ -1785,7 +1785,7 @@ cd backend && uv run python manage.py check
 
 ---
 
-### [ ] 13.4 Добавить has_google в PlayerSerializer
+### [x] 13.4 Добавить has_google в PlayerSerializer
 
 **Что сделать:**
 В `backend/apps/accounts/serializers.py` обновить `PlayerSerializer`:

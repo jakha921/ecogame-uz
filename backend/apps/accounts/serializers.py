@@ -31,7 +31,21 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class PlayerSerializer(serializers.ModelSerializer):
+    has_google = serializers.SerializerMethodField()
+
     class Meta:
         model = Player
-        fields = ["id", "username", "nickname", "email", "avatar", "total_score", "date_joined"]
-        read_only_fields = ["id", "username", "total_score", "date_joined"]
+        fields = [
+            "id",
+            "username",
+            "nickname",
+            "email",
+            "avatar",
+            "total_score",
+            "date_joined",
+            "has_google",
+        ]
+        read_only_fields = ["id", "username", "total_score", "date_joined", "has_google"]
+
+    def get_has_google(self, obj: "Player") -> bool:
+        return bool(obj.google_id)
