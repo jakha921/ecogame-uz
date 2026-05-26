@@ -2136,7 +2136,7 @@ cd backend && uv run python manage.py check
 
 ## Phase 16: Рекомендации и документация
 
-### [ ] 16.1 Создать docs/RECOMMENDATIONS.md
+### [x] 16.1 Создать docs/RECOMMENDATIONS.md
 
 **Что сделать:**
 Создать файл `docs/RECOMMENDATIONS.md` (~100 строк) на русском языке, структура:
@@ -2188,7 +2188,7 @@ cd backend && uv run python manage.py check
 
 ---
 
-### [ ] 16.2 Обновить CLAUDE.md с Google Auth
+### [x] 16.2 Обновить CLAUDE.md с Google Auth
 
 **Что сделать:**
 В `CLAUDE.md`:
@@ -2211,7 +2211,7 @@ cd backend && uv run python manage.py check
 
 ---
 
-### [ ] 16.3 Обновить README.md с Google Auth и исправлениями
+### [x] 16.3 Обновить README.md с Google Auth и исправлениями
 
 **Что сделать:**
 1. В таблицу технологий добавить строку:

@@ -43,6 +43,25 @@ frontend/src/
   api/             — quiz.ts, education.ts, types.ts, client.ts
 ```
 
+## Auth API endpoints
+```
+POST /api/v1/auth/register/      — регистрация
+POST /api/v1/auth/login/         — JWT login (username + password)
+POST /api/v1/auth/google/        — Google OAuth (ID token → JWT)
+POST /api/v1/auth/anonymous/     — анонимный вход
+POST /api/v1/auth/claim/         — привязать username к анонимному аккаунту
+POST /api/v1/auth/token/refresh/ — обновить access token
+GET  /api/v1/auth/me/            — профиль текущего пользователя
+```
+
+## Google Auth
+- Подход: SPA ID token flow (без серверных редиректов)
+- Frontend: `@react-oauth/google` → `GoogleLogin` компонент возвращает `credential` (ID token)
+- Backend: `google.oauth2.id_token.verify_oauth2_token()` верифицирует токен
+- Три шага поиска: google_id match → email match + link → create new Player
+- Env переменные: `GOOGLE_CLIENT_ID` (backend) и `VITE_GOOGLE_CLIENT_ID` (frontend)
+- Client ID: `<your-google-client-id>.apps.googleusercontent.com`
+
 ## Quiz API endpoints (основные)
 ```
 POST /api/v1/game/quiz/sessions/              — start session
