@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { GoogleLoginButton } from "@/components/GoogleLoginButton";
 import { useAuthStore } from "@/stores/authStore";
 import { t } from "@/i18n";
 
@@ -67,6 +68,16 @@ export function LoginPage() {
             {isLoading ? "Kirilmoqda..." : t("menu.login")}
           </button>
         </form>
+
+        <div className="flex items-center gap-3 my-5">
+          <div className="flex-1 h-px bg-gray-200" />
+          <span className="text-sm text-gray-400">yoki</span>
+          <div className="flex-1 h-px bg-gray-200" />
+        </div>
+
+        <div className="flex justify-center">
+          <GoogleLoginButton />
+        </div>
 
         <p className="text-center text-sm text-gray-500 mt-4">
           {t("auth.no_account")}{" "}

@@ -1959,7 +1959,7 @@ cd frontend && npm run build
 
 ---
 
-### [ ] 14.3 Добавить Google кнопку на LoginPage и RegisterPage
+### [x] 14.3 Добавить Google кнопку на LoginPage и RegisterPage
 
 **Что сделать:**
 
