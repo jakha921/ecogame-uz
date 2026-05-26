@@ -55,16 +55,16 @@ addopts = "--reuse-db --tb=short"
 
 ### 4.2.1 Общие результаты
 
-По результатам выполнения тестовой сессии **130 тестов пройдено, 0 провалено**:
+По результатам выполнения тестовой сессии **136 тестов пройдено, 0 провалено**:
 
 ```
 ============================= test session starts ==============================
 platform darwin -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
 django: version: 6.0.5, settings: config.settings.dev
 rootdir: /Users/jakha/MyFiles/University/Diploma/backend
-collected 130 items
+collected 136 items
 
-apps/accounts/tests/test_api.py ..................         [18 passed]
+apps/accounts/tests/test_api.py ........................  [24 passed]
 apps/accounts/tests/test_models.py ......                 [6 passed]
 apps/education/tests/test_api.py ......                   [6 passed]
 apps/education/tests/test_models.py ..........            [10 passed]
@@ -73,14 +73,14 @@ apps/game/tests/test_models.py ......................      [22 passed]
 apps/game/tests/test_services.py ......................    [37 passed]
 apps/leaderboard/tests/test_api.py .........              [9 passed]
 
-============================= 130 passed in 34.50s =============================
+============================= 136 passed in 34.78s =============================
 ```
 
 ### 4.2.2 Распределение тестов по модулям
 
 | Файл тестов | Тест-классов | Тестов | Покрытие аспектов |
 |-------------|-------------|--------|------------------|
-| accounts/test_api.py | 5 | 18 | Регистрация, JWT, анонимность, claim |
+| accounts/test_api.py | 6 | 24 | Регистрация, JWT, анонимность, claim, Google Auth |
 | accounts/test_models.py | 1 | 6 | Модель Player, unique constraints |
 | education/test_api.py | 2 | 6 | Публикация статей, фильтрация |
 | education/test_models.py | 2 | 10 | EducationalContent, EcoFact |
@@ -88,7 +88,7 @@ apps/leaderboard/tests/test_api.py .........              [9 passed]
 | game/test_models.py | 8 | 22 | Question, Answer, QuizSession |
 | game/test_services.py | 8 | 37 | Scoring, streak, achievements |
 | leaderboard/test_api.py | 4 | 9 | Список, ранк, сигналы |
-| **Итого** | **38** | **130** | |
+| **Итого** | **39** | **136** | |
 
 ### 4.2.3 TestCalculateScore — детальный анализ
 
@@ -646,7 +646,7 @@ TypeScript обнаруживает:
 
 **Ключевые результаты:**
 
-1. **130 тестов пройдено, 0 провалено** — все unit и интеграционные тесты выполняются успешно. Тестовое покрытие охватывает критические пути: алгоритм оценивания, streak-логику, anti-cheat механизм, аутентификацию, сигналы лидерборда.
+1. **136 тестов пройдено, 0 провалено** — все unit и интеграционные тесты выполняются успешно. Тестовое покрытие охватывает критические пути: алгоритм оценивания, streak-логику, anti-cheat механизм, аутентификацию, сигналы лидерборда.
 
 2. **Anti-cheat верифицирован тестом** — `test_start_answer_end` явно проверяет отсутствие `is_correct` в API-ответе вопросов.
 
@@ -656,4 +656,4 @@ TypeScript обнаруживает:
 
 5. **TypeScript strict mode** — обеспечивает статическую верификацию типов без runtime ошибок при сборке.
 
-Совокупность автоматических тестов (130) и ручного тестирования UI подтверждает функциональную корректность системы и её готовность к production-эксплуатации.
+Совокупность автоматических тестов (136) и ручного тестирования UI подтверждает функциональную корректность системы и её готовность к production-эксплуатации.

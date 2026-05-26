@@ -2443,3 +2443,98 @@ class EcoFactRandomView(APIView):
 
 Полный исходный код проекта доступен в репозитории GitHub и развёрнут по адресу https://ecogame.fullfocus.dev.
 Приложение успешно функционирует в production-среде и доступно для использования студентами и преподавателями.
+
+## 3.20 Интеграция Google OAuth
+
+### 3.20.1 Выбор подхода авторизации
+
+Для интеграции с Google Sign-In выбран **ID token flow** (SPA-совместимый подход), при котором:
+1. Фронтенд через библиотеку `@react-oauth/google` показывает кнопку Google Sign-In.
+2. Пользователь выбирает аккаунт Google → Google возвращает подписанный **ID token** (JWT, подписанный ключами Google).
+3. Фронтенд отправляет ID token на `POST /api/v1/auth/google/`.
+4. Бэкенд верифицирует ID token через Google API и возвращает собственный JWT.
+
+Этот подход предпочтителен перед Authorization Code flow для SPA, так как **Client Secret никогда не передаётся на клиент**, а вся верификация происходит на защищённом сервере.
+
+### 3.20.2 Бэкенд: GoogleAuthView
+
+```python
+class GoogleAuthView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        credential = request.data.get("credential", "")
+        if not credential:
+            return Response({"detail": "credential talab qilinadi."}, status=400)
+
+        try:
+            payload = google_id_token.verify_oauth2_token(
+                credential,
+                google_requests.Request(),
+                settings.GOOGLE_CLIENT_ID,
+            )
+        except ValueError:
+            return Response({"detail": "Google token yaroqsiz."}, status=400)
+
+        google_id = payload["sub"]   # уникальный ID пользователя Google
+        email = payload.get("email", "")
+        name = payload.get("name", "")
+
+        # Трёхшаговый поиск игрока
+        player = Player.objects.filter(google_id=google_id).first()
+        if not player:
+            player = Player.objects.filter(email=email).first()
+            if player:
+                player.google_id = google_id   # привязка Google к существующему аккаунту
+                player.save(update_fields=["google_id"])
+            else:
+                player = Player.objects.create_user(...)  # новый игрок
+
+        refresh = RefreshToken.for_user(player)
+        return Response({"access": str(refresh.access_token), "refresh": str(refresh), "is_new": ...})
+```
+
+**Трёхшаговый matching** гарантирует корректную обработку всех сценариев:
+- Возвращающийся пользователь Google → найден по `google_id`.
+- Пользователь ранее зарегистрировался по email → `google_id` привязывается к существующему аккаунту.
+- Новый пользователь → создаётся новый `Player` с `google_id`.
+
+### 3.20.3 Фронтенд: GoogleLoginButton
+
+```tsx
+import { GoogleLogin } from "@react-oauth/google";
+
+export function GoogleLoginButton({ redirectTo = "/" }) {
+  const googleLogin = useAuthStore((s) => s.googleLogin);
+  const navigate = useNavigate();
+
+  return (
+    <GoogleLogin
+      onSuccess={async (response) => {
+        if (!response.credential) return;
+        await googleLogin(response.credential);
+        navigate(redirectTo);
+      }}
+      theme="outline"
+      size="large"
+    />
+  );
+}
+```
+
+Компонент `GoogleLoginButton` отображается на странице входа, регистрации и в главном меню (для анонимных пользователей с предложением сохранить прогресс).
+
+### 3.20.4 Тесты Google Auth
+
+Для верификации реализованы 6 тестов в классе `TestGoogleAuth`:
+
+| Тест | Сценарий |
+|------|----------|
+| `test_google_auth_new_user` | Новый пользователь создаётся, `is_new=True` |
+| `test_google_auth_existing_google_id` | Существующий `google_id` → вход без дубликатов |
+| `test_google_auth_email_match_links_google_id` | Email совпадение → `google_id` привязывается |
+| `test_google_auth_invalid_token` | Невалидный токен → 400 |
+| `test_google_auth_missing_credential` | Пустой запрос → 400 |
+| `test_google_auth_profile_has_google` | После входа → `has_google: true` в профиле |
+
+Мокирование: `unittest.mock.patch("apps.accounts.views.google_id_token.verify_oauth2_token")` — патч на место использования, а не на место определения.

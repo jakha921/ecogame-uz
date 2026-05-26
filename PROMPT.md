@@ -2306,7 +2306,7 @@ curl -s https://ecogame.fullfocus.dev/ | grep -c "Google"
 
 ## Phase 18: Обновление ВКР
 
-### [ ] 18.1 Обновить Главу 3 — добавить раздел Google OAuth
+### [x] 18.1 Обновить Главу 3 — добавить раздел Google OAuth
 
 **Что сделать:**
 В `docs/vkr/chapter3_implementation.md` добавить новый раздел в конце (после последнего раздела):
@@ -2381,7 +2381,7 @@ export function GoogleLoginButton() {
 
 ---
 
-### [ ] 18.2 Обновить Главу 4 — тесты Google Auth
+### [x] 18.2 Обновить Главу 4 — тесты Google Auth
 
 **Что сделать:**
 В `docs/vkr/chapter4_testing.md`:
