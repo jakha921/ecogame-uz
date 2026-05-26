@@ -28,6 +28,7 @@ export function EducationPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLoading(true);
     educationApi
       .getArticles(selected === "ALL" ? undefined : selected)

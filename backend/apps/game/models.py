@@ -35,6 +35,7 @@ class ConditionType(models.TextChoices):
     CATEGORY_MASTER = "CATEGORY_MASTER", "Мастер категории"
 
 
+# Legacy models — не используются quiz engine, сохранены для целостности миграций
 class Level(models.Model):
     """Определение игрового уровня."""
 

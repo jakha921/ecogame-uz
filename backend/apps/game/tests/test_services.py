@@ -288,7 +288,7 @@ class TestCheckAchievements:
             score=600,
             correct_count=5,
         )
-        result = QuizService.end_session(session)
+        QuizService.end_session(session)
         player.refresh_from_db()
         player.__class__.objects.filter(pk=player.pk).update(total_score=600)
         player.refresh_from_db()

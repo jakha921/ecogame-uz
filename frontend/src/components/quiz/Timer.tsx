@@ -14,6 +14,7 @@ export function Timer({ timeLimit, onTimeUp, active }: TimerProps) {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setElapsed(0);
     if (!active) return;
 

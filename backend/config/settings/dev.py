@@ -1,6 +1,7 @@
 """Development settings."""
 
 from .base import *  # noqa: F401, F403
+from .base import BASE_DIR
 
 SECRET_KEY = "django-insecure-dev-secret-key-not-for-production-12345"
 DEBUG = True

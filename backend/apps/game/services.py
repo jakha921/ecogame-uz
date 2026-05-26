@@ -5,8 +5,7 @@ import random
 from datetime import date
 
 from django.db import transaction
-from django.db.models import Max as models_max
-from django.db.models import Sum
+from django.db.models import Max, Sum
 from django.utils import timezone
 
 from apps.accounts.models import Player
@@ -321,7 +320,7 @@ class QuizService:
         total_quizzes = sessions.count()
         total_correct = sessions.aggregate(t=Sum("correct_count"))["t"] or 0
         total_questions = sessions.aggregate(t=Sum("total_questions"))["t"] or 0
-        best_streak = sessions.aggregate(m=models_max("max_streak"))["m"] or 0
+        best_streak = sessions.aggregate(m=Max("max_streak"))["m"] or 0
         accuracy = total_correct / total_questions if total_questions > 0 else 0.0
 
         per_category: dict[str, dict] = {}

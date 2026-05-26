@@ -206,9 +206,9 @@ class MiniGameScoreView(APIView):
             game_type=MiniGameScore.GAME_TYPE_SORTING,
             **serializer.validated_data,
         )
-        Player = request.user.__class__
-        Player.objects.filter(pk=request.user.pk).update(
-            total_score=Player.objects.get(pk=request.user.pk).total_score + score_obj.score
+        player_cls = request.user.__class__
+        player_cls.objects.filter(pk=request.user.pk).update(
+            total_score=player_cls.objects.get(pk=request.user.pk).total_score + score_obj.score
         )
         return Response(
             {"score": score_obj.score, "message": "Natija saqlandi!"},

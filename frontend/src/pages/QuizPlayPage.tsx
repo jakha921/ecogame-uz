@@ -39,6 +39,7 @@ export function QuizPlayPage({ mode }: QuizPlayPageProps) {
 
   const [answerState, setAnswerState] = useState<Record<number, AnswerButtonState>>({});
   const [timerKey, setTimerKey] = useState(0);
+  // eslint-disable-next-line react-hooks/purity
   const startTimeRef = useRef<number>(Date.now());
 
   useEffect(() => {
@@ -47,6 +48,7 @@ export function QuizPlayPage({ mode }: QuizPlayPageProps) {
 
   // Reset per-question state on new question
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setAnswerState({});
     setTimerKey((k) => k + 1);
     startTimeRef.current = Date.now();

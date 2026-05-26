@@ -119,7 +119,7 @@ npm run dev
 ## Тестирование
 
 ```bash
-# Backend (81 тест)
+# Backend (136+ тестов)
 cd backend
 uv run pytest -v
 uv run pytest --cov=apps --cov-report=html
