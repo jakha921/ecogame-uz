@@ -1626,8 +1626,7 @@ Django REST Framework, React, web application
 
 ## Phase 13: Backend — Google Auth
 
-> Google OAuth credentials: Client ID = `<your-google-client-id>.apps.googleusercontent.com`
-> Client Secret = `GOCSPX-REDACTED`
+> Google OAuth credentials: Client ID и Client Secret хранятся в `/Users/jakha/Programming/config/Google-Auth-FullFocus/`
 > Источник: `/Users/jakha/Programming/config/Google-Auth-FullFocus/`
 > Подход: SPA flow — фронтенд → Google ID token → POST /auth/google/ → бэкенд верифицирует → JWT
 
@@ -1650,7 +1649,7 @@ Django REST Framework, React, web application
    ```
 6. В `.env` добавить строку:
    ```
-   GOOGLE_CLIENT_ID=<your-google-client-id>.apps.googleusercontent.com
+   GOOGLE_CLIENT_ID=<your-google-client-id>
    ```
 7. В `.env.example` добавить строку:
    ```
@@ -1846,7 +1845,7 @@ cd backend && uv run pytest apps/accounts/tests/test_api.py -v
 1. `cd frontend && npm install @react-oauth/google`
 2. В `.env` добавить:
    ```
-   VITE_GOOGLE_CLIENT_ID=<your-google-client-id>.apps.googleusercontent.com
+   VITE_GOOGLE_CLIENT_ID=<your-google-client-id>
    ```
 3. В `.env.example` добавить:
    ```
@@ -2287,7 +2286,7 @@ cd frontend && npm run build
    docker compose exec -T backend uv run python manage.py migrate
    ```
 4. Проверить что GOOGLE_CLIENT_ID установлен в Coolify environment variables (через https://coolify.fullfocus.dev)
-   Если нет — добавить вручную: `GOOGLE_CLIENT_ID=<your-google-client-id>.apps.googleusercontent.com`
+   Если нет — добавить вручную значение из `/Users/jakha/Programming/config/Google-Auth-FullFocus/`
    И VITE_GOOGLE_CLIENT_ID с тем же значением.
 
 **Верификация:**
